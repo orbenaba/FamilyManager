@@ -20,8 +20,8 @@ public class StartController extends MouseAdapter {
         //Add listeners to minimize label
         sview.addMinimizeAction(new MinimizeListeners());
         sview.addExitAction(new ExitListeners());
-        /*sview.addRegisterAction(new RegisterListener());
-        sview.addLoginAction(new LoginListener());*/
+        sview.addRegisterAction(new RegisterListener());
+        sview.addLoginAction(new LoginListener());
     }
 
     class MinimizeListeners extends MouseAdapter {
@@ -62,7 +62,7 @@ public class StartController extends MouseAdapter {
             sview.exit.setForeground(Color.black);
         }
     }
-  /*  class RegisterListener extends MouseAdapter {
+    class RegisterListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             RegisterView rv = new RegisterView();
@@ -94,7 +94,5 @@ public class StartController extends MouseAdapter {
             sview.login.setBorder(null);
         }
     }
-
-    */
 
 }

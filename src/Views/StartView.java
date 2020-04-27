@@ -26,16 +26,19 @@ public class StartView extends JFrame {
         setUndecorated(true);//get rid of the ugly frame
         initMatrix(0,0,getWidth()/8,getHeight()/8);
         //add exit and minimize labels
-        //init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin);
+        exit=new JLabel("X");
+        minimize=new JLabel("-");
+        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
+        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin);
         initTitle(20,50,55);
- /*       init_Login_Register();
+        init_Login_Register();
 
 
         add(login);
-        add(register);*/
+        add(register);
         add(title);
-       // add(exit);
-       // add(minimize);
+        add(exit);
+        add(minimize);
         addMatrixPanels();
         setVisible(true);
     }
@@ -61,22 +64,20 @@ public class StartView extends JFrame {
                 add(matrixPanels[i][j]);
     }
     //initialize exit and minimize
-   /* public static void init_Exit_Minimize(int x,int y,int size,JLabel exit2,JLabel minimize2,Border frameExMin2)
+    //prevent code duplication by declaring the func as a static func.
+    public static void init_Exit_Minimize(int x,int y,int size,JLabel exit,JLabel minimize,Border frameExMin)
     {
-        exit2=new JLabel("X");
-        minimize2=new JLabel("-");
-        minimize2.setBounds(x,y,size,size);
-        exit2.setBounds(x+size,y,size,size);
-        exit2.setFont(new Font("Arial", BOLD,size));
-        minimize2.setFont(new Font("Arial", BOLD,size));
-        exit2.setForeground(Color.black);
-        minimize2.setForeground(Color.black);
-        exit2.setHorizontalAlignment(SwingConstants.CENTER);
-        minimize2.setHorizontalAlignment(SwingConstants.CENTER);
-        frameExMin2=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        exit2.setBorder(frameExMin2);
-        minimize2.setBorder(frameExMin2);
-    }*/
+        minimize.setBounds(x,y,size,size);
+        exit.setBounds(x+size,y,size,size);
+        exit.setFont(new Font("Arial", BOLD,size));
+        minimize.setFont(new Font("Arial", BOLD,size));
+        exit.setForeground(Color.black);
+        minimize.setForeground(Color.black);
+        exit.setHorizontalAlignment(SwingConstants.CENTER);
+        minimize.setHorizontalAlignment(SwingConstants.CENTER);
+        exit.setBorder(frameExMin);
+        minimize.setBorder(frameExMin);
+    }
     //initialize title
     public void initTitle(int x,int y,int size){
         title=new JLabel("Welcome to family manager");
@@ -104,10 +105,10 @@ public class StartView extends JFrame {
     public void addExitAction(MouseAdapter mal){
         exit.addMouseListener(mal);
     }
-   /* public void addRegisterAction(MouseAdapter mal){
+    public void addRegisterAction(MouseAdapter mal){
         register.addMouseListener(mal);
     }
     public void addLoginAction(MouseAdapter mal){
         login.addMouseListener(mal);
-    }*/
+    }
 }
