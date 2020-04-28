@@ -1,7 +1,9 @@
 package Controllers;
 
 import Views.LoginView;
+import Views.RegisterFamilyView;
 import Views.RegisterView;
+import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,6 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Views.RegisterView.addExitAction;
+import static Views.RegisterView.addMinimizeAction;
 import static java.sql.Types.NULL;
 
 public class RegisterController {
@@ -24,8 +28,8 @@ public class RegisterController {
 
     public RegisterController(RegisterView rview) {
         this.rview = rview;
-        rview.addMinimizeAction(new MinimizeListeners());
-        rview.addExitAction(new ExitListeners());
+        addMinimizeAction(new MinimizeListeners(rview),rview.minimize);
+        addExitAction(new ExitListeners(rview),rview.exit);
         rview.addUsernameFocus(new FocusUsernameListener());
         rview.addPasswordFocus(new FocusPasswordListener());
         rview.addConfirmPasswordFocus(new FocusPasswordListener());
@@ -37,46 +41,100 @@ public class RegisterController {
         rview.addSelectListener(new SelectImageAction());
     }
 
-    class MinimizeListeners extends MouseAdapter {
+    static class MinimizeListeners extends MouseAdapter {
+        private JFrame view;
+        public MinimizeListeners(JFrame view){
+            this.view=view;
+        }
         @Override
         public void mouseClicked(MouseEvent e) {
-            rview.setState(JFrame.ICONIFIED);
+            view.setState(JFrame.ICONIFIED);
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
             Border whiteMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            rview.minimize.setBorder(whiteMinimizeB);
-            rview.minimize.setForeground(Color.white);
-            //In addition, in the aforementioned area the cursor turns into hand cursor
-            rview.minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            if(view instanceof RegisterView) {
+                ((RegisterView) view).minimize.setBorder(whiteMinimizeB);
+                ((RegisterView) view).minimize.setForeground(Color.white);
+                //In addition, in the aforementioned area the cursor turns into hand cursor
+                ((RegisterView) view).minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            else if(view instanceof LoginView) {
+                ((LoginView) view).minimize.setBorder(whiteMinimizeB);
+                ((LoginView) view).minimize.setForeground(Color.white);
+                //In addition, in the aforementioned area the cursor turns into hand cursor
+                ((LoginView) view).minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            else if(view instanceof RegisterFamilyView){
+                ((RegisterFamilyView) view).minimize.setBorder(whiteMinimizeB);
+                ((RegisterFamilyView) view).minimize.setForeground(Color.white);
+                //In addition, in the aforementioned area the cursor turns into hand cursor
+                ((RegisterFamilyView) view).minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.minimize.setBorder(rview.frameExMin);
-            rview.minimize.setForeground(Color.black);
+            if (view instanceof RegisterView) {
+                ((RegisterView) view).minimize.setBorder(((RegisterView) view).frameExMin);
+                ((RegisterView) view).minimize.setForeground(Color.black);
+            }
+            else if(view instanceof LoginView){
+                ((LoginView)view).minimize.setBorder(((LoginView)view).frameExMin);
+                ((LoginView)view).minimize.setForeground(Color.black);
+            }
+            else if(view instanceof RegisterFamilyView){
+                ((RegisterFamilyView)view).minimize.setBorder(((RegisterFamilyView)view).frameExMin);
+                ((RegisterFamilyView)view).minimize.setForeground(Color.black);
+            }
         }
     }
 
-    class ExitListeners extends MouseAdapter {
+    static class ExitListeners extends MouseAdapter {
+        private JFrame view;
+        public ExitListeners(JFrame view) {
+            this.view = view;
+        }
         @Override
         public void mouseClicked(MouseEvent e) {
             System.exit(0);
         }
-
         @Override
         public void mouseEntered(MouseEvent e) {
-            Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            rview.exit.setBorder(whiteExitB);
-            rview.exit.setForeground(Color.white);
-            rview.exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            if (view instanceof RegisterView) {
+                Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+                ((RegisterView) view).exit.setBorder(whiteExitB);
+                ((RegisterView) view).exit.setForeground(Color.white);
+                ((RegisterView) view).exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            else if(view instanceof LoginView){
+                Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+                ((LoginView) view).exit.setBorder(whiteExitB);
+                ((LoginView) view).exit.setForeground(Color.white);
+                ((LoginView) view).exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            else if(view instanceof RegisterFamilyView){
+                Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
+                ((RegisterFamilyView) view).exit.setBorder(whiteExitB);
+                ((RegisterFamilyView) view).exit.setForeground(Color.white);
+                ((RegisterFamilyView) view).exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.exit.setBorder(rview.frameExMin);
-            rview.exit.setForeground(Color.black);
+            if (view instanceof RegisterView) {
+                ((RegisterView) view).exit.setBorder(((RegisterView) view).frameExMin);
+                ((RegisterView) view).exit.setForeground(Color.black);
+            } else if (view instanceof LoginView) {
+                ((LoginView) view).exit.setBorder(((LoginView) view).frameExMin);
+                ((LoginView) view).exit.setForeground(Color.black);
+            }
+            else if (view instanceof RegisterFamilyView) {
+                ((RegisterFamilyView) view).exit.setBorder(((RegisterFamilyView) view).frameExMin);
+                ((RegisterFamilyView) view).exit.setForeground(Color.black);
+            }
         }
     }
 
@@ -177,29 +235,6 @@ public class RegisterController {
             return true;
         }
 
-        //Is the given username has already existed in our DB?
-        public boolean isUsernameExist(String username)
-        {
-            PreparedStatement st;
-            ResultSet rs ;
-            boolean exist=false;
-            String query="SELECT*FROM users WHERE username= ?";
-            try{
-                st = DriverManager.getConnection("jdbc:mysql://localhost:3306/family", "root", "root").prepareStatement(query);
-                st.setString(1,username);
-                rs=st.executeQuery();
-                if(rs.next()) {
-                    exist = true;
-                    JOptionPane.showMessageDialog(null,"This username is already exist","Username validation",2);
-
-                }
-            }
-            catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return exist;
-        }
-
         @Override
         public void actionPerformed(ActionEvent e) {
             String fname2=rview.fullname.getText();
@@ -287,5 +322,27 @@ public class RegisterController {
             if(!Character.isDigit(e.getKeyChar()))
                 e.consume();
         }
+    }
+
+    //Is the given username has already existed in our DB?
+    public static boolean isUsernameExist(String username)
+    {
+        PreparedStatement st;
+        ResultSet rs ;
+        boolean exist=false;
+        String query="SELECT*FROM family WHERE username= ?";
+        try{
+            st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            st.setString(1,username);
+            rs=st.executeQuery();
+            if(rs.next()) {
+                exist = true;
+                JOptionPane.showMessageDialog(null,"This username is already exist","Username validation",2);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exist;
     }
 }

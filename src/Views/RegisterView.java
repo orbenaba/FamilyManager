@@ -1,5 +1,7 @@
 package Views;
 
+import Models.Family;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -8,7 +10,7 @@ import static Views.StartView.init_Exit_Minimize;
 
 
 public class RegisterView extends JFrame {
-    public JPanel p1,p2;
+    JPanel p1,p2;
     public JLabel title,exit,minimize,fnameLabel,unameLabel,passLabel,passConfLabel,phoneLabel,genderLabel,imageLabel,loginContext;
     public JTextField username,fullname,phone,gender;
     public JPasswordField createPassword,confirmPassword;
@@ -26,8 +28,16 @@ public class RegisterView extends JFrame {
         setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        decorateBackground();
-        addTitle();
+        p1=new JPanel();
+        p2=new JPanel();
+        decorateBackground(p1,p2,this,getWidth()-30,getHeight());
+
+        title=new JLabel("Register");
+        addTitle(title,245,15,210,80);
+
+
+
+
         addRegisterForm();
         exit=new JLabel("X");
         minimize=new JLabel("-");
@@ -64,27 +74,31 @@ public class RegisterView extends JFrame {
         add(p2);
         setVisible(true);
     }
-    public void decorateBackground() {
+
+
+
+
+
+
+
+
+    public static void decorateBackground(JPanel p1,JPanel p2,JFrame This,int width,int height) {
         //Yellow background
-        getContentPane().setBackground(Color.yellow);
-        p1 = new JPanel();
-        p2 = new JPanel();
+        This.getContentPane().setBackground(Color.yellow);
         p1.setBackground(new Color(116,119,139));
-        p1.setBounds(15,15,670,100);
+        p1.setBounds(15,15,width,100);
         p2.setBackground(new Color(205,206,213));
-        p2.setBounds(15,115,670,520);
+        p2.setBounds(15,115,width,height-130);
     }
-    public void addTitle() {
+    public static void addTitle(JLabel title,int x,int y,int width,int height) {
         //Label for "Register" title
-        title=new JLabel("Register");
         title.setFont(new Font("Arial", Font.BOLD, 30));
         title.setForeground(Color.white);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
         title.setBackground(new Color(0,84,104));
-        //The default is the background is transparent
-        title.setOpaque(true);
-        title.setBounds(245,15,210,80);
+        title.setOpaque(true);//The default is the background is transparent
+        title.setBounds(x,y,width,height);
     }
     public void addRegisterForm(){
         //Initialize all labels' texts
@@ -157,12 +171,15 @@ public class RegisterView extends JFrame {
 
 
     //Listeners:
-    public void addMinimizeAction(MouseAdapter mal) {
+    public static void addMinimizeAction(MouseAdapter mal,JLabel minimize) {
         minimize.addMouseListener(mal);
     }
-    public void addExitAction(MouseAdapter mal){
+    public static void addExitAction(MouseAdapter mal,JLabel exit){
         exit.addMouseListener(mal);
     }
+
+
+
     public void addUsernameFocus(FocusAdapter mal) {
         username.addFocusListener(mal);
     }
@@ -175,12 +192,21 @@ public class RegisterView extends JFrame {
     public void addLoginContextAction(MouseAdapter mal){
         loginContext.addMouseListener(mal);
     }
+
+
+
+
     public void addRegisterListener(ActionListener mal){
         register.addActionListener(mal);
     }
     public void addRegisterMouse(MouseAdapter mal) {
         register.addMouseListener(mal);
     }
+
+
+
+
+
     public void enforcePhone(KeyAdapter mal){
         phone.addKeyListener(mal);
     }

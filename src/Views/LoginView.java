@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
+import static Views.RegisterView.addTitle;
+import static Views.RegisterView.decorateBackground;
 import static Views.StartView.init_Exit_Minimize;
 
 
@@ -28,8 +30,12 @@ public class LoginView extends JFrame {
           setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
           setLocationRelativeTo(null);
           setLayout(null);
-          decorateBackground();
-          addTitle();
+          p1=new JPanel();
+          p2=new JPanel();
+
+          decorateBackground(p1,p2,this,getWidth()-30,getHeight());
+          title=new JLabel("Login");
+          addTitle(title,245, 15, 210, 80);
           exit=new JLabel("X");
           minimize=new JLabel("-");
           frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
@@ -49,28 +55,6 @@ public class LoginView extends JFrame {
           add(p2);
 
           setVisible(true);
-     }
-     public void decorateBackground() {
-          //Yellow background
-          getContentPane().setBackground(Color.yellow);
-          p1 = new JPanel();
-          p2 = new JPanel();
-          p1.setBackground(new Color(116,119,139));
-          p1.setBounds(15,15,670,100);
-          p2.setBackground(new Color(205,206,213));
-          p2.setBounds(15,115,670,370);
-     }
-     public void addTitle() {
-          //Label for "Login" title
-          title = new JLabel("Login");
-          title.setFont(new Font("Arial", Font.BOLD, 30));
-          title.setForeground(Color.white);
-          title.setHorizontalAlignment(SwingConstants.CENTER);
-          title.setVerticalAlignment(SwingConstants.CENTER);
-          title.setBackground(new Color(0, 84, 104));
-          //The default is the background is transparent
-          title.setOpaque(true);
-          title.setBounds(245, 15, 210, 80);
      }
      public void addLoginForm(){
           //username+password icons
@@ -107,7 +91,6 @@ public class LoginView extends JFrame {
           registerContext.setBounds(150,320,210,20);
           registerContext.setForeground(Color.BLUE);
      }
-
      public void addSubmitBTN(){
           //button for submit the whole details which absorbed by the user
           login=new JButton("Log in");
@@ -120,12 +103,6 @@ public class LoginView extends JFrame {
 
 
      //Add mouse listeners
-     public void addMinimizeAction(MouseAdapter mal) {
-          minimize.addMouseListener(mal);
-     }
-     public void addExitAction(MouseAdapter mal){
-          exit.addMouseListener(mal);
-     }
      public void addUsernameFocus(FocusAdapter mal) {
           username.addFocusListener(mal);
      }

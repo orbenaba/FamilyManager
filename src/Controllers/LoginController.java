@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Views.RegisterView.addExitAction;
+import static Views.RegisterView.addMinimizeAction;
 import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
 
 public class LoginController {
@@ -19,58 +21,14 @@ public class LoginController {
 
     public LoginController(LoginView lview) {
         this.lview = lview;
-        lview.addMinimizeAction(new MinimizeListeners());
-        lview.addExitAction(new ExitListeners());
+        addMinimizeAction(new RegisterController.MinimizeListeners(lview),lview.minimize);
+        addExitAction(new RegisterController.ExitListeners(lview),lview.exit);
         lview.addUsernameFocus(new FocusUsernameListener());
         lview.addPasswordFocus(new FocusPasswordListener());
         lview.addRegisterContextAction(new RegisterContextAction());
         lview.addLoginListener(new LoginExecutable());
         lview.addLoginMouse(new LoginMouseListener());
     }
-
-    class MinimizeListeners extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            lview.setState(JFrame.ICONIFIED);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            lview.minimize.setBorder(whiteMinimizeB);
-            lview.minimize.setForeground(Color.white);
-            //In addition, in the aforementioned area the cursor turns into hand cursor
-            lview.minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            lview.minimize.setBorder(lview.frameExMin);
-            lview.minimize.setForeground(Color.black);
-        }
-    }
-
-    class ExitListeners extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            System.exit(0);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            lview.exit.setBorder(whiteExitB);
-            lview.exit.setForeground(Color.white);
-            lview.exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            lview.exit.setBorder(lview.frameExMin);
-            lview.exit.setForeground(Color.black);
-        }
-    }
-
     class FocusUsernameListener extends FocusAdapter {
         //clear the text field-username if it is "username"
         @Override
