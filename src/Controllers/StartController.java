@@ -24,7 +24,7 @@ public class StartController extends MouseAdapter {
         sview.addLoginAction(new LoginListener());
     }
 
-    class MinimizeListeners extends MouseAdapter {
+     class MinimizeListeners extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             sview.setState(JFrame.ICONIFIED);
@@ -66,6 +66,7 @@ public class StartController extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
             RegisterView rv = new RegisterView();
+            RegisterController rc=new RegisterController(rv);
             sview.dispose();
         }
         @Override
@@ -81,7 +82,8 @@ public class StartController extends MouseAdapter {
     class LoginListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            LoginView rv = new LoginView();
+            LoginView lv=new LoginView();
+            LoginController rv = new LoginController(lv);
             sview.dispose();
         }
         @Override

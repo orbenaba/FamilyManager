@@ -29,7 +29,7 @@ public class StartView extends JFrame {
         exit=new JLabel("X");
         minimize=new JLabel("-");
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin);
+        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin);//prevent code replication
         initTitle(20,50,55);
         init_Login_Register();
 
