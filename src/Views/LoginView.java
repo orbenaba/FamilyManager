@@ -13,7 +13,7 @@ import static Views.RegisterView.decorateBackground;
 import static Views.StartView.init_Exit_Minimize;
 
 
-public class LoginView extends JFrame {
+public class LoginView extends Jframe {
      public Family family;
      JPanel p1, p2;
      public JLabel title, passIcon1, userIcon, exit, minimize, registerContext;
@@ -22,7 +22,14 @@ public class LoginView extends JFrame {
      public Border frameTitle, frameExMin, frameTextfield;
 
      public JButton login;
-
+     @Override
+     public JLabel getMinimize(){
+          return this.minimize;
+     }
+     @Override
+     public JLabel getExit(){
+          return this.exit;
+     }
      public LoginView() {
           //get rid of the ugly frame which is given by default
           setUndecorated(true);

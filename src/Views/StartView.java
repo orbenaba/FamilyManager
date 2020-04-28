@@ -10,12 +10,20 @@ import java.awt.event.MouseListener;
 
 import static java.awt.Font.BOLD;
 
-public class StartView extends JFrame {
+public class StartView extends Jframe {
     JPanel [][]matrixPanels;//cubes matrix background
     public JLabel exit,minimize;
     public Border frameExMin;
     public JLabel title;//this intended to separate between all the characters in the title
     public JLabel login,register;
+    @Override
+    public JLabel getMinimize(){
+        return this.minimize;
+    }
+    @Override
+    public JLabel getExit(){
+        return this.exit;
+    }
 
     public StartView(){
         setSize(800,800);

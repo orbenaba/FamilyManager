@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static Views.RegisterView.addExitAction;
+import static Views.RegisterView.addMinimizeAction;
+
 public class StartController extends MouseAdapter {
     private StartView sview;
 
@@ -18,49 +21,10 @@ public class StartController extends MouseAdapter {
 
 
         //Add listeners to minimize label
-        sview.addMinimizeAction(new MinimizeListeners());
-        sview.addExitAction(new ExitListeners());
+        addMinimizeAction(new RegisterController.MinimizeListeners(sview),sview.minimize);
+        addExitAction(new RegisterController.ExitListeners(sview),sview.exit);
         sview.addRegisterAction(new RegisterListener());
         sview.addLoginAction(new LoginListener());
-    }
-
-     class MinimizeListeners extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            sview.setState(JFrame.ICONIFIED);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteMinimizeB=BorderFactory.createMatteBorder(1,1,1,1,Color.white);
-            sview.minimize.setBorder(whiteMinimizeB);
-            sview.minimize.setForeground(Color.white);
-            //In addition, in the aforementioned area the cursor turns into hand cursor
-            sview.minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            sview.minimize.setBorder(sview.frameExMin);
-            sview.minimize.setForeground(Color.black);
-        }
-    }
-    class ExitListeners extends MouseAdapter {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            System.exit(0);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            sview.exit.setBorder(whiteExitB);
-            sview.exit.setForeground(Color.white);
-            sview.exit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-        @Override
-        public void mouseExited(MouseEvent e) {
-            sview.exit.setBorder(sview.frameExMin);
-            sview.exit.setForeground(Color.black);
-        }
     }
     class RegisterListener extends MouseAdapter {
         @Override

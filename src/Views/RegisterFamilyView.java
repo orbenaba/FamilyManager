@@ -12,7 +12,7 @@ import static Views.RegisterView.addTitle;
 import static Views.RegisterView.decorateBackground;
 import static Views.StartView.init_Exit_Minimize;
 
-public class RegisterFamilyView extends JFrame {
+public class RegisterFamilyView extends Jframe {
     public Family family;
     public JLabel exit,minimize;
     public Border frameExMin;
@@ -21,8 +21,16 @@ public class RegisterFamilyView extends JFrame {
     public JTextField username,lastname;
     public JPasswordField createPassword,confirmPassword;
     public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel;
-
     public JButton create;
+
+    @Override
+    public JLabel getMinimize(){
+        return this.minimize;
+    }
+    @Override
+    public JLabel getExit(){
+        return this.exit;
+    }
     public RegisterFamilyView()
     {
         //get rid of the ugly frame which is given by default

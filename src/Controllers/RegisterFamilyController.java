@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Family;
+import Views.AreYouChildOrParentView;
 import Views.RegisterFamilyView;
 
 import javax.swing.*;
@@ -9,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,6 +76,8 @@ public class RegisterFamilyController {
                         ps.setString(5, family.password);
                         if (ps.executeUpdate() != 0) {
                             JOptionPane.showMessageDialog(null, "Your account has been created successfully");
+                            new AreYouChildOrParentController(new AreYouChildOrParentView(rfview.family));
+                            rfview.dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "Failed in creating your account");
                         }

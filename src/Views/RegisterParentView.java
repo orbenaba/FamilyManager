@@ -1,7 +1,7 @@
 package Views;
 
+
 import Models.Family;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +10,7 @@ import java.awt.event.*;
 import static Views.StartView.init_Exit_Minimize;
 
 
-public class RegisterView extends Jframe {
+public class RegisterParentView extends Jframe {
     JPanel p1,p2;
     public JLabel title,exit,minimize,fnameLabel,unameLabel,passLabel,passConfLabel,phoneLabel,genderLabel,imageLabel,loginContext;
     public JTextField username,fullname,phone,gender;
@@ -28,7 +28,7 @@ public class RegisterView extends Jframe {
     public JLabel getExit(){
         return this.exit;
     }
-    public RegisterView()
+    public RegisterParentView(Family family)
     {
         //get rid of the ugly frame which is given by default
         setUndecorated(true);

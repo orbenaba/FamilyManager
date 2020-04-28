@@ -1,7 +1,8 @@
 package Views;
 
+
+import Models.Child;
 import Models.Family;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +11,7 @@ import java.awt.event.*;
 import static Views.StartView.init_Exit_Minimize;
 
 
-public class RegisterView extends Jframe {
+public class RegisterChildView extends Jframe {
     JPanel p1,p2;
     public JLabel title,exit,minimize,fnameLabel,unameLabel,passLabel,passConfLabel,phoneLabel,genderLabel,imageLabel,loginContext;
     public JTextField username,fullname,phone,gender;
@@ -18,6 +19,11 @@ public class RegisterView extends Jframe {
     public Border frameTitle,frameExMin, frameTextfield;
     public JRadioButton male,female;
     public JButton register,selectImage;
+
+    public Child child;
+
+
+
     //create a variable to set the image path in it
     public String image_path=null;
     @Override
@@ -28,8 +34,11 @@ public class RegisterView extends Jframe {
     public JLabel getExit(){
         return this.exit;
     }
-    public RegisterView()
+    public RegisterChildView(Family family)
     {
+        this.child=new Child(family.username,family.password);
+
+
         //get rid of the ugly frame which is given by default
         setUndecorated(true);
         setSize(700,650);
