@@ -51,7 +51,7 @@ public class RegisterFamilyView extends JFrame {
         confirmPassword=new JPasswordField();
         createPassword=new JPasswordField();
         addFields(lastname,username,confirmPassword,createPassword,250,160);
-        //Add create button
+        //Add  create button
         create=new JButton("Create");
         create.setBounds(150,570,300,50);
         create.setForeground(Color.white);
