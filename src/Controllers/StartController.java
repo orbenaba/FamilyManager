@@ -21,8 +21,8 @@ public class StartController extends MouseAdapter {
 
 
         //Add listeners to minimize label
-        addMinimizeAction(new RegisterController.MinimizeListeners(sview),sview.minimize);
-        addExitAction(new RegisterController.ExitListeners(sview),sview.exit);
+        addMinimizeAction(new RegisterController.MinimizeListeners(sview,true),sview.minimize);
+        addExitAction(new RegisterController.ExitListeners(sview,true),sview.exit);
         sview.addRegisterAction(new RegisterListener());
         sview.addLoginAction(new LoginListener());
     }

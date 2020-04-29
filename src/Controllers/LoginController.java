@@ -21,8 +21,8 @@ public class LoginController {
 
     public LoginController(LoginView lview) {
         this.lview = lview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(lview),lview.minimize);
-        addExitAction(new RegisterController.ExitListeners(lview),lview.exit);
+        addMinimizeAction(new RegisterController.MinimizeListeners(lview,true),lview.minimize);
+        addExitAction(new RegisterController.ExitListeners(lview,true),lview.exit);
         lview.addUsernameFocus(new FocusUsernameListener());
         lview.addPasswordFocus(new FocusPasswordListener());
         lview.addRegisterContextAction(new RegisterContextAction());
@@ -139,15 +139,6 @@ public class LoginController {
                     if (rs.next())//username and password are correct
                     {
                         System.out.println("dkkkkkkkkk");
-                        //here display new form
-                        /*
-                        //etc:
-                        menu f = new menu();
-                        f.setVisible(true);
-                        f.pack();
-                        f.setLocationRelativeTo(null);
-                        //closing the current form
-                        dispose();*/
                     } else {
                         //error message
                         JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);

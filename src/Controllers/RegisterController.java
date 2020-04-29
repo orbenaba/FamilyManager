@@ -26,8 +26,8 @@ public class RegisterController {
 
     public RegisterController(RegisterView rview) {
         this.rview = rview;
-        addMinimizeAction(new MinimizeListeners(rview), rview.minimize);
-        addExitAction(new ExitListeners(rview), rview.exit);
+        addMinimizeAction(new MinimizeListeners(rview,true), rview.minimize);
+        addExitAction(new ExitListeners(rview,true), rview.exit);
         rview.addUsernameFocus(new FocusUsernameListener());
         rview.addPasswordFocus(new FocusPasswordListener());
         rview.addConfirmPasswordFocus(new FocusPasswordListener());
@@ -41,8 +41,10 @@ public class RegisterController {
 
     static class MinimizeListeners extends MouseAdapter {
         private Jframe view;
-        public MinimizeListeners(JFrame view) {
+        private boolean flag;
+        public MinimizeListeners(JFrame view,boolean flag) {
             this.view = (Jframe) view;
+            this.flag=flag;
         }
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -60,15 +62,16 @@ public class RegisterController {
         public void mouseExited(MouseEvent e) {
             Border blackMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
             view.getMinimize().setBorder(blackMinimizeB);
-            view.getMinimize().setForeground(Color.black);
+            view.getMinimize().setForeground(flag==true?Color.black:Color.green);
         }
     }
 
     static class ExitListeners extends MouseAdapter {
         private Jframe view;
-
-        public ExitListeners(JFrame view) {
+        private boolean flag;
+        public ExitListeners(JFrame view,boolean flag) {
             this.view = (Jframe) view;
+            this.flag=flag;
         }
 
         @Override
@@ -86,7 +89,7 @@ public class RegisterController {
         @Override
         public void mouseExited(MouseEvent e) {
             view.getExit().setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-            view.getExit().setForeground(Color.black);
+            view.getExit().setForeground(flag==true?Color.black:Color.green);
         }
     }
 

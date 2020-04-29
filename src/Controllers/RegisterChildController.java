@@ -27,8 +27,8 @@ public class RegisterChildController {
 
     public RegisterChildController(RegisterChildView rview) {
         this.rview = rview;
-        addMinimizeAction(new MinimizeListeners(rview), rview.minimize);
-        addExitAction(new ExitListeners(rview), rview.exit);
+        addMinimizeAction(new RegisterController.MinimizeListeners(rview,true), rview.minimize);
+        addExitAction(new RegisterController.ExitListeners(rview,true), rview.exit);
         rview.addUsernameFocus(new FocusUsernameListener());
         rview.addPasswordFocus(new FocusPasswordListener());
         rview.addConfirmPasswordFocus(new FocusPasswordListener());
@@ -38,57 +38,6 @@ public class RegisterChildController {
         rview.enforcePhone(new enforcingPhoneDigits());
 
         rview.addSelectListener(new SelectImageAction());
-    }
-
-    static class MinimizeListeners extends MouseAdapter {
-        private Jframe view;
-        public MinimizeListeners(JFrame view) {
-            this.view = (Jframe) view;
-        }
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            view.setState(Jframe.ICONIFIED);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            view.getMinimize().setBorder(whiteMinimizeB);
-            view.getMinimize().setForeground(Color.white);
-            view.getMinimize().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            Border blackMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-            view.getMinimize().setBorder(blackMinimizeB);
-            view.getMinimize().setForeground(Color.black);
-        }
-    }
-
-    static class ExitListeners extends MouseAdapter {
-        private Jframe view;
-
-        public ExitListeners(JFrame view) {
-            this.view = (Jframe) view;
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            System.exit(0);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            view.getExit().setBorder(whiteExitB);
-            view.getExit().setForeground(Color.white);
-            view.getExit().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            view.getExit().setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-            view.getExit().setForeground(Color.black);
-        }
     }
 
     class FocusUsernameListener extends FocusAdapter {

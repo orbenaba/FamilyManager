@@ -36,7 +36,7 @@ public class AreYouChildOrParentView extends Jframe {
         exit=new JLabel("X");
         minimize=new JLabel("-");
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1, Color.black);
-        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin);//prevent code replication
+        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin,true);//prevent code replication
         title=new JLabel("Are you considered as");
         addTitle(title,10,15,400,80);
         title2=new JLabel("a child or as a parent?");

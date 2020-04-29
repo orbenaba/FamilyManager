@@ -37,7 +37,7 @@ public class StartView extends Jframe {
         exit=new JLabel("X");
         minimize=new JLabel("-");
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin);//prevent code replication
+        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin,true);//prevent code replication
         initTitle(20,50,55);
         init_Login_Register();
 
@@ -73,14 +73,14 @@ public class StartView extends Jframe {
     }
     //initialize exit and minimize
     //prevent code duplication by declaring the func as a static func.
-    public static void init_Exit_Minimize(int x,int y,int size,JLabel exit,JLabel minimize,Border frameExMin)
+    public static void init_Exit_Minimize(int x,int y,int size,JLabel exit,JLabel minimize,Border frameExMin,boolean flag)
     {
         minimize.setBounds(x,y,size,size);
         exit.setBounds(x+size,y,size,size);
         exit.setFont(new Font("Arial", BOLD,size));
         minimize.setFont(new Font("Arial", BOLD,size));
-        exit.setForeground(Color.black);
-        minimize.setForeground(Color.black);
+        exit.setForeground(flag==true?Color.black:Color.green);
+        minimize.setForeground(flag==true?Color.black:Color.green);
         exit.setHorizontalAlignment(SwingConstants.CENTER);
         minimize.setHorizontalAlignment(SwingConstants.CENTER);
         exit.setBorder(frameExMin);

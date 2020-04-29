@@ -47,7 +47,7 @@ public class RegisterFamilyView extends Jframe {
         exit=new JLabel("X");
         minimize=new JLabel("-");
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin);//prevent code replication
+        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin,true);//prevent code replication
 
         lastnameLabel=new JLabel("Last name:");
         usernameLabel=new JLabel("Username:");

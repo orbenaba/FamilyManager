@@ -24,8 +24,8 @@ public class RegisterFamilyController {
 
     public RegisterFamilyController(RegisterFamilyView rfview) {
         this.rfview = rfview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(rfview), rfview.minimize);
-        addExitAction(new RegisterController.ExitListeners(rfview), rfview.exit);
+        addMinimizeAction(new RegisterController.MinimizeListeners(rfview,true), rfview.minimize);
+        addExitAction(new RegisterController.ExitListeners(rfview,true), rfview.exit);
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
     }
@@ -75,7 +75,6 @@ public class RegisterFamilyController {
                         ps.setString(4, family.lastName);
                         ps.setString(5, family.password);
                         if (ps.executeUpdate() != 0) {
-                            JOptionPane.showMessageDialog(null, "Your account has been created successfully");
                             new AreYouChildOrParentController(new AreYouChildOrParentView(rfview.family));
                             rfview.dispose();
                         } else {
