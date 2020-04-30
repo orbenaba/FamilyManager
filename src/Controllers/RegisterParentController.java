@@ -4,10 +4,13 @@ import Views.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +29,13 @@ public class RegisterParentController {
         this.rview = rview;
         addExitAction(new RegisterController.ExitListeners(rview, false), rview.exit);
         addMinimizeAction(new RegisterController.MinimizeListeners(rview, false), rview.minimize);
-        rview.addImageAction(new addImage_action());
+        rview.addImageAction(new AddImage_action());
+        rview.addFirstNameListener(new FirstNameListener());
+        rview.handleComboAction(new Combo());
+        rview.addGendersListener(new GendersListener());
     }
 
-    class addImage_action implements ActionListener {
+    class AddImage_action implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -42,6 +48,7 @@ public class RegisterParentController {
             int fileState = chooser.showSaveDialog(null);
             //check if the user select an image
             if (fileState == JFileChooser.APPROVE_OPTION) {
+                int width=rview.imageContainer.getWidth(),height=rview.imageContainer.getHeight();
                 //Remove old components- profile image and circle button
                 rview.getContentPane().remove(rview.imageContainer);
                 rview.getContentPane().remove(rview.addImage);
@@ -49,7 +56,7 @@ public class RegisterParentController {
                 File selectedImage = chooser.getSelectedFile();
                 //Add again the picture, but this time the selected image
                 rview.imageContainer=new JLabel(rview.image);
-                rview.imageContainer.setBounds(175,20,250,250);
+                rview.imageContainer.setBounds(175,20,width,height);
                 //Fitting the picture
                 rview.imageContainer.setIcon(new ImageIcon(
                         new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(rview.imageContainer.getWidth(),
@@ -58,6 +65,45 @@ public class RegisterParentController {
                 //Refresh view
                 rview.repaint();
             }
+        }
+    }
+
+    class FirstNameListener extends MouseAdapter {
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            rview.firstName.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+            rview.firstNameLabel.setForeground(Color.green);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e)
+        {
+            rview.firstName.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
+            rview.firstNameLabel.setForeground(Color.white);
+        }
+    }
+
+    class Combo implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JComboBox cb = (JComboBox)e.getSource();
+            String gender = (String)cb.getSelectedItem();
+        }
+    }
+
+    class GendersListener extends MouseAdapter{
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            rview.genders.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e)
+        {
+            rview.genders.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
         }
     }
 }
