@@ -10,9 +10,9 @@ public abstract class Human extends User {
     public Calendar birthday;
 ;;;;;;;;;;;;;;;    public BufferedImage image;
     public String bioFileName;//biography of the human, maximum 100 chars
-    public Human(String username,String password){
-        this.username=username;
-        this.password=password;
+;;;;;;;;;;    public Human(String username,String password){
+;;;;;;;;;;        this.username=username;
+;;;;;;;;;;        this.password=password;
     }
     public Human(){
 
