@@ -33,6 +33,10 @@ public class RegisterParentController {
         rview.addFirstNameListener(new FirstNameListener());
         rview.handleComboAction(new Combo());
         rview.addGendersListener(new GendersListener());
+
+        rview.addPasswordListener(new PasswordListener());
+        rview.addUsernameListener(new UsernameListener());
+        rview.addConfirmPasswordListener(new ConfirmPasswordListener());
     }
 
     class AddImage_action implements ActionListener {
@@ -104,6 +108,46 @@ public class RegisterParentController {
         public void mouseEntered(MouseEvent e)
         {
             rview.genders.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
+        }
+    }
+
+    class UsernameListener extends MouseAdapter{
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            rview.username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e)
+        {
+            rview.username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
+        }
+    }
+    class PasswordListener extends MouseAdapter{
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            rview.password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e)
+        {
+            rview.password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
+        }
+    }
+    class ConfirmPasswordListener extends MouseAdapter{
+        @Override
+        public void mouseExited(MouseEvent e)
+        {
+            rview.confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e)
+        {
+            rview.confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
         }
     }
 }
