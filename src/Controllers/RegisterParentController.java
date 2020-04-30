@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.io.File;
+import java.util.Calendar;
 
 import static Views.RegisterView.*;
 
@@ -30,6 +31,8 @@ public class RegisterParentController {
         rview.addPasswordListener(new PasswordListener());
         rview.addUsernameListener(new UsernameListener());
         rview.addConfirmPasswordListener(new ConfirmPasswordListener());
+
+        rview.addCalendarListener(new CalendarListener());
     }
 
     class AddImage_action implements ActionListener {
@@ -133,6 +136,19 @@ public class RegisterParentController {
         @Override
         public void mouseEntered(MouseEvent e) {
             rview.confirmPassword.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white));
+        }
+    }
+
+    class CalendarListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            rview.dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.white));
+            rview.birthdayLabel.setForeground(Color.white);
+        }
+        @Override
+        public void mouseExited(MouseEvent e){
+            rview.dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+            rview.birthdayLabel.setForeground(Color.green);
         }
     }
 }
