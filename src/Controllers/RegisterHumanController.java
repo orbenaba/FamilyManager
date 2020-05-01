@@ -31,6 +31,8 @@ public class RegisterHumanController {
         rview.addConfirmPasswordListener(new ConfirmPasswordListener());
 
         rview.addCalendarListener(new CalendarListener());
+        rview.addCreateAction(new CreateAction());
+        rview.addCreateListener(new CreateListener());
     }
 
     class AddImage_action implements ActionListener {
@@ -147,6 +149,25 @@ public class RegisterHumanController {
         public void mouseExited(MouseEvent e){
             rview.dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
             rview.birthdayLabel.setForeground(Color.green);
+        }
+    }
+
+    class CreateAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            rview.mappingTextareaIntoFile();
+        }
+    }
+
+    class CreateListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            rview.create.setBackground(Color.white);
+        }
+        @Override
+        public void mouseExited(MouseEvent e){
+            rview.create.setBackground(new Color(48,48,48));
         }
     }
 }

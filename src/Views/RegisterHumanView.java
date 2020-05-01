@@ -8,10 +8,12 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +24,7 @@ import static Views.StartView.init_Exit_Minimize;
 
 
 public class RegisterHumanView extends Jframe {
-    public JLabel exit, minimize, imageContainer, firstNameLabel,birthdayLabel;
+    public JLabel exit, minimize, imageContainer, firstNameLabel, birthdayLabel;
     public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
 
     public Border frameExMin;
@@ -38,11 +40,15 @@ public class RegisterHumanView extends Jframe {
     public Calendar calendar;
     //Bio
     public JTextArea bio;
+    //public JScrollPane pane;
+    //Submit
+    public JButton create;
 
     @Override
     public JLabel getMinimize() {
         return this.minimize;
     }
+
     @Override
     public JLabel getExit() {
         return this.exit;
@@ -64,7 +70,7 @@ public class RegisterHumanView extends Jframe {
         imageContainer = new JLabel(image);
         imageContainer.setBounds(300, 10, 250, 250);
         addImage = new CircleButton("");
-        addImage.setBounds(385, 150, 82, 82);//Covers the plus that belongs to the image
+        addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
         firstNameLabel = new JLabel("First name:");
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
         firstNameLabel.setForeground(Color.green);
@@ -78,6 +84,7 @@ public class RegisterHumanView extends Jframe {
 
 
         java.util.List<String> gendersArray = getGenders();
+        gendersArray.add("Select gender");
 
         genders = new JComboBox(gendersArray.toArray());
         genders.setBounds(450, 270, 240, 35);
@@ -85,33 +92,51 @@ public class RegisterHumanView extends Jframe {
         genders.setForeground(Color.green);
         genders.setBackground(new Color(48, 48, 48));
         genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-        genders.setSelectedItem("Select gender");//By default
+        genders.setSelectedItem(("Select gender"));
+
 
         addUsernamePassword(50, 350, 50);
-        birthdayLabel=new JLabel("Date of birth:");
-        birthdayLabel.setBounds(50,480,180,35);
+        birthdayLabel = new JLabel("Date of birth:");
+        birthdayLabel.setBounds(50, 480, 180, 35);
         birthdayLabel.setForeground(Color.green);
-        birthdayLabel.setFont(new Font("Arial",Font.BOLD,25));
+        birthdayLabel.setFont(new Font("Arial", Font.BOLD, 25));
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////~~~ADD BIRTHDAY FIELD~~~////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
-        calendar=Calendar.getInstance();
-        dateChooser=new JDateChooser(calendar.getTime());
-        dateChooser.setBounds(230,480,170,35);
-        dateChooser.setFont(new Font("Arial",Font.BOLD,17));
-        dateChooser.setBackground(new Color(48,48,48));
-        dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        calendar = Calendar.getInstance();
+        dateChooser = new JDateChooser(calendar.getTime());
+        dateChooser.setBounds(230, 480, 170, 35);
+        dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
+        dateChooser.setBackground(new Color(48, 48, 48));
+        dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
         dateChooser.setDateFormatString("dd/MM/yyyy");
         add(dateChooser);
         ///////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////~~~ADD BIO FIELD~~~////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
-        bio=new JTextArea(4,30);
-        bio.setBounds(200,540,450,200);
-        bio.setFont(new Font("Arial",Font.BOLD,20));
-        bio.setBackground(new Color(48,48,48));
+        bio = new JTextArea(4, 30);
+        bio.setBounds(100, 540, 450, 200);
+        bio.setFont(new Font("Arial", Font.BOLD, 20));
+        bio.setBackground(new Color(48, 48, 48));
         bio.setForeground(Color.green);
+        bio.setLineWrap(true);
+        bio.setWrapStyleWord(true);
+                                                      /*      pane=new JScrollPane(bio);
+                                                            pane.setBounds(520,540,30,200);
+                                                            pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                                                    */
 
+
+        create=new JButton("Create");
+        create.setBounds(600,685,200,50);
+        create.setBackground(new Color(48,48,48));
+        create.setForeground(Color.green);
+        create.setFont(new Font("Arial",Font.BOLD,25));
+
+
+     //////////////////////////////////////////////   add(pane);
+
+        add(create);
         add(bio);
         add(birthdayLabel);
         add(usernameLabel);
@@ -184,7 +209,7 @@ public class RegisterHumanView extends Jframe {
 
 
         passwordLabel.setBounds(x, y + iconSize + 10, iconSize, iconSize);
-        confirmPasswordLabel.setBounds(x+330, y +  iconSize + 10, iconSize, iconSize);
+        confirmPasswordLabel.setBounds(x + 330, y + iconSize + 10, iconSize, iconSize);
 
         password.setBackground(new Color(48, 48, 48));
         confirmPassword.setBackground(new Color(48, 48, 48));
@@ -195,17 +220,40 @@ public class RegisterHumanView extends Jframe {
         confirmPassword.setBounds(x + iconSize + 340, y + iconSize + 10, 200, iconSize - 10);
         username.setBounds(x + iconSize + 10, y, 200, iconSize - 10);
     }
-    public void addPasswordListener(MouseAdapter mal){
+
+    public void addPasswordListener(MouseAdapter mal) {
         password.addMouseListener(mal);
     }
-    public void addConfirmPasswordListener(MouseAdapter mal){
+
+    public void addConfirmPasswordListener(MouseAdapter mal) {
         confirmPassword.addMouseListener(mal);
     }
-    public void addUsernameListener(MouseAdapter mal){
+
+    public void addUsernameListener(MouseAdapter mal) {
         username.addMouseListener(mal);
     }
-    public void addCalendarListener(MouseAdapter mal){
+
+    public void addCalendarListener(MouseAdapter mal) {
         birthdayLabel.addMouseListener(mal);
         dateChooser.addMouseListener(mal);
+    }
+
+    public void addCreateAction(ActionListener mal){
+        create.addActionListener(mal);
+    }
+
+    public void addCreateListener(MouseAdapter mal){
+        create.addMouseListener(mal);
+    }
+    //Returns the name of the text file
+    public String mappingTextareaIntoFile() {
+        try {
+            FileWriter fileWriter=new FileWriter(username+".txt",false);
+            fileWriter.write(bio.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return username + ".txt";
     }
 }
