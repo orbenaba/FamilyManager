@@ -4,15 +4,23 @@ package Views;
 import Models.Family;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 public class RegisterParentView extends RegisterHumanView {
+    public Family family;
+
     public JTextField jobName,salary;
     public JLabel jobNameLabel,salaryLabel;
     public JCheckBox isMarried;
+    public JLabel childView;
 
 
     public RegisterParentView(Family family) {
+        this.family=family;
+        Border frame=BorderFactory.createMatteBorder(1,1,1,1,Color.green);
         //Initialize
         salary=new JTextField();
         jobName=new JTextField();
@@ -54,11 +62,33 @@ public class RegisterParentView extends RegisterHumanView {
         jobName.setForeground(Color.green);
         jobNameLabel.setForeground(Color.green);
 
+        salary.setBorder(frame);
+        jobName.setBorder(frame);
+
+        childView=new JLabel("Actually, I'm a child");
+        childView.setForeground(Color.green);
+        childView.setFont(new Font("Arial",Font.ITALIC,20));
+        childView.setBounds(50,50,180,25);
+
+
         //add
+        add(childView);
         add(salary);
         add(salaryLabel);
         add(isMarried);
         add(jobName);
         add(jobNameLabel);
+    }
+
+    public void addJobnameListener(MouseAdapter mal){
+        jobName.addMouseListener(mal);
+        jobNameLabel.addMouseListener(mal);
+    }
+    public void addSalaryListener(MouseAdapter mal){
+        salary.addMouseListener(mal);
+        salaryLabel.addMouseListener(mal);
+    }
+    public void addChildViewListener(MouseAdapter mal){
+        childView.addMouseListener(mal);
     }
 }

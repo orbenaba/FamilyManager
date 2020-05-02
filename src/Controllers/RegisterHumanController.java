@@ -33,6 +33,8 @@ public class RegisterHumanController {
         rview.addCalendarListener(new CalendarListener());
         rview.addCreateAction(new CreateAction());
         rview.addCreateListener(new CreateListener());
+
+        rview.addBioListener(new BioListener());
     }
 
     class AddImage_action implements ActionListener {
@@ -49,6 +51,7 @@ public class RegisterHumanController {
             //check if the user select an image
             if (fileState == JFileChooser.APPROVE_OPTION) {
                 int width = rview.imageContainer.getWidth(), height = rview.imageContainer.getHeight();
+                int x=rview.imageContainer.getX(),y=rview.imageContainer.getY();
                 //Remove old components- profile image and circle button
                 rview.getContentPane().remove(rview.imageContainer);
                 rview.getContentPane().remove(rview.addImage);
@@ -56,7 +59,7 @@ public class RegisterHumanController {
                 File selectedImage = chooser.getSelectedFile();
                 //Add again the picture, but this time the selected image
                 rview.imageContainer = new JLabel(rview.image);
-                rview.imageContainer.setBounds(175, 20, width, height);
+                rview.imageContainer.setBounds(x-30, y, width+60, height);
                 //Fitting the picture
                 rview.imageContainer.setIcon(new ImageIcon(
                         new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(rview.imageContainer.getWidth(),
@@ -168,6 +171,21 @@ public class RegisterHumanController {
         @Override
         public void mouseExited(MouseEvent e){
             rview.create.setBackground(new Color(48,48,48));
+        }
+    }
+
+    class BioListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            rview.bio.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+            if(rview.bio.getText().equals("\t            Bio..."))
+                rview.bio.setText("");
+        }
+        @Override
+        public void mouseExited(MouseEvent e){
+            rview.bio.setBorder(null);
+            if(rview.bio.getText().equals(""))
+                rview.bio.setText("\t            Bio...");
         }
     }
 }

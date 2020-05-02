@@ -8,6 +8,7 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -55,6 +56,10 @@ public class RegisterHumanView extends Jframe {
     }
 
     public RegisterHumanView() {
+        //Changing the caret in the entire text fields
+        UIManager.put("TextField.caretForeground", new ColorUIResource(Color.red));
+
+        Color color=new Color(48,48,48);
         //get rid of the ugly frame which is given by default
         setUndecorated(true);
         setSize(850, 750);
@@ -74,12 +79,12 @@ public class RegisterHumanView extends Jframe {
         firstNameLabel = new JLabel("First name:");
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
         firstNameLabel.setForeground(Color.green);
-        firstNameLabel.setBounds(50, 270, 150, 35);
+        firstNameLabel.setBounds(50, 280, 150, 35);
         firstName = new JTextField();
         firstName.setFont(new Font("Arial", Font.BOLD, 25));
         firstName.setForeground(Color.green);
-        firstName.setBackground(new Color(48, 48, 48));
-        firstName.setBounds(200, 270, 200, 35);
+        firstName.setBackground(color);
+        firstName.setBounds(200, 280, 200, 35);
         firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
 
 
@@ -87,10 +92,10 @@ public class RegisterHumanView extends Jframe {
         gendersArray.add("Select gender");
 
         genders = new JComboBox(gendersArray.toArray());
-        genders.setBounds(450, 270, 240, 35);
+        genders.setBounds(450, 280, 240, 35);
         genders.setFont(new Font("Arial", Font.BOLD, 25));
         genders.setForeground(Color.green);
-        genders.setBackground(new Color(48, 48, 48));
+        genders.setBackground(color);
         genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
         genders.setSelectedItem(("Select gender"));
 
@@ -107,7 +112,7 @@ public class RegisterHumanView extends Jframe {
         dateChooser = new JDateChooser(calendar.getTime());
         dateChooser.setBounds(230, 480, 170, 35);
         dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
-        dateChooser.setBackground(new Color(48, 48, 48));
+        dateChooser.setBackground(color);
         dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
         dateChooser.setDateFormatString("dd/MM/yyyy");
         add(dateChooser);
@@ -117,24 +122,26 @@ public class RegisterHumanView extends Jframe {
         bio = new JTextArea(4, 30);
         bio.setBounds(100, 540, 450, 200);
         bio.setFont(new Font("Arial", Font.BOLD, 20));
-        bio.setBackground(new Color(48, 48, 48));
+        bio.setBackground(color);
         bio.setForeground(Color.green);
         bio.setLineWrap(true);
         bio.setWrapStyleWord(true);
-                                                      /*      pane=new JScrollPane(bio);
-                                                            pane.setBounds(520,540,30,200);
-                                                            pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                                                    */
+        bio.setForeground(Color.green);
+        bio.setText("\t            Bio...");                     /*      pane=new JScrollPane(bio);
+                                                                 pane.setBounds(520,540,30,200);
+                                                                   pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                                                                */
 
 
         create=new JButton("Create");
         create.setBounds(600,685,200,50);
-        create.setBackground(new Color(48,48,48));
+        create.setBackground(color);
         create.setForeground(Color.green);
         create.setFont(new Font("Arial",Font.BOLD,25));
+        create.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-     //////////////////////////////////////////////   add(pane);
+        //////////////////////////////////////////////   add(pane);
 
         add(create);
         add(bio);
@@ -190,6 +197,7 @@ public class RegisterHumanView extends Jframe {
 
     //Listeners
     public void addUsernamePassword(int x, int y, int iconSize) {
+        Color color = new Color(48,48,48);
         username = new JTextField();
         password = new JPasswordField();
         confirmPassword = new JPasswordField();
@@ -211,10 +219,13 @@ public class RegisterHumanView extends Jframe {
         passwordLabel.setBounds(x, y + iconSize + 10, iconSize, iconSize);
         confirmPasswordLabel.setBounds(x + 330, y + iconSize + 10, iconSize, iconSize);
 
-        password.setBackground(new Color(48, 48, 48));
-        confirmPassword.setBackground(new Color(48, 48, 48));
-        username.setBackground(new Color(48, 48, 48));
+        password.setBackground(color);
+        confirmPassword.setBackground(color);
+        username.setBackground(color);
 
+        password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
 
         password.setBounds(x + iconSize + 10, y + iconSize + 10, 200, iconSize - 10);
         confirmPassword.setBounds(x + iconSize + 340, y + iconSize + 10, 200, iconSize - 10);
@@ -245,6 +256,8 @@ public class RegisterHumanView extends Jframe {
     public void addCreateListener(MouseAdapter mal){
         create.addMouseListener(mal);
     }
+
+    public void addBioListener(MouseAdapter mal){bio.addMouseListener(mal);}
     //Returns the name of the text file
     public String mappingTextareaIntoFile() {
         try {
