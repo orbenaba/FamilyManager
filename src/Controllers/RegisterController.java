@@ -279,15 +279,16 @@ public class RegisterController {
             }
         }
 
-        //Is the given username has already existed in our DB?
+        //Checking if the given username exists neither in family nor in human Tables:
         public static boolean isUsernameExist(String username) {
             PreparedStatement st;
             ResultSet rs;
             boolean exist = false;
-            String query = "SELECT*FROM family WHERE username= ?";
+            String query = "(SELECT*FROM family WHERE username= ?)UNION(SELECT*FROM human WHERE username=?) ";
             try {
                 st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
                 st.setString(1, username);
+                st.setString(2,username);
                 rs = st.executeQuery();
                 if (rs.next()) {
                     exist = true;

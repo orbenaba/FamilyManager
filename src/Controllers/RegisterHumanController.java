@@ -12,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import java.io.File;
+
+import static Controllers.RegisterController.isUsernameExist;
 import static Views.RegisterView.*;
 
 public class RegisterHumanController {
@@ -155,13 +157,28 @@ public class RegisterHumanController {
         }
     }
 
-    class CreateAction implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            rview.mappingTextareaIntoFile();
+        class CreateAction implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(rview.verifyMustNotEmpty()) {
+                    if(!isUsernameExist(rview.username.getText())) {
+                        if (rview.verifyGender()) {
+                            new HomeController(new HomeView());
+                            rview.dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "You must choose gender", "Gender validation", 2);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "This username is already exist", "Username validation", 2);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty Fields", 2);
+                }
+            }
         }
-    }
 
     class CreateListener extends MouseAdapter{
         @Override

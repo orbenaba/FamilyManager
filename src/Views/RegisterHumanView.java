@@ -258,6 +258,8 @@ public class RegisterHumanView extends Jframe {
     }
 
     public void addBioListener(MouseAdapter mal){bio.addMouseListener(mal);}
+
+   //Functionality
     //Returns the name of the text file
     public String mappingTextareaIntoFile() {
         try {
@@ -268,5 +270,15 @@ public class RegisterHumanView extends Jframe {
             e.printStackTrace();
         }
         return username + ".txt";
+    }
+
+    public boolean verifyMustNotEmpty(){
+        if(firstName.getText().trim().equals("")||username.getText().trim().equals("")
+        ||String.valueOf(password.getPassword()).equals("")||String.valueOf(confirmPassword.getPassword()).equals(""))
+            return false;
+        return true;
+    }
+    public boolean verifyGender(){
+        return genders.getSelectedItem().equals("Select gender");
     }
 }
