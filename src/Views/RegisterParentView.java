@@ -6,10 +6,11 @@ import Models.Family;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 public class RegisterParentView extends RegisterHumanView {
-    public Family family;
+    public String familyUsername;
 
     public JTextField jobName,salary;
     public JLabel jobNameLabel,salaryLabel;
@@ -17,8 +18,9 @@ public class RegisterParentView extends RegisterHumanView {
     public JLabel childView;
 
 
-    public RegisterParentView(Family family) {
-        this.family=family;
+    public RegisterParentView(String familyUsername) {
+        this.familyUsername=familyUsername;
+        System.out.println("Family name= "+this.familyUsername);
         Border frame=BorderFactory.createMatteBorder(1,1,1,1,Color.green);
         //Initialize
         salary=new JTextField();
@@ -89,5 +91,9 @@ public class RegisterParentView extends RegisterHumanView {
     }
     public void addChildViewListener(MouseAdapter mal){
         childView.addMouseListener(mal);
+    }
+
+    public void addCreateActionParent(ActionListener mal){
+        create.addActionListener(mal);
     }
 }

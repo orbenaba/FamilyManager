@@ -8,6 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.*;
 
 
 public class RegisterChildController extends RegisterHumanController {
@@ -19,6 +24,7 @@ public class RegisterChildController extends RegisterHumanController {
         this.rview = rview;
         rview.addStatusListener(new StatusListener());
         rview.addParentViewListener(new ParentViewListener());
+        rview.addCreateChildAction(new CreateActionChild());
     }
 
     class StatusListener extends MouseAdapter{
@@ -38,14 +44,80 @@ public class RegisterChildController extends RegisterHumanController {
         @Override
         public void mouseExited(MouseEvent e){
             rview.parentView.setBorder(null);
-        }        @Override
+        }
+        @Override
         public void mouseEntered(MouseEvent e){
             rview.parentView.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.green));
         }
         @Override
         public void mouseClicked(MouseEvent e){
-            new RegisterParentController(new RegisterParentView(rview.family));
+            new RegisterParentController(new RegisterParentView(rview.familyUsername));
             rview.dispose();
+        }
+    }
+    class CreateActionChild implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String username= rview.username.getText();
+            String bioNameFile=username+".txt";
+            java.sql.Date birthday=new java.sql.Date(rview.dateChooser.getDate().getTime());
+
+            String familyUsername=rview.familyUsername;
+            String firstname=rview.firstName.getText();
+            byte genderId;
+            {
+                String gender=rview.genders.getSelectedItem().toString();
+                genderId=(byte)(gender.equals("Male")?0:gender.equals("Female")?1:gender.equals("Bisexual")?2:3);
+            }
+            boolean isSingle=rview.isSingle.isSelected();
+            String status=rview.status.getText();
+            String pass= String.valueOf(rview.password.getPassword());
+            String confirmPass= String.valueOf(rview.confirmPassword.getPassword());
+
+
+            PreparedStatement ps;
+            ResultSet rs;
+            String registerQuery="INSERT INTO human(Username,Birthday,FamilyUsername,FirstName," +
+                    "GenderId,Image,IsObligated,JobName,Password,Salary,Status,isLimited)" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+
+            try {
+                ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerQuery);
+                ps.setString(1,username);
+                ps.setDate(2,birthday);
+                ps.setString(3,familyUsername);
+                ps.setString(4,firstname);
+                ps.setByte(5,genderId);
+                //save the image profile as a blob in DB
+                if(rview.imagePath!=null) {
+                    InputStream image = new FileInputStream(new File(rview.imagePath));
+                    ps.setBlob(6, image);
+                }
+                else{
+                    ps.setNull(6, Types.NULL);
+                }
+
+                ps.setBoolean(7,isSingle);
+                ps.setNull(8, Types.NULL);
+                ps.setString(9,pass);
+                ps.setNull(10,Types.NULL);
+                ps.setString(11,status);
+                ps.setBoolean(12,false);//isLimited
+
+                if(ps.executeUpdate()!=0){
+                    new HomeController(new HomeView());
+                    rview.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Error!!!");
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
 

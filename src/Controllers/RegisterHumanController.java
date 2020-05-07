@@ -33,7 +33,6 @@ public class RegisterHumanController {
         rview.addConfirmPasswordListener(new ConfirmPasswordListener());
 
         rview.addCalendarListener(new CalendarListener());
-        rview.addCreateAction(new CreateAction());
         rview.addCreateListener(new CreateListener());
 
         rview.addBioListener(new BioListener());
@@ -52,6 +51,7 @@ public class RegisterHumanController {
             int fileState = chooser.showSaveDialog(null);
             //check if the user select an image
             if (fileState == JFileChooser.APPROVE_OPTION) {
+                rview.imagePath=chooser.getSelectedFile().getAbsolutePath();
                 int width = rview.imageContainer.getWidth(), height = rview.imageContainer.getHeight();
                 int x=rview.imageContainer.getX(),y=rview.imageContainer.getY();
                 //Remove old components- profile image and circle button
@@ -156,29 +156,6 @@ public class RegisterHumanController {
             rview.birthdayLabel.setForeground(Color.green);
         }
     }
-
-        class CreateAction implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(rview.verifyMustNotEmpty()) {
-                    if(!isUsernameExist(rview.username.getText())) {
-                        if (rview.verifyGender()) {
-                            new HomeController(new HomeView());
-                            rview.dispose();
-                        }
-                        else{
-                            JOptionPane.showMessageDialog(null, "You must choose gender", "Gender validation", 2);
-                        }
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(null, "This username is already exist", "Username validation", 2);
-                    }
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty Fields", 2);
-                }
-            }
-        }
 
     class CreateListener extends MouseAdapter{
         @Override

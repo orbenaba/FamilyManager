@@ -5,10 +5,11 @@ import Models.Family;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 public class RegisterChildView extends RegisterHumanView {
-    public Family family;
+    public String familyUsername;
 
     public JLabel statusLabel;
     public JCheckBox isSingle;
@@ -16,8 +17,8 @@ public class RegisterChildView extends RegisterHumanView {
     public JLabel parentView;
 
 
-    public RegisterChildView(Family family){
-        this.family=family;
+    public RegisterChildView(String familyUsername){
+        this.familyUsername=familyUsername;
         isSingle=new JCheckBox("Single?");
         statusLabel=new JLabel("Status:");
         status=new JTextField();
@@ -65,5 +66,9 @@ public class RegisterChildView extends RegisterHumanView {
 
     public void addParentViewListener(MouseAdapter mal){
         parentView.addMouseListener(mal);
+    }
+
+    public void addCreateChildAction(ActionListener mal){
+        create.addActionListener(mal);
     }
 }

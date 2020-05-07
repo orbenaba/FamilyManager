@@ -284,7 +284,7 @@ public class RegisterController {
             PreparedStatement st;
             ResultSet rs;
             boolean exist = false;
-            String query = "(SELECT*FROM family WHERE username= ?)UNION(SELECT*FROM human WHERE username=?) ";
+            String query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?) ";
             try {
                 st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
                 st.setString(1, username);

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.RegisterChildView;
 import Views.RegisterParentView;
@@ -25,14 +26,14 @@ public class AreYouChildOrParentController {
     public class ChildAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            new RegisterChildController(new RegisterChildView(cpview.family));
+            new RegisterChildController(new RegisterChildView(cpview.familyUsername));
             cpview.dispose();
         }
     }
     public class ParentAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            new RegisterParentController(new RegisterParentView(cpview.family));
+            new RegisterParentController(new RegisterParentView(cpview.familyUsername));
             cpview.dispose();
         }
     }

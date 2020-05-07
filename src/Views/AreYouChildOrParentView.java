@@ -14,7 +14,7 @@ public class AreYouChildOrParentView extends Jframe {
     public JLabel exit,minimize,title,title2;
     public Border frameExMin;
     public JButton child,parent;
-    public Family family;
+    public String familyUsername;
 
     @Override
     public JLabel getExit() {
@@ -25,8 +25,8 @@ public class AreYouChildOrParentView extends Jframe {
         return this.minimize;
     }
 
-    public AreYouChildOrParentView(Family family){
-        this.family=family;
+    public AreYouChildOrParentView(String familyUsername){
+        this.familyUsername=familyUsername;
         setSize(500,500);
         setUndecorated(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

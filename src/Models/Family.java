@@ -25,4 +25,9 @@ public class Family extends User{
         this.lastName = "";
         this.currentMonthProfit = 0;
     }
+    //copy constructor
+    public Family(Family other){
+        this.username=other.username;
+        this.lastName=other.lastName;
+    }
 }

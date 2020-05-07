@@ -44,6 +44,8 @@ public class RegisterHumanView extends Jframe {
     //public JScrollPane pane;
     //Submit
     public JButton create;
+    //image path
+    public String imagePath=null;
 
     @Override
     public JLabel getMinimize() {
