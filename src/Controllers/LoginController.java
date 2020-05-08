@@ -9,10 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static Views.RegisterView.addExitAction;
 import static Views.RegisterView.addMinimizeAction;
@@ -23,14 +20,15 @@ public class LoginController {
 
     public LoginController(LoginView lview) {
         this.lview = lview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(lview,true),lview.minimize);
-        addExitAction(new RegisterController.ExitListeners(lview,true),lview.exit);
+        addMinimizeAction(new RegisterController.MinimizeListeners(lview, true), lview.minimize);
+        addExitAction(new RegisterController.ExitListeners(lview, true), lview.exit);
         lview.addUsernameFocus(new FocusUsernameListener());
         lview.addPasswordFocus(new FocusPasswordListener());
         lview.addRegisterContextAction(new RegisterContextAction());
         lview.addLoginListener(new LoginExecutable());
         lview.addLoginMouse(new LoginMouseListener());
     }
+
     class FocusUsernameListener extends FocusAdapter {
         //clear the text field-username if it is "username"
         @Override
@@ -92,20 +90,22 @@ public class LoginController {
         }
     }
 
-    class RegisterContextAction extends MouseAdapter{
+    class RegisterContextAction extends MouseAdapter {
         @Override
         public void mouseEntered(MouseEvent e) {
-            Border fr=BorderFactory.createMatteBorder(0,0,1,0,Color.blue);
+            Border fr = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.blue);
             lview.registerContext.setBorder(fr);
         }
+
         @Override
-        public void mouseExited(MouseEvent e){
+        public void mouseExited(MouseEvent e) {
             lview.registerContext.setBorder(null);
         }
+
         @Override
-        public void mouseClicked(MouseEvent e){
-            RegisterView rv=new RegisterView();
-            RegisterController rc=new RegisterController(rv);
+        public void mouseClicked(MouseEvent e) {
+            RegisterView rv = new RegisterView();
+            RegisterController rc = new RegisterController(rv);
             try {
                 dispose();
             } catch (Exception ex) {
@@ -113,57 +113,75 @@ public class LoginController {
             }
         }
     }
-    /**Login as a family account or parent/child account*/
+
+    /**
+     * Login as a family account or parent/child account
+     */
     class LoginExecutable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            PreparedStatement st1,st2;
+            Connection con;
+            PreparedStatement st1, st2;
             ResultSet rs;
-            //get the username and password
-            String uname = lview.username.getText();
-            String pword = String.valueOf(lview.createPassword.getPassword());
-            //create a select query to check if the username and the password exist in the DB
-            //show a message if the username or the password fields are empty
-            if(uname.trim().equals("username")){
-                JOptionPane.showMessageDialog(null,"Enter your username","Empty username",2);
-            }
-            else if(pword.trim().equals("password"))
-            {
-                JOptionPane.showMessageDialog(null,"Enter your password","Empty password",2);
-            }
-            else {
-                try {
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                //get the username and password
+                String uname = lview.username.getText();
+                String pword = String.valueOf(lview.createPassword.getPassword());
+                //create a select query to check if the username and the password exist in the DB
+                //show a message if the username or the password fields are empty
+                if (uname.trim().equals("username")) {
+                    JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
+                } else if (pword.trim().equals("password")) {
+                    JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
+                } else {
                     String humanQuery = "SELECT * FROM human WHERE username= ? AND password = ?";
                     String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
-                    st1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(humanQuery);
+                    st1 = con.prepareStatement(humanQuery);
                     st1.setString(1, uname);
                     st1.setString(2, pword);
                     rs = st1.executeQuery();
                     /**The user is actually a parent/child*/
                     if (rs.next())//username and password are correct
                     {
+                        rs.close();
                         new HomeController(new HomeView());
                         lview.dispose();
                     } else {
-                        st2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(familyQuery);
-                        st2.setString(1,uname);
-                        st2.setString(2,pword);
-                        rs=st2.executeQuery();
-                        /**The user is actually a family*/
-                        if(rs.next())
-                        {
-                            new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
-                            lview.dispose();
-                        }
-                        else//error message
-                            JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
-                    }
+                        st2 = con.prepareStatement(familyQuery);
+                        st2.setString(1, uname);
+                        st2.setString(2, pword);
+                        rs = st2.executeQuery();
 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                        /**The user is actually a family*/
+                        if (rs.next()) {
+                            rs.close();
+                            /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
+                             Using singleton architecture.*/
+                            String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
+                            st1 = con.prepareStatement(singleton10people);
+                            st1.setString(1, uname);
+                            rs = st1.executeQuery();
+                            /**Counts exactly the rows in human table */
+                            rs.next();
+                            if (rs.getInt(1) >= 2) {
+                                JOptionPane.showMessageDialog(null, "Sorry, but one family can only contain at most 10 people", "10 people error", 1);
+                            }
+                            else {
+                                new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
+                                lview.dispose();
+                            }
+                        } else//error message
+                        {
+                            rs.close();
+                            JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
+                        }
+                    }
                 }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }

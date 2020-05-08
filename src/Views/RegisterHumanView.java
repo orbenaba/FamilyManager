@@ -187,7 +187,7 @@ public class RegisterHumanView extends Jframe {
         genders.addActionListener(mal);
     }
 
-    public static java.util.List<String> getGenders() {
+    public static java.util.List<String>getGenders() {
         List<String> lst = new ArrayList<>();
         String query = "SELECT*FROM gender";
         try {
