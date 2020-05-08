@@ -25,12 +25,12 @@ import static Views.StartView.init_Exit_Minimize;
 
 
 public class RegisterHumanView extends Jframe {
-    public JLabel exit, minimize, imageContainer, firstNameLabel, birthdayLabel;
+    public JLabel exit, minimize, imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel;
     public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
 
     public Border frameExMin;
     public JTextField firstName;
-    public ImageIcon image;
+    public ImageIcon image,removePhoto;
     public CircleButton addImage;
 
     public JTextField username;
@@ -46,6 +46,7 @@ public class RegisterHumanView extends Jframe {
     public JButton create;
     //image path
     public String imagePath=null;
+
 
     @Override
     public JLabel getMinimize() {
@@ -256,10 +257,6 @@ public class RegisterHumanView extends Jframe {
         dateChooser.addMouseListener(mal);
     }
 
-    public void addCreateAction(ActionListener mal){
-        create.addActionListener(mal);
-    }
-
     public void addCreateListener(MouseAdapter mal){
         create.addMouseListener(mal);
     }
@@ -288,4 +285,9 @@ public class RegisterHumanView extends Jframe {
     public boolean verifyGender(){
         return genders.getSelectedItem().equals("Select gender");
     }
+
+    public void addRemovePhotoListener(MouseAdapter mal){
+        removePhotoLabel.addMouseListener(mal);
+    }
+
 }

@@ -1,6 +1,7 @@
 package Controllers;
 
 import Views.*;
+import com.company.CircleButton;
 
 
 import javax.swing.*;
@@ -66,7 +67,13 @@ public class RegisterHumanController {
                 rview.imageContainer.setIcon(new ImageIcon(
                         new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(rview.imageContainer.getWidth(),
                                 rview.imageContainer.getHeight(), Image.SCALE_DEFAULT)));
+                //Adding the bin trash near the selected picture
+                rview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
+                rview.removePhotoLabel=new JLabel(rview.removePhoto);
+                rview.removePhotoLabel.setBounds(x+width+50,y,40,50);
+                rview.add(rview.removePhotoLabel);
                 rview.add(rview.imageContainer);
+                rview.addRemovePhotoListener(new RemovePhotoListenerr());
                 //Refresh view
                 rview.repaint();
             }
@@ -180,6 +187,29 @@ public class RegisterHumanController {
             rview.bio.setBorder(null);
             if(rview.bio.getText().equals(""))
                 rview.bio.setText("\t            Bio...");
+        }
+    }
+
+    class RemovePhotoListenerr extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            rview.removePhotoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+        @Override
+        public void mouseClicked(MouseEvent e){
+            /**Getting rid of old components*/
+            rview.getContentPane().remove(rview.imageContainer);
+            rview.getContentPane().remove(rview.removePhotoLabel);
+            /**Adding new components*/
+            rview.image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
+            rview.imageContainer=new JLabel(rview.image);
+            rview.imageContainer.setBounds(300,10,250,250);
+            rview.addImage=new CircleButton("");
+            rview.addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
+            rview.add(rview.imageContainer);
+            rview.add(rview.addImage);
+            rview.addImageAction(new AddImage_action());
+            rview.repaint();
         }
     }
 }
