@@ -6,6 +6,7 @@ import Models.Family;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 
 public class RegisterChildView extends RegisterHumanView {

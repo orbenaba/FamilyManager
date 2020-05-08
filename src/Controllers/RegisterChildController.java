@@ -4,15 +4,14 @@ import Views.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
+
+import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 
 public class RegisterChildController extends RegisterHumanController {
@@ -55,6 +54,7 @@ public class RegisterChildController extends RegisterHumanController {
             rview.dispose();
         }
     }
+
     class CreateActionChild implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -105,6 +105,7 @@ public class RegisterChildController extends RegisterHumanController {
                 ps.setBoolean(12,false);//isLimited
 
                 if(ps.executeUpdate()!=0){
+                    mappingTextareaIntoFile(username,rview.bio);//saving bio in file
                     new HomeController(new HomeView());
                     rview.dispose();
                 }

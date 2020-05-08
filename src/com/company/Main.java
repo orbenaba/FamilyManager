@@ -1,7 +1,9 @@
 package com.company;
 
+import Controllers.LoginController;
 import Controllers.RegisterFamilyController;
 import Controllers.StartController;
+import Views.LoginView;
 import Views.RegisterFamilyView;
 import Views.StartView;
 
@@ -34,13 +36,19 @@ public class Main {
                 StartController scontroller=new StartController(sview);
             }
         });
-*/
+
         EventQueue.invokeLater(new Runnable() {
             public void run() {//create a thread
                 RegisterFamilyController rfc=new RegisterFamilyController(new RegisterFamilyView());
             }
         });
 
+*/        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                LoginController lc=new LoginController(new LoginView());
+            }
+        });
 
 
     }

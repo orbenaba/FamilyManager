@@ -1,5 +1,7 @@
 package Controllers;
 
+import Views.AreYouChildOrParentView;
+import Views.HomeView;
 import Views.LoginView;
 import Views.RegisterView;
 
@@ -111,17 +113,16 @@ public class LoginController {
             }
         }
     }
-
+    /**Login as a family account or parent/child account*/
     class LoginExecutable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            PreparedStatement st;
+            PreparedStatement st1,st2;
             ResultSet rs;
             //get the username and password
             String uname = lview.username.getText();
             String pword = String.valueOf(lview.createPassword.getPassword());
             //create a select query to check if the username and the password exist in the DB
-            String query = "SELECT * FROM users WHERE username= ? AND password = ?";
             //show a message if the username or the password fields are empty
             if(uname.trim().equals("username")){
                 JOptionPane.showMessageDialog(null,"Enter your username","Empty username",2);
@@ -132,16 +133,30 @@ public class LoginController {
             }
             else {
                 try {
-                    st = DriverManager.getConnection("jdbc:mysql://localhost:3306/family", "root", "root").prepareStatement(query);
-                    st.setString(1, uname);
-                    st.setString(2, pword);
-                    rs = st.executeQuery();
+                    String humanQuery = "SELECT * FROM human WHERE username= ? AND password = ?";
+                    String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
+                    st1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(humanQuery);
+                    st1.setString(1, uname);
+                    st1.setString(2, pword);
+                    rs = st1.executeQuery();
+                    /**The user is actually a parent/child*/
                     if (rs.next())//username and password are correct
                     {
-                        System.out.println("dkkkkkkkkk");
+                        new HomeController(new HomeView());
+                        lview.dispose();
                     } else {
-                        //error message
-                        JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
+                        st2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(familyQuery);
+                        st2.setString(1,uname);
+                        st2.setString(2,pword);
+                        rs=st2.executeQuery();
+                        /**The user is actually a family*/
+                        if(rs.next())
+                        {
+                            new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
+                            lview.dispose();
+                        }
+                        else//error message
+                            JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
                     }
 
                 } catch (SQLException ex) {

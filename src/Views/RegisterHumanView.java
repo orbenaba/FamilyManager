@@ -78,7 +78,7 @@ public class RegisterHumanView extends Jframe {
         imageContainer.setBounds(300, 10, 250, 250);
         addImage = new CircleButton("");
         addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
-        firstNameLabel = new JLabel("First name:");
+        firstNameLabel = new JLabel("*First name:");
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
         firstNameLabel.setForeground(Color.green);
         firstNameLabel.setBounds(50, 280, 150, 35);
@@ -91,7 +91,7 @@ public class RegisterHumanView extends Jframe {
 
 
         java.util.List<String> gendersArray = getGenders();
-        gendersArray.add("Select gender");
+        gendersArray.add("*Select gender");
 
         genders = new JComboBox(gendersArray.toArray());
         genders.setBounds(450, 280, 240, 35);
@@ -103,7 +103,7 @@ public class RegisterHumanView extends Jframe {
 
 
         addUsernamePassword(50, 350, 50);
-        birthdayLabel = new JLabel("Date of birth:");
+        birthdayLabel = new JLabel("*Date of birth:");
         birthdayLabel.setBounds(50, 480, 180, 35);
         birthdayLabel.setForeground(Color.green);
         birthdayLabel.setFont(new Font("Arial", Font.BOLD, 25));
@@ -112,6 +112,11 @@ public class RegisterHumanView extends Jframe {
         ///////////////////////////////////////////////////////////////////////////////////////////
         calendar = Calendar.getInstance();
         dateChooser = new JDateChooser(calendar.getTime());
+        //enforcing the user to choose a valid date. I range [NOW,NOW-120]
+        java.util.Date currentDate= new java.util.Date();
+        java.util.Date minDate=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
+        dateChooser.setMaxSelectableDate(currentDate);
+        dateChooser.setMinSelectableDate(minDate);
         dateChooser.setBounds(230, 480, 170, 35);
         dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
         dateChooser.setBackground(color);
@@ -263,7 +268,7 @@ public class RegisterHumanView extends Jframe {
 
    //Functionality
     //Returns the name of the text file
-    public String mappingTextareaIntoFile() {
+    public static String mappingTextareaIntoFile(String username,JTextArea bio) {
         try {
             FileWriter fileWriter=new FileWriter(username+".txt",false);
             fileWriter.write(bio.getText());

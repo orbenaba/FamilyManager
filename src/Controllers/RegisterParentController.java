@@ -4,10 +4,7 @@ import Views.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +22,7 @@ public class RegisterParentController extends RegisterHumanController {
         rview.addSalaryListener(new SalaryListener());
         rview.addChildViewListener(new ChildViewListener());
 
+        rview.addEnforcingSalary(new EnforcingSalary());
         /**Create the account*/
         rview.addCreateActionParent(new CreateActionParent());
     }
@@ -58,7 +56,8 @@ public class RegisterParentController extends RegisterHumanController {
         @Override
         public void mouseExited(MouseEvent e){
             rview.childView.setBorder(null);
-        }        @Override
+        }
+        @Override
         public void mouseEntered(MouseEvent e){
             rview.childView.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.green));
         }
@@ -66,6 +65,14 @@ public class RegisterParentController extends RegisterHumanController {
         public void mouseClicked(MouseEvent e){
             new RegisterChildController(new RegisterChildView(rview.familyUsername));
             rview.dispose();
+        }
+    }
+
+    /**Enforcing the user to use only digits in Salary field*/
+    class EnforcingSalary extends KeyAdapter {
+        public void keyTyped(KeyEvent e) {
+            if (!Character.isDigit(e.getKeyChar()))
+                e.consume();
         }
     }
 

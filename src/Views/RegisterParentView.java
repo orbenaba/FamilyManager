@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 
 public class RegisterParentView extends RegisterHumanView {
@@ -91,6 +92,10 @@ public class RegisterParentView extends RegisterHumanView {
     }
     public void addChildViewListener(MouseAdapter mal){
         childView.addMouseListener(mal);
+    }
+
+    public void addEnforcingSalary(KeyAdapter mal) {
+        salary.addKeyListener(mal);
     }
 
     public void addCreateActionParent(ActionListener mal){
