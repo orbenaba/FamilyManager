@@ -1,9 +1,6 @@
 package Controllers;
 
-import Views.AreYouChildOrParentView;
-import Views.HomeView;
-import Views.LoginView;
-import Views.RegisterView;
+import Views.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -104,13 +101,8 @@ public class LoginController {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            RegisterView rv = new RegisterView();
-            RegisterController rc = new RegisterController(rv);
-            try {
-                dispose();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            RegisterFamilyController rfc=new RegisterFamilyController(new RegisterFamilyView());
+            lview.dispose();
         }
     }
 
@@ -145,7 +137,7 @@ public class LoginController {
                     if (rs.next())//username and password are correct
                     {
                         rs.close();
-                        new HomeController(new HomeView());
+                        new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
                     } else {
                         st2 = con.prepareStatement(familyQuery);

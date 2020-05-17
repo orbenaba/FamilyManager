@@ -91,64 +91,69 @@ public class RegisterParentController extends RegisterHumanController {
         public void actionPerformed(ActionEvent e) {
             String username = rview.username.getText();
             if (!isUsernameExist(username)) {
-                String bioNameFile = username + ".txt";
-                java.sql.Date birthday = new java.sql.Date(rview.dateChooser.getDate().getTime());
+                if(verify()) {
+                    String bioNameFile = username + ".txt";
+                    java.sql.Date birthday = new java.sql.Date(rview.dateChooser.getDate().getTime());
 
-                String familyUsername = rview.familyUsername;
-                String firstname = rview.firstName.getText();
-                byte genderId;
-                {
-                    String gender = rview.genders.getSelectedItem().toString();
-                    genderId = (byte) (gender.equals("Male") ? 0 : gender.equals("Female") ? 1 : gender.equals("Bisexual") ? 2 : 3);
-                }
-                boolean isMarried = rview.isMarried.isSelected();
-                String jobName = rview.jobName.getText();
-                String pass = String.valueOf(rview.password.getPassword());
-                String confirmPass = String.valueOf(rview.confirmPassword.getPassword());
-                double salary = Double.parseDouble(rview.salary.getText());
-
-
-                PreparedStatement ps;
-                ResultSet rs;
-                String registerQuery = "INSERT INTO human(Username,Birthday,FamilyUsername,FirstName," +
-                        "GenderId,Image,IsObligated,JobName,Password,Salary,isLimited)" +
-                        "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
-                try {
-                    ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerQuery);
-                    ps.setString(1, username);
-                    ps.setDate(2, birthday);
-                    ps.setString(3, familyUsername);
-                    ps.setString(4, firstname);
-                    ps.setByte(5, genderId);
-                    //save the image profile as a blob in DB
-                    if (rview.imagePath != null) {
-                        InputStream image = new FileInputStream(new File(rview.imagePath));
-                        ps.setBlob(6, image);
-                    } else {
-                        ps.setNull(6, Types.NULL);
+                    String familyUsername = rview.familyUsername;
+                    String firstname = rview.firstName.getText();
+                    byte genderId;
+                    {
+                        String gender = rview.genders.getSelectedItem().toString();
+                        genderId = (byte) (gender.equals("Male") ? 0 : gender.equals("Female") ? 1 : gender.equals("Bisexual") ? 2 : 3);
                     }
+                    boolean isMarried = rview.isMarried.isSelected();
+                    String jobName = rview.jobName.getText();
+                    String pass = String.valueOf(rview.password.getPassword());
+                    String confirmPass = String.valueOf(rview.confirmPassword.getPassword());
+                    double salary = Double.parseDouble(rview.salary.getText());
 
-                    ps.setBoolean(7, isMarried);
-                    ps.setString(8, jobName);
-                    ps.setString(9, pass);
-                    ps.setDouble(10, salary);
-                    ps.setBoolean(11, false);//isLimited
 
-                    if (ps.executeUpdate() != 0) {
-                        new HomeController(new HomeView());
-                        rview.dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error!!!");
+                    PreparedStatement ps;
+                    ResultSet rs;
+                    String registerQuery = "INSERT INTO human(Username,Birthday,FamilyUsername,FirstName," +
+                            "GenderId,Image,IsObligated,JobName,Password,Salary,isLimited)" +
+                            "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+
+                    try {
+                        ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerQuery);
+                        ps.setString(1, username);
+                        ps.setDate(2, birthday);
+                        ps.setString(3, familyUsername);
+                        ps.setString(4, firstname);
+                        ps.setByte(5, genderId);
+                        //save the image profile as a blob in DB
+                        if (rview.imagePath != null) {
+                            InputStream image = new FileInputStream(new File(rview.imagePath));
+                            ps.setBlob(6, image);
+                        } else {
+                            ps.setNull(6, Types.NULL);
+                        }
+
+                        ps.setBoolean(7, isMarried);
+                        ps.setString(8, jobName);
+                        ps.setString(9, pass);
+                        ps.setDouble(10, salary);
+                        ps.setBoolean(11, false);//isLimited
+
+                        if (ps.executeUpdate() != 0) {
+                            new HomeController(new HomeView(rview.username.getText()));
+                            rview.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error!!!");
+                        }
+
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
                     }
-
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
                 }
-
             }
+        }
+
+        public boolean verify(){
+            return true;
         }
     }
 }

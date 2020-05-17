@@ -110,7 +110,7 @@ public class RegisterChildController extends RegisterHumanController {
 
                     if (ps.executeUpdate() != 0) {
                         mappingTextareaIntoFile(username, rview.bio);//saving bio in file
-                        new HomeController(new HomeView());
+                        new HomeController(new HomeView(rview.username.getText()));
                         rview.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Error!!!");

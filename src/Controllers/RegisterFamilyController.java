@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.Family;
 import Views.AreYouChildOrParentView;
+import Views.LoginView;
 import Views.RegisterFamilyView;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public class RegisterFamilyController {
         addExitAction(new RegisterController.ExitListeners(rfview,true), rfview.exit);
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
+        rfview.addLoginContextListener(new LoginContextListener());
     }
     class CreateMouseListener extends MouseAdapter {
         @Override
@@ -86,6 +88,22 @@ public class RegisterFamilyController {
                     }
 
                 }
+        }
+    }
+
+    class LoginContextListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            rfview.loginContext.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.blue));
+        }
+        @Override
+        public void mouseExited(MouseEvent e){
+            rfview.loginContext.setBorder(null);
+        }
+        @Override
+        public void mouseClicked(MouseEvent e){
+            LoginController lc=new LoginController(new LoginView());
+            rfview.dispose();
         }
     }
 }

@@ -20,7 +20,7 @@ public class RegisterFamilyView extends Jframe {
     JLabel title;
     public JTextField username,lastname;
     public JPasswordField createPassword,confirmPassword;
-    public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel;
+    public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel,loginContext;
     public JButton create;
 
     @Override
@@ -66,8 +66,14 @@ public class RegisterFamilyView extends Jframe {
         create.setFont(new Font("Arial",Font.BOLD,22));
         create.setBackground(new Color(0,84,104));
         create.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        /**Add a context to login view*/
+        loginContext=new JLabel("Already have an account?");
+        loginContext.setFont(new Font("Arial",Font.BOLD,15));
+        loginContext.setBounds(200,500,185,20);
+        loginContext.setForeground(Color.BLUE);
 
 
+        add(loginContext);
         add(create);
         add(lastnameLabel);
         add(usernameLabel);
@@ -114,6 +120,9 @@ public class RegisterFamilyView extends Jframe {
     //When hovering above the button it changes its color
     public void addCreateMouse(MouseAdapter mal) {
         create.addMouseListener(mal);
+    }
+    public void addLoginContextListener(MouseAdapter mal){
+        loginContext.addMouseListener(mal);
     }
 
 }
