@@ -1,5 +1,7 @@
 package Views;
 
+import Models.Human;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 

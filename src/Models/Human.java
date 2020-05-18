@@ -1,19 +1,30 @@
 package Models;
 
-import java.awt.image.BufferedImage;
-import java.util.Calendar;
 
 public abstract class Human extends User {
-;;;;;;;;;;;;;;;    public String firstName;//as is
-;;;;;;;;;;;;;;;    public byte genderId;//In practice we are retrieve the gender from the DB based on the genderId
-;;;;;;;;;;;;;;;    public Calendar birthday;
-;;;;;;;;;;;;;;;    public BufferedImage image;
-;;;;;;;;;;;;;public String bioFileName;//biography of the human, maximum 100 chars
-;;;;;;;;;;    public Human(String username,String password){
-;;;;;;;;;;        this.username=username;
-;;;;;;;;;;        this.password=password;
+    public String firstName,familyUsername,bioFileName,imagePath;
+    public byte genderId;
+    public java.sql.Date birthday;
+
+    public Human(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
-    public Human(){
+
+    public Human() {
 
     }
+
+    public Human(String password, String username, String firstName, byte genderId, String familyUsername,
+                 String bioFileName, String imagePath, java.sql.Date birthday) {
+        super(password, username);
+        this.firstName = firstName;
+        this.genderId = genderId;
+        this.familyUsername=familyUsername;
+        this.bioFileName=bioFileName;
+        this.imagePath=imagePath;
+        this.birthday=birthday;
+    }
 }
+
+

@@ -1,5 +1,7 @@
 package Controllers;
 
+import Models.Child;
+import Models.Parent;
 import Views.*;
 
 import javax.swing.*;
@@ -110,6 +112,8 @@ public class RegisterChildController extends RegisterHumanController {
 
                     if (ps.executeUpdate() != 0) {
                         mappingTextareaIntoFile(username, rview.bio);//saving bio in file
+ //                       Child child = new Child(pass,username,firstname,genderId,familyUsername,bioNameFile,rview.imagePath,birthday,status,isSingle);
+
                         new HomeController(new HomeView(rview.username.getText()));
                         rview.dispose();
                     } else {

@@ -1,5 +1,7 @@
 package Controllers;
 
+import Models.Parent;
+import Models.User;
 import Views.*;
 
 import javax.swing.*;
@@ -12,6 +14,7 @@ import java.io.InputStream;
 import java.sql.*;
 
 import static Controllers.RegisterController.isUsernameExist;
+import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 
 public class RegisterParentController extends RegisterHumanController {
@@ -137,6 +140,8 @@ public class RegisterParentController extends RegisterHumanController {
                         ps.setBoolean(11, false);//isLimited
 
                         if (ps.executeUpdate() != 0) {
+                            mappingTextareaIntoFile(username, rview.bio);//saving bio in file
+                            Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,bioNameFile,rview.imagePath,birthday,jobName,salary);
                             new HomeController(new HomeView(rview.username.getText()));
                             rview.dispose();
                         } else {

@@ -1,5 +1,7 @@
 package Controllers;
 
+import Models.Child;
+import Models.Parent;
 import Views.*;
 
 import java.awt.event.ActionEvent;
@@ -24,7 +26,7 @@ public class HomeController {
     class SettingsAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new MyProfileController(new MyProfileView(homeView.username));
+                new MyProfileChildController(new MyProfileChildView(homeView.username));
             homeView.dispose();
         }
     }
