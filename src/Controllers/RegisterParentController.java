@@ -109,8 +109,9 @@ public class RegisterParentController extends RegisterHumanController {
                     String jobName = rview.jobName.getText();
                     String pass = String.valueOf(rview.password.getPassword());
                     String confirmPass = String.valueOf(rview.confirmPassword.getPassword());
-                    double salary = Double.parseDouble(rview.salary.getText());
-
+                    double salary=0;
+                    if(!rview.salary.getText().trim().equals(""))
+                        salary = Double.parseDouble(rview.salary.getText());
 
                     PreparedStatement ps;
                     ResultSet rs;
@@ -142,7 +143,7 @@ public class RegisterParentController extends RegisterHumanController {
 
                         if (ps.executeUpdate() != 0) {
                             mappingTextareaIntoFile(username, rview.bio);//saving bio in file
- //                           Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,birthday,jobName,salary);
+                            //Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,birthday,jobName,salary);
                             /**Needs to update the counter*/
                             String updateCounter="UPDATE family SET Counter=Counter+1 WHERE Username= ?";
                             ps=con.prepareStatement(updateCounter);

@@ -28,6 +28,8 @@ public class MyProfileChildView extends Jframe {
     public JLabel imageContainer;
     public JButton deleteAccount;
     public JLabel backToHome;
+    public JLabel usernameLabel,passwordLabel;
+    public JTextField usernameField,passwordField;
 
 
     @Override
@@ -43,6 +45,9 @@ public class MyProfileChildView extends Jframe {
     public MyProfileChildView(String username) {
         this.username = username;
         Font font = new Font("Arial", Font.BOLD, 40);
+        Color bordo=new Color(123, 61, 61);
+
+
         setUndecorated(true);
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
         setSize(1000, 800);
@@ -50,7 +55,7 @@ public class MyProfileChildView extends Jframe {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLayout(null);
-        getContentPane().setBackground(new Color(255, 236, 112));
+        getContentPane().setBackground(new Color(36, 16, 71));
         frameExMin = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
         exit = new JLabel("X");
         minimize = new JLabel("-");
@@ -63,11 +68,12 @@ public class MyProfileChildView extends Jframe {
         child = getChild(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
-        imageContainer.setBounds(400, 10, 250, 250);
+        imageContainer.setBounds(375, 10, 250, 250);
         if (child.image == null) {
             imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
             addImage = new CircleButton("");
-            addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
+            addImage.setBounds(448, 150, 78, 78);//Covers the plus that belongs to the image
+            add(imageContainer);
             add(addImage);
         } else {
             Image temp = child.image.getImage();
@@ -78,6 +84,7 @@ public class MyProfileChildView extends Jframe {
             removePhotoLabel=new JLabel(removePhoto);
             removePhotoLabel.setBounds(imageContainer.getX()+imageContainer.getWidth()+50,imageContainer.getY(),40,50);
             add(removePhotoLabel);
+            add(imageContainer);
         }
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
@@ -88,22 +95,57 @@ public class MyProfileChildView extends Jframe {
         deleteAccount=new JButton("Delete account");
         deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
         deleteAccount.setBounds(10,getHeight()-70,200,50);
-        deleteAccount.setBackground(new Color(123, 61, 61));
+        deleteAccount.setBackground(bordo);
         deleteAccount.setForeground(Color.black);
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
+
         //Adding an icon- back to home view
         backToHome=new JLabel();
         backToHome.setBounds(10,10,60,60);
         backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        Font regFont=new Font("Arial",Font.BOLD,25);
+        usernameLabel=new JLabel("Username:");
+        passwordLabel=new JLabel("Password:");
+        usernameLabel.setFont(regFont);
+        passwordLabel.setFont(regFont);
+        usernameLabel.setForeground(bordo);
+        passwordLabel.setForeground(bordo);
+        usernameLabel.setBounds(20,270,150,40);
+        passwordLabel.setBounds(500,270,150,40);
+        /////////////////////////
+        /////////////////////////
+        usernameField=new JTextField();
+        usernameField.setBounds(170,270,250,40);
+        passwordField=new JTextField();
+        passwordField.setBounds(650,270,250,40);
+        usernameField.setFont(regFont);
+        passwordField.setFont(regFont);
+        usernameLabel.setForeground(bordo);
+        passwordLabel.setForeground(bordo);
+        usernameField.setBackground(Color.orange);
+        passwordField.setBackground(Color.orange);
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
 
 
+        add(passwordField);
+        add(usernameField);
+        add(usernameLabel);
+        add(passwordLabel);
         add(backToHome);
         add(deleteAccount);
-        add(imageContainer);
         add(minimize);
         add(exit);
 

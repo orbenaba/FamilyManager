@@ -107,7 +107,7 @@ public class RegisterChildController extends RegisterHumanController {
                     ps.setBoolean(7, isSingle);
                     ps.setNull(8, Types.NULL);
                     ps.setString(9, pass);
-                    ps.setNull(10, Types.NULL);
+                    ps.setInt(10, -1);
                     ps.setString(11, status);
                     ps.setBoolean(12, false);//isLimited
 

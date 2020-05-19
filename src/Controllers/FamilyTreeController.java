@@ -2,8 +2,17 @@ package Controllers;
 
 import Views.FamilyTreeView;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import static Views.RegisterView.addExitAction;
 import static Views.RegisterView.addMinimizeAction;
+import static Views.FamilyTreeView.TreeNode;
+
 
 public class FamilyTreeController {
     private FamilyTreeView ftview;
@@ -13,5 +22,45 @@ public class FamilyTreeController {
         this.ftview=ftview;
         addMinimizeAction(new RegisterController.MinimizeListeners(ftview, true), ftview.minimize);
         addExitAction(new RegisterController.ExitListeners(ftview, true), ftview.exit);
+        ftview.addLeavesListener(new LeavesListener());
+        ftview.addLeafAction(new LeafAction());
+
+    }
+
+    class LeavesListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            Cursor cursor=new Cursor(Cursor.HAND_CURSOR);
+            ftview.parents.forEach(parent->parent.button.setCursor(cursor));
+            ftview.children.forEach(child->child.button.setCursor(cursor));
+        }
+    }
+
+    class LeafAction implements ActionListener {
+        String usernameProfile,myUsername;
+        public LeafAction(String usernameProfile, String myUsername) {
+            this.usernameProfile = usernameProfile;
+            this.myUsername = myUsername;
+        }
+        public LeafAction(){
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object src = e.getSource();
+            TreeNode clickedButton=null;
+
+            for(TreeNode button:ftview.children){
+                if(src==button.button)
+                    clickedButton=button;
+            }
+            if(clickedButton==null){
+                for(TreeNode button:ftview.parents){
+                    if(src==button.button)
+                        clickedButton=button;
+                }
+            }
+            System.out.println("Username is= "+clickedButton.uname);
+        }
     }
 }

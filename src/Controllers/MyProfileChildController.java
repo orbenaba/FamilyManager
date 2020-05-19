@@ -29,8 +29,10 @@ public class MyProfileChildController {
         addExitAction(new RegisterController.ExitListeners(mpcview, true), mpcview.exit);
         if (mpcview.child.image != null)
             mpcview.addRemovePhotoListener(new RemovePhotoListener());
+        else
+            mpcview.addImageAction(new AddImage_action());
         mpcview.addDeleteAccountAction(new DeleteAccountAction());
-        /**====================================*/
+        /**==========Back to home label===============*/
         mpcview.addBackHomeListener(new BackToHomeListener());
     }
 
@@ -127,13 +129,11 @@ public class MyProfileChildController {
             mpcview.backToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
             mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIconBlue.png")));
         }
-
         /**when out of the home label, we change its color*/
         @Override
         public void mouseExited(MouseEvent e){
             mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
         }
-
         @Override
         public void mouseClicked(MouseEvent e){
             new HomeController(new HomeView(mpcview.username));
