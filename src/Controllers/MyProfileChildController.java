@@ -1,5 +1,6 @@
 package Controllers;
 
+import Views.HomeView;
 import Views.MyProfileChildView;
 import Views.StartView;
 import com.company.CircleButton;
@@ -29,6 +30,8 @@ public class MyProfileChildController {
         if (mpcview.child.image != null)
             mpcview.addRemovePhotoListener(new RemovePhotoListener());
         mpcview.addDeleteAccountAction(new DeleteAccountAction());
+        /**====================================*/
+        mpcview.addBackHomeListener(new BackToHomeListener());
     }
 
     class RemovePhotoListener extends MouseAdapter {
@@ -116,6 +119,33 @@ public class MyProfileChildController {
             }
         }
     }
+
+    class BackToHomeListener extends MouseAdapter{
+        @Override
+        /**when hovering over the home label, we change its color*/
+        public void mouseEntered(MouseEvent e){
+            mpcview.backToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIconBlue.png")));
+        }
+
+        /**when out of the home label, we change its color*/
+        @Override
+        public void mouseExited(MouseEvent e){
+            mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            new HomeController(new HomeView(mpcview.username));
+            mpcview.dispose();
+        }
+    }
+
+
+
+
+
+
     public static void deleteAccount(String username,String familyUsername){
         Connection con;
         ResultSet rs;
@@ -148,7 +178,6 @@ public class MyProfileChildController {
         }
 
     }
-
 
 
 }

@@ -27,6 +27,9 @@ public class MyProfileChildView extends Jframe {
     public ImageIcon removePhoto;
     public JLabel imageContainer;
     public JButton deleteAccount;
+    public JLabel backToHome;
+
+
     @Override
     public JLabel getExit() {
         return this.exit;
@@ -87,9 +90,18 @@ public class MyProfileChildView extends Jframe {
         deleteAccount.setBounds(10,getHeight()-70,200,50);
         deleteAccount.setBackground(new Color(123, 61, 61));
         deleteAccount.setForeground(Color.black);
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        //Adding an icon- back to home view
+        backToHome=new JLabel();
+        backToHome.setBounds(10,10,60,60);
+        backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
 
 
-
+        add(backToHome);
         add(deleteAccount);
         add(imageContainer);
         add(minimize);
@@ -159,4 +171,8 @@ public class MyProfileChildView extends Jframe {
         deleteAccount.addActionListener(mal);
     }
 
+
+    public void addBackHomeListener(MouseAdapter mal){
+        backToHome.addMouseListener(mal);
+    }
 }
