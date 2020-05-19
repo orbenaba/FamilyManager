@@ -23,6 +23,8 @@ public class FamilyTreeView extends Jframe{
     public ArrayList<TreeNode> parents;
     public ArrayList<TreeNode>children;
     public JLabel background;
+    public boolean isParent=true;
+    public JLabel title;
 
     @Override
     public JLabel getExit() {
@@ -51,43 +53,74 @@ public class FamilyTreeView extends Jframe{
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/forestBackground.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
 
+
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
         exit=new JLabel("X");
         minimize=new JLabel("-");
         init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin,true);//prevent code replication
-        System.out.println("Width= "+getWidth()+"\nHeight="+getHeight());
+        /**Title*/
+        title=new JLabel("Family Hierarchy");
+        title.setFont(new Font("Italic",Font.BOLD,70));
+        title.setForeground(new Color(255, 15, 15));
+        title.setBounds(getWidth()/2-300,20,600,80);
 
 
         FamilyMembers familyMembers=getFamilyMembers(username);
         /**Now, we have the whole family data--*/
+        //Identify the user-parent or child?
         familyTree=new Tree(familyMembers.members);
+        for(UserData mem:familyTree.children){
+            if(mem.uName.equals(username))
+                isParent=false;
+        }
         parents=new ArrayList<>();
         int totalParents=familyTree.parents.size();
         int i=0;
+        JLabel text;
         if(totalParents>=6){
             /**The width of each button is 145px and the distance between two buttons is 5px--->>(145+5)/2*/
             int xStartParents=getWidth()/2 - (totalParents*75);
             for(UserData parent: familyTree.parents){
+                text=new JLabel(parent.firstName);
+                text.setForeground(Color.black);
+                text.setFont(font);
+                text.setBounds(xStartParents+i*150+60,170,200,200);
+                add(text);
+
                 JButton button=new JButton(parent.firstName+'\n'+parent.uName);
-                button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
+                if(parent.uName.equals(username))
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
+                else
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
-                button.setBounds(xStartParents+i*150,100,145,200);
+                button.setBounds(xStartParents+i*150,150,145,200);
                 i++;
                 parents.add(new TreeNode(button,parent.uName,parent.firstName));
+
+
                 add(button);
             }
         }
         else{
             int xStartParents=getWidth()/2 - (totalParents*150);
             for(UserData parent: familyTree.parents){
-                JButton button=new JButton(parent.firstName+'\n'+parent.uName);
-                button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
+                text=new JLabel(parent.firstName);
+                text.setFont(font);
+                text.setForeground(Color.black);
+                text.setBounds(xStartParents+i*150+60,170,200,200);
+                add(text);
+
+                JButton button=new JButton();
+                if(parent.uName.equals(username))
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
+                else
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
-                button.setBounds(xStartParents+i*300,100,200,200);
+                button.setBounds(xStartParents+i*300,150,200,200);
                 i++;
                 parents.add(new TreeNode(button,parent.uName,parent.firstName));
                 add(button);
@@ -99,12 +132,20 @@ public class FamilyTreeView extends Jframe{
         if(totalChildren>=6) {
             int xStartChildren=getWidth()/2-(totalChildren*75)-150;
             for (UserData child : familyTree.children) {
+                text=new JLabel(child.firstName);
+                text.setFont(font);
+                text.setForeground(Color.black);
+                text.setBounds(xStartChildren+i*150+60,500,200,200);
+                add(text);
+
                 JButton button = new JButton(child.firstName + '\n' + child.uName);
-                button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
+                if(child.uName.equals(username))
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
+                else
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
-
                 button.setBounds(xStartChildren + i * 190, 500, 190, 200);
                 i++;
                 children.add(new TreeNode(button,child.uName,child.firstName));
@@ -114,13 +155,20 @@ public class FamilyTreeView extends Jframe{
         else {
             int xStartChildren=getWidth()/2-(totalChildren*150)-150;
             for (UserData child : familyTree.children) {
+                text=new JLabel(child.firstName);
+                text.setFont(font);
+                text.setForeground(Color.black);
+                text.setBounds(xStartChildren+i*300+60,500,200,200);
+                add(text);
+
                 JButton button = new JButton(child.firstName + '\n' + child.uName);
-                button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
+                if(child.uName.equals(username))
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
+                else
+                    button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
-
-
                 button.setBounds(xStartChildren + i * 300, 500, 200, 200);
                 i++;
                 children.add(new TreeNode(button,child.uName,child.firstName));
@@ -133,6 +181,7 @@ public class FamilyTreeView extends Jframe{
 
 
 
+        add(title);
         add(background);
         setVisible(true);
 
@@ -155,7 +204,8 @@ public class FamilyTreeView extends Jframe{
 
     }
     public static class Tree{
-        ArrayList<UserData> parents,children;
+        ArrayList<UserData> parents;
+        ArrayList<UserData> children;
         public Tree(HashMap<String,memberData> members) {
             parents = new ArrayList<>();
             children = new ArrayList<>();
@@ -229,6 +279,5 @@ public class FamilyTreeView extends Jframe{
     public void addLeafAction(ActionListener mal){
         parents.forEach(parent->parent.button.addActionListener(mal));
         children.forEach(child->child.button.addActionListener(mal));
-
     }
 }

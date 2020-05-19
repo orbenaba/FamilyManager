@@ -1,6 +1,9 @@
 package Controllers;
 
 import Views.FamilyTreeView;
+import Views.MyProfileChildView;
+import Views.MyProfileParentView;
+import Views.showProfileByIdView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,30 +40,40 @@ public class FamilyTreeController {
     }
 
     class LeafAction implements ActionListener {
-        String usernameProfile,myUsername;
+        String usernameProfile, myUsername;
+
         public LeafAction(String usernameProfile, String myUsername) {
             this.usernameProfile = usernameProfile;
             this.myUsername = myUsername;
         }
-        public LeafAction(){
+
+        public LeafAction() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
-            TreeNode clickedButton=null;
-
-            for(TreeNode button:ftview.children){
-                if(src==button.button)
-                    clickedButton=button;
+            TreeNode clickedButton = null;
+            for (TreeNode button : ftview.children) {
+                if (src == button.button)
+                    clickedButton = button;
             }
-            if(clickedButton==null){
-                for(TreeNode button:ftview.parents){
-                    if(src==button.button)
-                        clickedButton=button;
+            if (clickedButton == null) {
+                for (TreeNode button : ftview.parents) {
+                    if (src == button.button)
+                        clickedButton = button;
                 }
             }
-            System.out.println("Username is= "+clickedButton.uname);
+            myUsername = ftview.username;
+            usernameProfile = clickedButton.uname;
+            if (myUsername.equals(usernameProfile)) {
+                if (ftview.isParent) {
+                    //new MyProfileParentController(new MyProfileParentView(ftview.username));
+                } else
+                    new MyProfileChildController(new MyProfileChildView(ftview.username));
+            } else
+                new showProfileByIdController(new showProfileByIdView(myUsername, usernameProfile));
+            ftview.dispose();
         }
     }
 }
