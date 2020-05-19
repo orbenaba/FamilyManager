@@ -117,9 +117,10 @@ public class RegisterParentController extends RegisterHumanController {
                     String registerQuery = "INSERT INTO human(Username,Birthday,FamilyUsername,FirstName," +
                             "GenderId,Image,IsObligated,JobName,Password,Salary,isLimited)" +
                             "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
+                    Connection con;
                     try {
-                        ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerQuery);
+                        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                        ps = con.prepareStatement(registerQuery);
                         ps.setString(1, username);
                         ps.setDate(2, birthday);
                         ps.setString(3, familyUsername);
@@ -142,6 +143,11 @@ public class RegisterParentController extends RegisterHumanController {
                         if (ps.executeUpdate() != 0) {
                             mappingTextareaIntoFile(username, rview.bio);//saving bio in file
  //                           Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,birthday,jobName,salary);
+                            /**Needs to update the counter*/
+                            String updateCounter="UPDATE family SET Counter=Counter+1 WHERE Username= ?";
+                            ps=con.prepareStatement(updateCounter);
+                            ps.setString(1,familyUsername);
+                            ps.executeUpdate();
                             new HomeController(new HomeView(rview.username.getText()));
                             rview.dispose();
                         } else {

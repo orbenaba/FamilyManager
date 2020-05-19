@@ -157,7 +157,7 @@ public class LoginController {
                             rs = st1.executeQuery();
                             /**Counts exactly the rows in human table */
                             rs.next();
-                            if (rs.getInt(1) >= 2) {
+                            if (rs.getInt(1) >= 10) {
                                 JOptionPane.showMessageDialog(null, "Sorry, but one family can only contain at most 10 people", "10 people error", 1);
                             }
                             else {

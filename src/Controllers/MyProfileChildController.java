@@ -1,6 +1,7 @@
 package Controllers;
 
 import Views.MyProfileChildView;
+import Views.StartView;
 import com.company.CircleButton;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.sql.*;
 
 import static Views.RegisterView.addExitAction;
 import static Views.RegisterView.addMinimizeAction;
@@ -21,11 +23,12 @@ public class MyProfileChildController {
 
 
     public MyProfileChildController(MyProfileChildView mpcview) {
-        this.mpcview=mpcview;
+        this.mpcview = mpcview;
         addMinimizeAction(new RegisterController.MinimizeListeners(mpcview, true), mpcview.minimize);
         addExitAction(new RegisterController.ExitListeners(mpcview, true), mpcview.exit);
-        mpcview.addRemovePhotoListener(new RemovePhotoListener());
-
+        if (mpcview.child.image != null)
+            mpcview.addRemovePhotoListener(new RemovePhotoListener());
+        mpcview.addDeleteAccountAction(new DeleteAccountAction());
     }
 
     class RemovePhotoListener extends MouseAdapter {
@@ -90,5 +93,62 @@ public class MyProfileChildController {
             }
         }
     }
+
+
+    class DeleteAccountAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Custom button text
+            Object[] options = {"Delete account",
+                    "Stay"};
+            int n = JOptionPane.showOptionDialog(mpcview,
+                    "Are you sure you wants to delete your account?",
+                    "Delete account",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            if (n == 0) {
+                deleteAccount(mpcview.child.username, mpcview.child.familyUsername);
+                new StartController(new StartView());
+                mpcview.dispose();
+            }
+        }
+    }
+    public static void deleteAccount(String username,String familyUsername){
+        Connection con;
+        ResultSet rs;
+        PreparedStatement ps;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            /**First of all we need to ensure that there are no other family members
+             * if there are - no problem
+             * if there are no members- you need to delete the family account*/
+            //this statement deletes the family if and only if it has 1 member
+
+            String deleteFamily="DELETE FROM family WHERE Counter<=1 AND Username=?";
+            ps=con.prepareStatement(deleteFamily);
+            ps.setString(1,familyUsername);
+            ps.execute();
+
+            /**In any case- delete the user account*/
+            String deleteUser="DELETE FROM human WHERE Username = ?;";
+            ps=con.prepareStatement(deleteUser);
+            ps.setString(1,username);
+            ps.executeUpdate();
+            /**In case there were members, we need to decrease by 1 the counter*/
+            String updateCounter="UPDATE family SET Counter=Counter-1 WHERE Username= ?";
+            ps=con.prepareStatement(updateCounter);
+            ps.setString(1,familyUsername);
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 }

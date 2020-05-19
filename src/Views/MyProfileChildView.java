@@ -26,7 +26,7 @@ public class MyProfileChildView extends Jframe {
     public CircleButton addImage;
     public ImageIcon removePhoto;
     public JLabel imageContainer;
-
+    public JButton deleteAccount;
     @Override
     public JLabel getExit() {
         return this.exit;
@@ -74,9 +74,23 @@ public class MyProfileChildView extends Jframe {
             removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
             removePhotoLabel=new JLabel(removePhoto);
             removePhotoLabel.setBounds(imageContainer.getX()+imageContainer.getWidth()+50,imageContainer.getY(),40,50);
-
             add(removePhotoLabel);
         }
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        /**-----------------------------------------------------------------------------------------------------*/
+        //delete personal account button
+        deleteAccount=new JButton("Delete account");
+        deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
+        deleteAccount.setBounds(10,getHeight()-70,200,50);
+        deleteAccount.setBackground(new Color(123, 61, 61));
+        deleteAccount.setForeground(Color.black);
+
+
+
+        add(deleteAccount);
         add(imageContainer);
         add(minimize);
         add(exit);
@@ -140,4 +154,9 @@ public class MyProfileChildView extends Jframe {
     public void addImageAction(ActionListener mal) {
         addImage.addActionListener(mal);
     }
+    //Delete account action
+    public void addDeleteAccountAction(ActionListener mal){
+        deleteAccount.addActionListener(mal);
+    }
+
 }
