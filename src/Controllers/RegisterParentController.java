@@ -141,7 +141,7 @@ public class RegisterParentController extends RegisterHumanController {
 
                         if (ps.executeUpdate() != 0) {
                             mappingTextareaIntoFile(username, rview.bio);//saving bio in file
-                            Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,bioNameFile,rview.imagePath,birthday,jobName,salary);
+ //                           Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,birthday,jobName,salary);
                             new HomeController(new HomeView(rview.username.getText()));
                             rview.dispose();
                         } else {

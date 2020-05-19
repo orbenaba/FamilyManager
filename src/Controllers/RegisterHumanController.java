@@ -43,7 +43,6 @@ public class RegisterHumanController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //String path=null;
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
             //file extension

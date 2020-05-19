@@ -1,10 +1,15 @@
 package Models;
 
 
+import javax.swing.*;
+import java.awt.*;
+
 public abstract class Human extends User {
-    public String firstName,familyUsername,bioFileName,imagePath;
+    public String firstName,familyUsername;
     public byte genderId;
     public java.sql.Date birthday;
+    public ImageIcon image;
+
 
     public Human(String username, String password) {
         this.username = username;
@@ -16,14 +21,13 @@ public abstract class Human extends User {
     }
 
     public Human(String password, String username, String firstName, byte genderId, String familyUsername,
-                 String bioFileName, String imagePath, java.sql.Date birthday) {
+                 java.sql.Date birthday,ImageIcon image) {
         super(password, username);
         this.firstName = firstName;
         this.genderId = genderId;
         this.familyUsername=familyUsername;
-        this.bioFileName=bioFileName;
-        this.imagePath=imagePath;
         this.birthday=birthday;
+        this.image=image;
     }
 }
 

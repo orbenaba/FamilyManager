@@ -6,6 +6,7 @@ import Views.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import static Views.RegisterView.addExitAction;
 import static Views.RegisterView.addMinimizeAction;
@@ -26,7 +27,8 @@ public class HomeController {
     class SettingsAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-                new MyProfileChildController(new MyProfileChildView(homeView.username));
+
+            new MyProfileChildController(new MyProfileChildView(homeView.username));
             homeView.dispose();
         }
     }

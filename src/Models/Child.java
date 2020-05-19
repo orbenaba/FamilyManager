@@ -1,5 +1,7 @@
 package Models;
 
+import javax.swing.*;
+import java.awt.*;
 import java.sql.Date;
 
 public class Child extends Human {
@@ -11,9 +13,10 @@ public class Child extends Human {
     }
 
     public Child(String password, String username, String firstName, byte genderId, String familyUsername,
-                 String bioFileName, String imagePath, Date birthday, String status, boolean isSingle) {
-        super(password, username, firstName, genderId, familyUsername, bioFileName, imagePath, birthday);
+                 Date birthday, String status, boolean isSingle, ImageIcon image) {
+        super(password, username, firstName, genderId, familyUsername, birthday,image);
         this.status = status;
         this.isSingle = isSingle;
     }
+
 }
