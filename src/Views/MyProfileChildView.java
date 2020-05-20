@@ -15,11 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
-import static Views.StartView.init_Exit_Minimize;
 
-public class MyProfileChildView extends Jframe {
-    public JLabel exit, minimize,removePhotoLabel;
-    public Border frameExMin;
+public class MyProfileChildView extends BaseForHomeSeqView {
+    public JLabel removePhotoLabel;
     public String username;
     public Child child;
 
@@ -27,40 +25,24 @@ public class MyProfileChildView extends Jframe {
     public ImageIcon removePhoto;
     public JLabel imageContainer;
     public JButton deleteAccount;
-    public JLabel backToHome;
     public JLabel usernameLabel,passwordLabel;
     public JTextField usernameField,passwordField;
 
-
     @Override
-    public JLabel getExit() {
-        return this.exit;
+    public String getUsername(){
+        return username;
     }
-
-    @Override
-    public JLabel getMinimize() {
-        return this.minimize;
-    }
-
     public MyProfileChildView(String username) {
         this.username = username;
         Font font = new Font("Arial", Font.BOLD, 40);
         Color bordo=new Color(123, 61, 61);
 
 
-        setUndecorated(true);
 //        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
         setSize(1000, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setLayout(null);
         getContentPane().setBackground(new Color(36, 16, 71));
-        frameExMin = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        exit = new JLabel("X");
-        minimize = new JLabel("-");
-        init_Exit_Minimize(getWidth() - 70, 0, 35, exit, minimize, frameExMin, true);//prevent code replication
-        /**-----------------------------------------------------------------------------------------------------*/
+       /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
@@ -103,10 +85,8 @@ public class MyProfileChildView extends Jframe {
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
 
-        //Adding an icon- back to home view
-        backToHome=new JLabel();
-        backToHome.setBounds(10,10,60,60);
-        backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
+
+
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
         /**-----------------------------------------------------------------------------------------------------*/
@@ -146,8 +126,6 @@ public class MyProfileChildView extends Jframe {
         add(passwordLabel);
         add(backToHome);
         add(deleteAccount);
-        add(minimize);
-        add(exit);
 
 
         setVisible(true);
@@ -214,7 +192,5 @@ public class MyProfileChildView extends Jframe {
     }
 
 
-    public void addBackHomeListener(MouseAdapter mal){
-        backToHome.addMouseListener(mal);
-    }
+
 }

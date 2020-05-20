@@ -15,9 +15,9 @@ import java.util.HashMap;
 
 import static Views.StartView.init_Exit_Minimize;
 
-public class FamilyTreeView extends Jframe{
-    public JLabel exit,minimize;
-    public Border frameExMin;
+public class FamilyTreeView extends BaseForHomeSeqView{
+ /*   public JLabel exit,minimize;
+    public Border frameExMin;*/
     public String username;
     public Tree familyTree;
     public ArrayList<TreeNode> parents;
@@ -25,26 +25,14 @@ public class FamilyTreeView extends Jframe{
     public JLabel background;
     public boolean isParent=true;
     public JLabel title;
-
     @Override
-    public JLabel getExit() {
-        return this.exit;
+    public String getUsername(){
+        return username;
     }
-
-    @Override
-    public JLabel getMinimize() {
-        return this.minimize;
-    }
-
     public FamilyTreeView(String username){
         this.username=username;
         Font font=new Font("Arial",Font.BOLD,40);
-        setUndecorated(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setLayout(null);
+
         /**=========================================================*/
         /**=========================================================*/
         /**============Adding forest background====================*/
@@ -53,12 +41,7 @@ public class FamilyTreeView extends Jframe{
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/forestBackground.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
 
-
-        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        exit=new JLabel("X");
-        minimize=new JLabel("-");
-        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin,true);//prevent code replication
-        /**Title*/
+       /**Title*/
         title=new JLabel("Family Hierarchy");
         title.setFont(new Font("Italic",Font.BOLD,70));
         title.setForeground(new Color(255, 15, 15));
@@ -175,10 +158,6 @@ public class FamilyTreeView extends Jframe{
                 add(button);
             }
         }
-
-        add(minimize);
-        add(exit);
-
 
 
         add(title);

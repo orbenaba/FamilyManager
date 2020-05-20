@@ -1,9 +1,6 @@
 package Controllers;
 
-import Views.FamilyTreeView;
-import Views.MyProfileChildView;
-import Views.MyProfileParentView;
-import Views.showProfileByIdView;
+import Views.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,14 +14,13 @@ import static Views.RegisterView.addMinimizeAction;
 import static Views.FamilyTreeView.TreeNode;
 
 
-public class FamilyTreeController {
+public class FamilyTreeController extends BaseForHomeSeqController {
     private FamilyTreeView ftview;
 
 
-    public FamilyTreeController(FamilyTreeView ftview){
+    public FamilyTreeController(FamilyTreeView ftview) {
+        super(ftview);
         this.ftview=ftview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(ftview, true), ftview.minimize);
-        addExitAction(new RegisterController.ExitListeners(ftview, true), ftview.exit);
         ftview.addLeavesListener(new LeavesListener());
         ftview.addLeafAction(new LeafAction());
 

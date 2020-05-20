@@ -15,25 +15,22 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.*;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
 
 
-public class MyProfileChildController {
+public class MyProfileChildController extends BaseForHomeSeqController {
     private MyProfileChildView mpcview;
 
 
     public MyProfileChildController(MyProfileChildView mpcview) {
+        super(mpcview);
         this.mpcview = mpcview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(mpcview, true), mpcview.minimize);
-        addExitAction(new RegisterController.ExitListeners(mpcview, true), mpcview.exit);
+
         if (mpcview.child.image != null)
             mpcview.addRemovePhotoListener(new RemovePhotoListener());
         else
             mpcview.addImageAction(new AddImage_action());
         mpcview.addDeleteAccountAction(new DeleteAccountAction());
         /**==========Back to home label===============*/
-        mpcview.addBackHomeListener(new BackToHomeListener());
     }
 
     class RemovePhotoListener extends MouseAdapter {
@@ -119,25 +116,6 @@ public class MyProfileChildController {
                 new StartController(new StartView());
                 mpcview.dispose();
             }
-        }
-    }
-
-    class BackToHomeListener extends MouseAdapter{
-        @Override
-        /**when hovering over the home label, we change its color*/
-        public void mouseEntered(MouseEvent e){
-            mpcview.backToHome.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIconBlue.png")));
-        }
-        /**when out of the home label, we change its color*/
-        @Override
-        public void mouseExited(MouseEvent e){
-            mpcview.backToHome.setIcon(new ImageIcon(getClass().getResource("/Icons/homeIcon.png")));
-        }
-        @Override
-        public void mouseClicked(MouseEvent e){
-            new HomeController(new HomeView(mpcview.username));
-            mpcview.dispose();
         }
     }
 
