@@ -6,7 +6,7 @@ import Views.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static Views.RegisterView.addExitAction;
 import static Views.RegisterView.addMinimizeAction;
@@ -27,10 +27,32 @@ public class HomeController {
     class SettingsAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            new MyProfileChildController(new MyProfileChildView(homeView.username));
+            if (isParent(homeView.username))
+                new MyProfileParentController(new MyProfileParentView(homeView.username));
+            else
+                new MyProfileChildController(new MyProfileChildView(homeView.username));
             homeView.dispose();
         }
+    }
+    public static boolean isParent(String username) {
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT Salary FROM human WHERE Username=?";
+        boolean ret = false;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            rs.next();
+            if (rs.getInt("Salary") >= 0)
+                ret = true;
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
 

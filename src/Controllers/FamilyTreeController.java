@@ -70,7 +70,7 @@ public class FamilyTreeController extends BaseForHomeSeqController {
             usernameProfile = clickedButton.uname;
             if (myUsername.equals(usernameProfile)) {
                 if (ftview.isParent) {
-                    //new MyProfileParentController(new MyProfileParentView(ftview.username));
+                    new MyProfileParentController(new MyProfileParentView(ftview.username));
                 } else
                     new MyProfileChildController(new MyProfileChildView(ftview.username));
             } else

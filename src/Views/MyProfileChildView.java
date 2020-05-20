@@ -11,9 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.Scanner;
 
 
 public class MyProfileChildView extends BaseForHomeSeqView {
@@ -25,32 +28,26 @@ public class MyProfileChildView extends BaseForHomeSeqView {
     public ImageIcon removePhoto;
     public JLabel imageContainer;
     public JButton deleteAccount;
-    public JLabel usernameLabel,passwordLabel;
-    public JTextField usernameField,passwordField;
+    public JLabel usernameLabel,passwordLabel,firstNameLabel;
+    public JTextArea bioArea;
+    public JTextField usernameField,passwordField,firstNameField;
 
     @Override
     public String getUsername(){
-        return username;
+        return this.username;
     }
     public MyProfileChildView(String username) {
         this.username = username;
         Font font = new Font("Arial", Font.BOLD, 40);
-        Color bordo=new Color(123, 61, 61);
+        Color bordo=new Color(219, 0, 40);
 
 
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
-        setSize(1000, 800);
-        setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(36, 16, 71));
-       /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
+        getContentPane().setBackground(new Color(219, 102, 0));
+
         child = getChild(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
-        imageContainer.setBounds(375, 10, 250, 250);
+        imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
         if (child.image == null) {
             imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
             addImage = new CircleButton("");
@@ -69,10 +66,7 @@ public class MyProfileChildView extends BaseForHomeSeqView {
             add(imageContainer);
         }
         /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
+
         //delete personal account button
         deleteAccount=new JButton("Delete account");
         deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
@@ -80,58 +74,96 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         deleteAccount.setBackground(bordo);
         deleteAccount.setForeground(Color.black);
         /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
+        addView();
 
-
-
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        Font regFont=new Font("Arial",Font.BOLD,25);
-        usernameLabel=new JLabel("Username:");
-        passwordLabel=new JLabel("Password:");
-        usernameLabel.setFont(regFont);
-        passwordLabel.setFont(regFont);
-        usernameLabel.setForeground(bordo);
-        passwordLabel.setForeground(bordo);
-        usernameLabel.setBounds(20,270,150,40);
-        passwordLabel.setBounds(500,270,150,40);
-        /////////////////////////
-        /////////////////////////
-        usernameField=new JTextField();
-        usernameField.setBounds(170,270,250,40);
-        passwordField=new JTextField();
-        passwordField.setBounds(650,270,250,40);
-        usernameField.setFont(regFont);
-        passwordField.setFont(regFont);
-        usernameLabel.setForeground(bordo);
-        passwordLabel.setForeground(bordo);
-        usernameField.setBackground(Color.orange);
-        passwordField.setBackground(Color.orange);
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-        /**-----------------------------------------------------------------------------------------------------*/
-
-
-        add(passwordField);
-        add(usernameField);
-        add(usernameLabel);
-        add(passwordLabel);
         add(backToHome);
         add(deleteAccount);
 
 
         setVisible(true);
-
-
     }
+
+    public void addView(){
+        Font regFont=new Font("Arial",Font.BOLD,25);
+        usernameLabel=new JLabel("Username:");
+        passwordLabel=new JLabel("Password:");
+        usernameLabel.setFont(regFont);
+        passwordLabel.setFont(regFont);
+        usernameLabel.setForeground(Color.black);
+        passwordLabel.setForeground(Color.black);
+        usernameLabel.setBounds(getWidth()/2-400,400,150,30);
+        usernameField=new JTextField();
+        usernameField.setBounds(getWidth()/2-250,400,300,50);
+        passwordLabel.setBounds(getWidth()/2-400,470,150,30);
+        passwordField=new JTextField();
+        passwordField.setBounds(getWidth()/2-250,470,300,50);
+        usernameField.setFont(regFont);
+        passwordField.setFont(regFont);
+        passwordField.setBackground(Color.orange);
+        usernameField.setBackground(Color.orange);
+        /***/
+        /***/
+        /***/
+        firstNameLabel=new JLabel("Name:");
+        firstNameLabel.setFont(regFont);
+        firstNameLabel.setForeground(Color.black);
+        firstNameLabel.setBounds(getWidth()/2-400,540,150,30);
+        firstNameField=new JTextField();
+        firstNameField.setBounds(getWidth()/2-250,540,300,50);
+        firstNameField.setFont(regFont);
+        firstNameField.setBackground(Color.orange);
+        /***/
+        /***/
+        /***/
+        bioArea=new JTextArea();
+        StringBuilder bioContent=new StringBuilder();
+        File file=new File(child.username+".txt");
+        Scanner myScan= null;
+        try {
+            myScan = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while(myScan.hasNextLine()) {
+            bioContent.append(myScan.nextLine()+'\n');
+        }
+        JLabel bio=new JLabel("Bio:");
+        bio.setFont(regFont);
+        bio.setForeground(Color.black);
+        bio.setBounds(getWidth()/2+100,360,50,30);
+        bioArea=new JTextArea(bioContent.toString());
+        bioArea.setFont(regFont);
+        bio.setVerticalTextPosition(0);
+        bio.setHorizontalTextPosition(0);
+        bioArea.setBackground(new Color(122, 5, 69));
+        bioArea.setForeground(Color.orange);
+        bioArea.setBounds(getWidth()/2+100,400,400,400);
+        bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
+
+
+
+
+
+
+
+
+
+        /**Set all the data*/
+        usernameField.setText(child.username);
+        passwordField.setText(child.password);
+        firstNameField.setText(child.firstName);
+
+
+        add(bio);
+        add(bioArea);
+        add(firstNameLabel);
+        add(firstNameField);
+        add(passwordField);
+        add(usernameField);
+        add(usernameLabel);
+        add(passwordLabel);
+    }
+
 
     public static Child getChild(String username) {
         Connection con;

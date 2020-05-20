@@ -2,7 +2,6 @@ package Models;
 
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class Human extends User {
     public String firstName,familyUsername;

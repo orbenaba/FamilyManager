@@ -46,9 +46,10 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             /**Adding new components*/
             ImageIcon image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
             mpcview.imageContainer=new JLabel(image);
-            mpcview.imageContainer.setBounds(300,10,250,250);
+            mpcview.imageContainer.setBounds(mpcview.getWidth()/2-239, 20, 478, 300);
+
             mpcview.addImage=new CircleButton("");
-            mpcview.addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
+            mpcview.addImage.setBounds(mpcview.getWidth()/2-39, 160, 78, 78);//Covers the plus that belongs to the image
             mpcview.add(mpcview.imageContainer);
             mpcview.add(mpcview.addImage);
             mpcview.addImageAction(new AddImage_action());
@@ -78,7 +79,8 @@ public class MyProfileChildController extends BaseForHomeSeqController {
                 File selectedImage = chooser.getSelectedFile();
                 //Add again the picture, but this time the selected image
                 mpcview.imageContainer = new JLabel(mpcview.child.image);
-                mpcview.imageContainer.setBounds(x-30, y, width+60, height);
+                mpcview.imageContainer.setBounds(mpcview.getWidth()/2-239, 20, 478, 300);
+
                 //Fitting the picture
                 mpcview.imageContainer.setIcon(new ImageIcon(
                         new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(mpcview.imageContainer.getWidth(),
@@ -95,8 +97,6 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             }
         }
     }
-
-
     class DeleteAccountAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -118,11 +118,6 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             }
         }
     }
-
-
-
-
-
 
     public static void deleteAccount(String username,String familyUsername){
         Connection con;

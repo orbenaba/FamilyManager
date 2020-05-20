@@ -1,6 +1,5 @@
 package Views;
 
-import Models.Human;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,7 +16,6 @@ public class HomeView extends Jframe {
     public JButton settingsButton,familyTreeButton,tasksButton,shoppingCartButton;
 
     public String username;
-
     @Override
     public JLabel getExit() {
         return this.exit;

@@ -1,58 +1,39 @@
 package Views;
 
-import Models.Child;
 import Models.Human;
-import Models.User;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.*;
 import java.util.Scanner;
 
 import static Models.Gender.getGenderById;
 import static Views.MyProfileChildView.getChild;
-import static Views.StartView.init_Exit_Minimize;
 
-public class showProfileByIdView extends Jframe {
+
+public class showProfileByIdView extends BaseForHomeSeqView {
     public String myUsername, watchedUsername;
     public Human human;
     public JLabel imgContainer;
     public JLabel nameLabel,usernameLabel;
-    public JLabel genderLabel,birthdayLabel,relationLabel,bioLabel;
+    public JLabel genderLabel,birthdayLabel,relationLabel;
+    public JTextArea bioLabel;
 
-    public JLabel exit, minimize;
-    public Border frameExMin;
 
-    @Override
-    public JLabel getExit() {
-        return exit;
-    }
 
     @Override
-    public JLabel getMinimize() {
-        return minimize;
+    public String getUsername(){
+        return this.myUsername;
     }
 
     public showProfileByIdView(String myUsername, String watchedUsername,boolean amIParent,boolean isHeParent) {
         this.myUsername = myUsername;
         this.watchedUsername = watchedUsername;
-        Font font = new Font("Arial", Font.BOLD, 40);
-        setUndecorated(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setLayout(null);
+
         getContentPane().setBackground(new Color(122, 205, 19));
 
-        frameExMin = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        exit = new JLabel("X");
-        minimize = new JLabel("-");
-        init_Exit_Minimize(getWidth() - 70, 0, 35, exit, minimize, frameExMin, true);//prevent code replication
         human=getUserData(watchedUsername);
         imgContainer=new JLabel();
         if(human.image==null){
@@ -73,8 +54,6 @@ public class showProfileByIdView extends Jframe {
 
 
         add(imgContainer);
-        add(minimize);
-        add(exit);
         setVisible(true);
     }
 
@@ -134,18 +113,23 @@ public class showProfileByIdView extends Jframe {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while(myScan.hasNextLine())
-            bioContent.append(myScan.nextLine());
+        while(myScan.hasNextLine()) {
+            bioContent.append(myScan.nextLine()+'\n');
+        }
         JLabel bio=new JLabel("Bio:");
         bio.setFont(f);
         bio.setForeground(Color.blue);
         bio.setBounds(getWidth()/2+100,360,50,30);
-        bioLabel=new JLabel(bioContent.toString());
+        bioLabel=new JTextArea(bioContent.toString());
         bioLabel.setFont(f);
-        bioLabel.setBackground(new Color(122, 205, 119));
+        bio.setVerticalTextPosition(0);
+        bio.setHorizontalTextPosition(0);
+        bioLabel.setBackground(new Color(122, 5, 69));
         bioLabel.setForeground(Color.blue);
         bioLabel.setBounds(getWidth()/2+100,400,400,400);
         bioLabel.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.blue));
+        bioLabel.setEditable(false);
+
 
         myScan.close();
         add(bio);

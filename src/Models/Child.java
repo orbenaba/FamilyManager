@@ -19,4 +19,6 @@ public class Child extends Human {
         this.isSingle = isSingle;
     }
 
+    public Child(){
+    }
 }
