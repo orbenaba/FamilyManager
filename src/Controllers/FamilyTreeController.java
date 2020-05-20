@@ -54,14 +54,20 @@ public class FamilyTreeController {
         public void actionPerformed(ActionEvent e) {
             Object src = e.getSource();
             TreeNode clickedButton = null;
+            boolean clickedOnParent=false;
             for (TreeNode button : ftview.children) {
-                if (src == button.button)
+                if (src == button.button) {
                     clickedButton = button;
+                    clickedOnParent=true;
+                    break;
+                }
             }
             if (clickedButton == null) {
                 for (TreeNode button : ftview.parents) {
-                    if (src == button.button)
+                    if (src == button.button) {
                         clickedButton = button;
+                        break;
+                    }
                 }
             }
             myUsername = ftview.username;
@@ -72,7 +78,7 @@ public class FamilyTreeController {
                 } else
                     new MyProfileChildController(new MyProfileChildView(ftview.username));
             } else
-                new showProfileByIdController(new showProfileByIdView(myUsername, usernameProfile));
+                new showProfileByIdController(new showProfileByIdView(myUsername, usernameProfile,ftview.isParent,clickedOnParent));
             ftview.dispose();
         }
     }
