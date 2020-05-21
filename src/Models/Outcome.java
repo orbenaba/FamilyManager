@@ -8,5 +8,5 @@ public class Outcome {
     public String username;//connect with family class
     public double price;
     public Date purchasedDate;//presents the date with seconds
-    public String description;//maximum 100 chars
+    public int description;/**Saving the description in a file whose name is "id.txt" in Outcomes directory*/
 }

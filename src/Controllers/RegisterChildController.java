@@ -112,7 +112,7 @@ public class RegisterChildController extends RegisterHumanController {
                     ps.setBoolean(12, false);//isLimited
 
                     if (ps.executeUpdate() != 0) {
-                        mappingTextareaIntoFile(username, rview.bio);//saving bio in file
+                        mappingTextareaIntoFile(username, rview.bio,"Biographies");//saving bio in file
  //                       Child child = new Child(pass,username,firstname,genderId,familyUsername,bioNameFile,rview.imagePath,birthday,status,isSingle);
                         /**Needs to update the counter*/
                         String updateCounter="UPDATE family SET Counter=Counter+1 WHERE Username= ?";

@@ -27,6 +27,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         title.setForeground(Color.white);
         title.setFont(new Font("Arial", Font.ITALIC,50));
         title.setBounds(getWidth()/2-300,20,600,60);
+        title.setForeground(new Color(176, 221, 252));
         /**Out comes panel*/
         outcomesPanel=new JPanel();
         outcomesPanel.setBackground(new Color(176, 221, 252));

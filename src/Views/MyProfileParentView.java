@@ -118,7 +118,7 @@ public class MyProfileParentView extends BaseForHomeSeqView {
         /***/
         bioArea=new JTextArea();
         StringBuilder bioContent=new StringBuilder();
-        File file=new File(parent.username+".txt");
+        File file=new File("Biographies\\"+username+".txt");
         Scanner myScan= null;
         try {
             myScan = new Scanner(file);

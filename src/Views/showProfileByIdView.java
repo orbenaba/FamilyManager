@@ -107,7 +107,7 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         /***/
         /***/
         StringBuilder bioContent=new StringBuilder();
-        File file=new File(watchedUsername+".txt");
+        File file=new File("Biographies\\"+watchedUsername+".txt");
         Scanner myScan= null;
         try {
             myScan = new Scanner(file);

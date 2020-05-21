@@ -265,9 +265,10 @@ public class RegisterHumanView extends Jframe {
 
    //Functionality
     //Returns the name of the text file
-    public static String mappingTextareaIntoFile(String username,JTextArea bio) {
+    public static String mappingTextareaIntoFile(Object username,JTextArea bio,String directory) {
         try {
-            FileWriter fileWriter=new FileWriter(username+".txt",false);
+            File file = new File(directory+"\\"+username+".txt");
+            FileWriter fileWriter=new FileWriter(file,false);
             fileWriter.write(bio.getText());
             fileWriter.close();
         } catch (IOException e) {

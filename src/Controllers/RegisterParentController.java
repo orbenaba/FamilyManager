@@ -142,17 +142,19 @@ public class RegisterParentController extends RegisterHumanController {
                         ps.setBoolean(11, false);//isLimited
 
                         if (ps.executeUpdate() != 0) {
-                            mappingTextareaIntoFile(username, rview.bio);//saving bio in file
+                            mappingTextareaIntoFile(username, rview.bio,"Biographies");//saving bio in file
                             //Parent parent = new Parent(pass,username,firstname,genderId,isMarried,familyUsername,birthday,jobName,salary);
                             /**Needs to update the counter*/
                             String updateCounter="UPDATE family SET Counter=Counter+1 WHERE Username= ?";
                             ps=con.prepareStatement(updateCounter);
                             ps.setString(1,familyUsername);
                             ps.executeUpdate();
+                            con.close();
                             new HomeController(new HomeView(rview.username.getText()));
                             rview.dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "Error!!!");
+                            con.close();
                         }
 
                     } catch (SQLException ex) {
