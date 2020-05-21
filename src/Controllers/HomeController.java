@@ -39,6 +39,7 @@ public class HomeController {
         PreparedStatement ps;
         ResultSet rs;
         String query = "SELECT Salary FROM human WHERE Username=?";
+        System.out.println("Username= "+username);
         boolean ret = false;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");

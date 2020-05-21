@@ -1,11 +1,12 @@
 package Models;
 
-import java.util.Calendar;
+
+import java.sql.Date;
 
 public class Outcome {
     protected int id;//an identifier of the object
     public String username;//connect with family class
-    public int price;
-    public Calendar purchasedDate;//presents the date with seconds
-    public String desciptionFileName;//maximum 100 chars
+    public double price;
+    public Date purchasedDate;//presents the date with seconds
+    public String description;//maximum 100 chars
 }

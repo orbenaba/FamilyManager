@@ -73,7 +73,8 @@ public class showProfileByIdView extends BaseForHomeSeqView {
                 con.close();
                 return getChild(username);
             }
-            // return getParent(username);
+            con.close();
+            return Views.MyProfileParentView.getParent(username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
