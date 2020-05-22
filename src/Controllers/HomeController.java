@@ -1,7 +1,5 @@
 package Controllers;
 
-import Models.Child;
-import Models.Parent;
 import Views.*;
 
 import java.awt.event.ActionEvent;
@@ -78,7 +76,7 @@ public class HomeController {
     class TasksAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new TasksController(new TasksView(homeView.username));
+            new TasksListController(new TasksListView(homeView.username));
             homeView.dispose();
         }
     }

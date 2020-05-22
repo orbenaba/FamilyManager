@@ -5,9 +5,9 @@ import Models.Outcome;
 import Models.ShoppingCart;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ShoppingCartView extends BaseForHomeSeqView {
@@ -18,7 +18,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public JButton addOutcome;
     public JLabel totalOutcomes;
 
-    public JList<JButton> outcomeButtons;
+    public JList<RowInShoppingCart> outcomeButtons;
 
 
     public JScrollPane outcomeScroller;
@@ -57,13 +57,13 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
         /**Out comes panel*/
         outcomesPanel = new JPanel();
-        outcomesPanel.setLayout(new GridLayout(0, 1, 5, 10));
-        outcomeButtons = convertListToButtons(shoppingCart.getOutcomes());
+        outcomesPanel.setLayout(new GridLayout(0, 3, 0, 15));
+        convertListToButtons(shoppingCart.getOutcomes());
         outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
         outcomeScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
         /**Increasing the speed of the scrolling:*/
-        outcomeScroller.getVerticalScrollBar().setUnitIncrement(16);
+        outcomeScroller.getVerticalScrollBar().setUnitIncrement(12);
 
 
         add(outcomeScroller);
@@ -80,33 +80,57 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
 
 
-    public JList<JButton> convertListToButtons(LinkedList<Outcome> objects) {
+    public void convertListToButtons(LinkedList<Outcome> outcomes) {
         int i = 0;
-        JList<JButton> buttons = new JList<>();
-        for (Outcome ob : objects) {
-            JButton btn = new JButton(ob.title);
-            btn.setPreferredSize(new Dimension(1000, 100));
-            buttons.add(btn);
-            outcomesPanel.add(btn, BorderLayout.CENTER);
+        outcomeButtons = new JList<RowInShoppingCart>();
+        Font f=new Font("Arial",Font.ITALIC,30);
+        int red=255,green=31,blue=31;
+        for (Outcome oc : outcomes) {
+            RowInShoppingCart row=new RowInShoppingCart(oc);
+            row.title.setPreferredSize(new Dimension(300, 100));
+            row.title.setVerticalTextPosition(SwingConstants.CENTER);
+            row.title.setHorizontalTextPosition(SwingConstants.CENTER);
+
+            Color currentRowColor=new Color(((red+=15)%100)+100,((green+=25)%100)+100,48);
+
+
+            row.title.setFont(f);
+            row.edit.setFont(f);
+            row.delete.setFont(f);
+
+            row.title.setBackground(currentRowColor);
+            row.delete.setBackground(currentRowColor);
+            row.edit.setBackground(currentRowColor);
+
+
+
+
+
+            outcomesPanel.add(row.title, BorderLayout.CENTER);
+            outcomesPanel.add(row.delete, BorderLayout.CENTER);
+            outcomesPanel.add(row.edit, BorderLayout.CENTER);
             i++;
-            System.out.println(ob.title);
+            System.out.println(oc.title);
         }
-        return buttons;
     }
 
 
-    private class RowInShoppingCart{
-        JButton title,edit,delete;
-        public RowInShoppingCart(JButton title, JButton edit, JButton delete) {
+    public class RowInShoppingCart{
+        JButton title;
+        JButton edit,delete;
+        Outcome outcome;
+        public RowInShoppingCart(JButton title, JButton edit, JButton delete,Outcome outcome) {
             this.title = title;
             this.edit = edit;
             this.delete = delete;
+            this.outcome=outcome;
+        }
+        public RowInShoppingCart(Outcome outcome) {
+            title=new JButton(outcome.title);
+            edit=new JButton("Edit");
+            delete=new JButton("Delete");
+            this.outcome=outcome;
         }
 
-        public RowInShoppingCart() {
-            title=new JButton();
-            edit=new JButton();
-            delete=new JButton();
-        }
     }
 }

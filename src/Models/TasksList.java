@@ -3,16 +3,16 @@ package Models;
 import java.sql.*;
 import java.util.LinkedList;
 
-public class ShoppingCart {
+public class TasksList {
     public String familyUsername;
-    public LinkedList<Outcome> outcomes;
+    public LinkedList<Task> tasks;
 
-    public ShoppingCart(String username) {
-        outcomes=new LinkedList<>();
+    public TasksList(String username) {
+        tasks=new LinkedList<>();
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
-        String query="SELECT*FROM outcome WHERE Username=" +
+        String query="SELECT*FROM task WHERE username=" +
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
 
@@ -22,8 +22,8 @@ public class ShoppingCart {
             ps.setString(1,username);
             rs=ps.executeQuery();
             while(rs.next()){
-                Outcome outcome=new Outcome(rs.getInt("id"),rs.getInt("Price"),rs.getDate("PurchasedDate"),rs.getString("Username"),rs.getString("Title"));
-                outcomes.add(outcome);
+                Task task=new Task(rs.getInt("id"),rs.getDate("executedDate"),rs.getString("username"),rs.getString("title"));
+                tasks.add(task);
             }
             query="SELECT FamilyUsername FROM human WHERE Username = ?";
             ps=con.prepareStatement(query);
@@ -39,14 +39,9 @@ public class ShoppingCart {
         }
 
     }
-    public int calculateShoppingCart(){
-        int sum=0;
-        for(Outcome c : outcomes)
-            sum+=c.price;
-        return sum;
-    }
 
-    public LinkedList<Outcome> getOutcomes() {
-        return outcomes;
+
+    public LinkedList<Task> getTasks() {
+        return tasks;
     }
 }
