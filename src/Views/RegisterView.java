@@ -12,24 +12,17 @@ import static Views.StartView.init_Exit_Minimize;
 
 public class RegisterView extends Jframe {
     JPanel p1,p2;
-    public JLabel title,exit,minimize,fnameLabel,unameLabel,passLabel,passConfLabel,phoneLabel,genderLabel,imageLabel,loginContext;
+    public JLabel title,fnameLabel,unameLabel,passLabel,passConfLabel,phoneLabel,genderLabel,imageLabel,loginContext;
     public JTextField username,fullname,phone,gender;
     public JPasswordField createPassword,confirmPassword;
-    public Border frameTitle,frameExMin, frameTextfield;
+    public Border frameTitle, frameTextfield;
     public JRadioButton male,female;
     public JButton register,selectImage;
     //create a variable to set the image path in it
     public String image_path=null;
-    @Override
-    public JLabel getMinimize(){
-        return this.minimize;
-    }
-    @Override
-    public JLabel getExit(){
-        return this.exit;
-    }
     public RegisterView()
     {
+        super(700);
         //get rid of the ugly frame which is given by default
         setUndecorated(true);
         setSize(700,650);
@@ -47,10 +40,6 @@ public class RegisterView extends Jframe {
 
 
         addRegisterForm();
-        exit=new JLabel("X");
-        minimize=new JLabel("-");
-        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin,true);//prevent code replication
         addRegisterForm();
 
 
@@ -59,8 +48,6 @@ public class RegisterView extends Jframe {
 
         add(title);
         add(register);
-        add(exit);
-        add(minimize);
         add(fnameLabel);
         add(unameLabel);
         add(passLabel);
@@ -168,16 +155,6 @@ public class RegisterView extends Jframe {
         loginContext.setBounds(150,530,185,20);
         loginContext.setForeground(Color.BLUE);
     }
-
-
-    //Listeners:
-    public static void addMinimizeAction(MouseAdapter mal,JLabel minimize) {
-        minimize.addMouseListener(mal);
-    }
-    public static void addExitAction(MouseAdapter mal,JLabel exit){
-        exit.addMouseListener(mal);
-    }
-
 
 
     public void addUsernameFocus(FocusAdapter mal) {

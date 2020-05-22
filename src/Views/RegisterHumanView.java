@@ -21,11 +21,10 @@ import java.util.Calendar;
 import java.util.List;
 
 
-import static Views.StartView.init_Exit_Minimize;
 
 
 public class RegisterHumanView extends Jframe {
-    public JLabel exit, minimize, imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel;
+    public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel;
     public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
 
     public Border frameExMin;
@@ -48,17 +47,9 @@ public class RegisterHumanView extends Jframe {
     public String imagePath=null;
 
 
-    @Override
-    public JLabel getMinimize() {
-        return this.minimize;
-    }
-
-    @Override
-    public JLabel getExit() {
-        return this.exit;
-    }
 
     public RegisterHumanView() {
+        super(850);
         //Changing the caret in the entire text fields
         UIManager.put("TextField.caretForeground", new ColorUIResource(Color.red));
 
@@ -70,14 +61,11 @@ public class RegisterHumanView extends Jframe {
         setLocationRelativeTo(null);
         setLayout(null);
         getContentPane().setBackground(Color.black);
-        exit = new JLabel("X");
-        minimize = new JLabel("-");
-        frameExMin = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-        init_Exit_Minimize(getWidth() - 85, 15, 35, exit, minimize, frameExMin, false);//prevent code replication
+
         image = new ImageIcon(getClass().getResource("/Icons/profile2.png"));
         imageContainer = new JLabel(image);
         imageContainer.setBounds(300, 10, 250, 250);
-        addImage = new CircleButton("");
+        addImage = new CircleButton("",Color.black);
         addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
         firstNameLabel = new JLabel("*First name:");
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
@@ -165,8 +153,6 @@ public class RegisterHumanView extends Jframe {
         add(firstName);
         add(imageContainer);
         add(addImage);
-        add(exit);
-        add(minimize);
         setVisible(true);
     }
 

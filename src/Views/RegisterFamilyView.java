@@ -14,8 +14,6 @@ import static Views.StartView.init_Exit_Minimize;
 
 public class RegisterFamilyView extends Jframe {
     public Family family;
-    public JLabel exit,minimize;
-    public Border frameExMin;
     JPanel p1,p2;
     JLabel title;
     public JTextField username,lastname;
@@ -23,16 +21,10 @@ public class RegisterFamilyView extends Jframe {
     public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel,loginContext;
     public JButton create;
 
-    @Override
-    public JLabel getMinimize(){
-        return this.minimize;
-    }
-    @Override
-    public JLabel getExit(){
-        return this.exit;
-    }
+
     public RegisterFamilyView()
     {
+        super(700);
         //get rid of the ugly frame which is given by default
         setUndecorated(true);
         setSize(700,650);
@@ -44,10 +36,7 @@ public class RegisterFamilyView extends Jframe {
         decorateBackground(p1,p2,this,getWidth()-30,getHeight());
         title=new JLabel("Create a family account!");
         addTitle(title,170,15,360,80);
-        exit=new JLabel("X");
-        minimize=new JLabel("-");
-        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin,true);//prevent code replication
+
 
         lastnameLabel=new JLabel("Last name:");
         usernameLabel=new JLabel("Username:");
@@ -83,8 +72,6 @@ public class RegisterFamilyView extends Jframe {
         add(username);
         add(createPassword);
         add(confirmPassword);
-        add(exit);
-        add(minimize);
         add(title);
         add(p1);
         add(p2);

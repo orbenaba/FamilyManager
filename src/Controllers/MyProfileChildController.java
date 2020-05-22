@@ -1,6 +1,5 @@
 package Controllers;
 
-import Views.HomeView;
 import Views.MyProfileChildView;
 import Views.StartView;
 import com.company.CircleButton;
@@ -13,9 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 
 
@@ -51,7 +47,7 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             mpcview.imageContainer=new JLabel(image);
             mpcview.imageContainer.setBounds(mpcview.getWidth()/2-239, 20, 478, 300);
 
-            mpcview.addImage=new CircleButton("");
+            mpcview.addImage=new CircleButton("",new Color(219, 102, 0));
             mpcview.addImage.setBounds(mpcview.getWidth()/2-39, 160, 78, 78);//Covers the plus that belongs to the image
             mpcview.add(mpcview.imageContainer);
             mpcview.add(mpcview.addImage);

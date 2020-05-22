@@ -6,16 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
 
-public class HomeController {
+public class HomeController extends JframeController{
     private HomeView homeView;
     public HomeController(HomeView homeView){
+        super(homeView);
         this.homeView=homeView;
 
-        addMinimizeAction(new RegisterController.MinimizeListeners(homeView,true),homeView.minimize);
-        addExitAction(new RegisterController.ExitListeners(homeView,true),homeView.exit);
         homeView.addSettingsAction(new SettingsAction());
         homeView.addFamilyTreeAction(new FamilyTreeAction());
         homeView.addShoppingCartAction(new ShoppingCartAction());

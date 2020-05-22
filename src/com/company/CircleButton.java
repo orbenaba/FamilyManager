@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.org.apache.xalan.internal.res.XSLTErrorResources;
+
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -13,9 +15,10 @@ public class CircleButton extends JButton{
 
     private boolean mouseOver = false;
     private boolean mousePressed = false;
-
-    public CircleButton(String text){
+    private Color background;
+    public CircleButton(String text,Color background){
         super(text);
+        this.background=background;
         setFocusPainted(false);
         setBorderPainted(false);
         setOpaque(false);
@@ -80,7 +83,8 @@ public class CircleButton extends JButton{
         int radius = diameter/2;
         if(mouseOver)
             g.setColor(Color.white);
-
+        else
+            g.setColor(background);
       /*  if(mousePressed){
             g.setColor(Color.LIGHT_GRAY);
         }
@@ -97,7 +101,7 @@ public class CircleButton extends JButton{
         }*/
         g.drawOval(getWidth()/2 - radius, getHeight()/2 - radius, diameter, diameter);
 
-        g.setColor(Color.BLACK);
+        g.setColor(background);
         g.setFont(getFont());
         FontMetrics metrics = g.getFontMetrics(getFont());
         int stringWidth = metrics.stringWidth(getText());

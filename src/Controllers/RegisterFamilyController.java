@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.LoginView;
 import Views.RegisterFamilyView;
@@ -17,16 +16,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static Controllers.RegisterController.isUsernameExist;
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
 
-public class RegisterFamilyController {
+public class RegisterFamilyController extends JframeController{
     private RegisterFamilyView rfview;
 
     public RegisterFamilyController(RegisterFamilyView rfview) {
+        super(rfview);
         this.rfview = rfview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(rfview,true), rfview.minimize);
-        addExitAction(new RegisterController.ExitListeners(rfview,true), rfview.exit);
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
         rfview.addLoginContextListener(new LoginContextListener());

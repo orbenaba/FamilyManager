@@ -47,11 +47,11 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         child = getChild(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
-        imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
+        imageContainer.setBounds(getWidth()/2-239+125, 20-10, 478, 300);
         if (child.image == null) {
             imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
-            addImage = new CircleButton("");
-            addImage.setBounds(448, 150, 78, 78);//Covers the plus that belongs to the image
+            addImage = new CircleButton("",new Color(219, 102, 0));
+            addImage.setBounds(getWidth()/2-39, 160+15, 78, 78);//Covers the plus that belongs to the image
             add(imageContainer);
             add(addImage);
         } else {

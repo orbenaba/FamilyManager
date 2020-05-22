@@ -21,13 +21,13 @@ import java.sql.SQLException;
 import static Views.RegisterView.*;
 import static java.sql.Types.NULL;
 
-public class RegisterController {
+public class RegisterController extends JframeController{
     private RegisterView rview;
 
     public RegisterController(RegisterView rview) {
+        super(rview);
         this.rview = rview;
-        addMinimizeAction(new MinimizeListeners(rview,true), rview.minimize);
-        addExitAction(new ExitListeners(rview,true), rview.exit);
+
         rview.addUsernameFocus(new FocusUsernameListener());
         rview.addPasswordFocus(new FocusPasswordListener());
         rview.addConfirmPasswordFocus(new FocusPasswordListener());
@@ -35,62 +35,7 @@ public class RegisterController {
         rview.addRegisterListener(new RegisterExecutable());
         changeColor(new changeButtonColor(rview.register),rview.register);
         rview.enforcePhone(new enforcingPhoneDigits());
-
         rview.addSelectListener(new SelectImageAction());
-    }
-
-    static class MinimizeListeners extends MouseAdapter {
-        private Jframe view;
-        private boolean flag;
-        public MinimizeListeners(JFrame view,boolean flag) {
-            this.view = (Jframe) view;
-            this.flag=flag;
-        }
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            view.setState(Jframe.ICONIFIED);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            view.getMinimize().setBorder(whiteMinimizeB);
-            view.getMinimize().setForeground(Color.white);
-            view.getMinimize().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            Border blackMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);
-            view.getMinimize().setBorder(blackMinimizeB);
-            view.getMinimize().setForeground(flag==true?Color.black:Color.green);
-        }
-    }
-
-    static class ExitListeners extends MouseAdapter {
-        private Jframe view;
-        private boolean flag;
-        public ExitListeners(JFrame view,boolean flag) {
-            this.view = (Jframe) view;
-            this.flag=flag;
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            System.exit(0);
-        }
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            Border whiteExitB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.white);
-            view.getExit().setBorder(whiteExitB);
-            view.getExit().setForeground(Color.white);
-            view.getExit().setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            view.getExit().setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
-            view.getExit().setForeground(flag==true?Color.black:Color.green);
-        }
     }
 
         class FocusUsernameListener extends FocusAdapter {

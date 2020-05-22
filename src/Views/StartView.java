@@ -12,20 +12,11 @@ import static java.awt.Font.BOLD;
 
 public class StartView extends Jframe {
     JPanel [][]matrixPanels;//cubes matrix background
-    public JLabel exit,minimize;
-    public Border frameExMin;
     public JLabel title;//this intended to separate between all the characters in the title
     public JLabel login,register;
-    @Override
-    public JLabel getMinimize(){
-        return this.minimize;
-    }
-    @Override
-    public JLabel getExit(){
-        return this.exit;
-    }
 
     public StartView(){
+        super(800);
         setSize(800,800);
         setTitle("Start");
         setLocationRelativeTo(null);//Center of screen's user
@@ -33,11 +24,7 @@ public class StartView extends Jframe {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//kill current process
         setUndecorated(true);//get rid of the ugly frame
         initMatrix(0,0,getWidth()/8,getHeight()/8);
-        //add exit and minimize labels
-        exit=new JLabel("X");
-        minimize=new JLabel("-");
-        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin,true);//prevent code replication
+
         initTitle(20,50,55);
         init_Login_Register();
 
@@ -45,8 +32,6 @@ public class StartView extends Jframe {
         add(login);
         add(register);
         add(title);
-        add(exit);
-        add(minimize);
         addMatrixPanels();
         setVisible(true);
     }
@@ -104,14 +89,6 @@ public class StartView extends Jframe {
         register.setFont(basic);
         login.setBounds(50,600,800,50);
         login.setFont(basic);
-    }
-
-    //Add listener to minimize and exit labels via Start Controller
-    public void addMinimizeAction(MouseAdapter mal) {
-        minimize.addMouseListener(mal);
-    }
-    public void addExitAction(MouseAdapter mal){
-        exit.addMouseListener(mal);
     }
     public void addRegisterAction(MouseAdapter mal){
         register.addMouseListener(mal);

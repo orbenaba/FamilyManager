@@ -51,7 +51,7 @@ public class MyProfileParentView extends BaseForHomeSeqView {
         imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
         if (parent.image == null) {
             imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
-            addImage = new CircleButton("");
+            addImage = new CircleButton("",new Color(219, 102, 0));
             addImage.setBounds(448, 150, 78, 78);//Covers the plus that belongs to the image
             add(imageContainer);
             add(addImage);

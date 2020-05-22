@@ -16,8 +16,6 @@ import java.util.HashMap;
 import static Views.StartView.init_Exit_Minimize;
 
 public class FamilyTreeView extends BaseForHomeSeqView{
- /*   public JLabel exit,minimize;
-    public Border frameExMin;*/
     public String username;
     public Tree familyTree;
     public ArrayList<TreeNode> parents;

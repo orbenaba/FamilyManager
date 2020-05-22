@@ -8,16 +8,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
-
-public class BaseForHomeSeqController {
+public class BaseForHomeSeqController extends JframeController{
     private BaseForHomeSeqView baseView;
 
     public BaseForHomeSeqController(BaseForHomeSeqView baseView){
+        super(baseView);
         this.baseView=baseView;
-        addMinimizeAction(new RegisterController.MinimizeListeners(baseView, true), baseView.minimize);
-        addExitAction(new RegisterController.ExitListeners(baseView, true), baseView.exit);
         baseView.addBackHomeListener(new BackToHomeListener());
     }
     class BackToHomeListener extends MouseAdapter {
