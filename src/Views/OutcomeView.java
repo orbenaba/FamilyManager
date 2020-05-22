@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 public class OutcomeView extends BaseForHomeSeqView {
     public String username;
     public JTextArea description;
-    public JLabel priceLabel,title,descriptionLabel,dateLabel;
-    public JTextField price;
+    public JLabel priceLabel,title,descriptionLabel,dateLabel,titleLabel;
+    public JTextField price,titleText;
     public JButton addOutcome;
 
 
@@ -36,12 +36,32 @@ public class OutcomeView extends BaseForHomeSeqView {
         priceLabel=new JLabel("Price:");
         priceLabel.setFont(new Font("Arial",Font.ITALIC,30));
         priceLabel.setForeground(new Color(176, 221, 252));
-        priceLabel.setBounds(getWidth()/2-200,200,100,50);
+        priceLabel.setBounds(getWidth()/2-220,200,100,50);
         price=new JTextField();
         price.setFont(new Font("Arial",Font.ITALIC,30));
         price.setBackground(new Color(176, 221, 252));
         price.setForeground(new Color(4, 62, 103));
-        price.setBounds(getWidth()/2-100,200,300,50);
+        price.setBounds(getWidth()/2-120,200,300,50);
+
+
+
+
+
+
+        titleLabel=new JLabel("Title:");
+        titleLabel.setFont(new Font("Arial",Font.ITALIC,30));
+        titleLabel.setForeground(new Color(176, 221, 252));
+        titleLabel.setBounds(getWidth()/2+220,200,100,50);
+        titleText=new JTextField();
+        titleText.setFont(new Font("Arial",Font.ITALIC,30));
+        titleText.setBackground(new Color(176, 221, 252));
+        titleText.setForeground(new Color(4, 62, 103));
+        titleText.setBounds(getWidth()/2+320,200,300,50);
+
+
+
+
+
 
 
         descriptionLabel=new JLabel("Description:");
@@ -72,6 +92,8 @@ public class OutcomeView extends BaseForHomeSeqView {
 
 
 
+        add(titleLabel);
+        add(titleText);
         add(dateLabel);
         add(addOutcome);
         add(description);

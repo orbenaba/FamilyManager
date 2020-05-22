@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ShoppingCart {
     public String familyUsername;
-    public List<Outcome> outcomes;
+    public LinkedList<Outcome> outcomes;
 
     public ShoppingCart(String username) {
         outcomes=new LinkedList<>();
@@ -23,7 +23,7 @@ public class ShoppingCart {
             ps.setString(1,username);
             rs=ps.executeQuery();
             while(rs.next()){
-                Outcome outcome=new Outcome(rs.getInt("id"),rs.getInt("Price"),rs.getDate("PurchasedDate"),rs.getString("Username"));
+                Outcome outcome=new Outcome(rs.getInt("id"),rs.getInt("Price"),rs.getDate("PurchasedDate"),rs.getString("Username"),rs.getString("Title"));
                 outcomes.add(outcome);
             }
             query="SELECT FamilyUsername FROM human WHERE Username = ?";
@@ -47,4 +47,7 @@ public class ShoppingCart {
         return sum;
     }
 
+    public LinkedList<Outcome> getOutcomes() {
+        return outcomes;
+    }
 }
