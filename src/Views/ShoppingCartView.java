@@ -58,13 +58,12 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         /**Out comes panel*/
         outcomesPanel = new JPanel();
         outcomesPanel.setLayout(new GridLayout(0, 1, 5, 10));
-
-        outcomesPanel.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() + 250);
         outcomeButtons = convertListToButtons(shoppingCart.getOutcomes());
         outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
         outcomeScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
-
+        /**Increasing the speed of the scrolling:*/
+        outcomeScroller.getVerticalScrollBar().setUnitIncrement(16);
 
 
         add(outcomeScroller);
@@ -77,18 +76,37 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         addOutcome.addActionListener(mal);
     }
 
+
+
+
+
     public JList<JButton> convertListToButtons(LinkedList<Outcome> objects) {
         int i = 0;
         JList<JButton> buttons = new JList<>();
-
-        for (int j = 0; j < 10; j++)
-            for (Outcome ob : objects) {
-                JButton btn = new JButton(ob.title);
-                buttons.add(btn);
-                outcomesPanel.add(btn, BorderLayout.CENTER);
-                i++;
-                System.out.println(ob.title);
-            }
+        for (Outcome ob : objects) {
+            JButton btn = new JButton(ob.title);
+            btn.setPreferredSize(new Dimension(1000, 100));
+            buttons.add(btn);
+            outcomesPanel.add(btn, BorderLayout.CENTER);
+            i++;
+            System.out.println(ob.title);
+        }
         return buttons;
+    }
+
+
+    private class RowInShoppingCart{
+        JButton title,edit,delete;
+        public RowInShoppingCart(JButton title, JButton edit, JButton delete) {
+            this.title = title;
+            this.edit = edit;
+            this.delete = delete;
+        }
+
+        public RowInShoppingCart() {
+            title=new JButton();
+            edit=new JButton();
+            delete=new JButton();
+        }
     }
 }
