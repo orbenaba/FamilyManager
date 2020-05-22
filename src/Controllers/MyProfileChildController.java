@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 
 
@@ -146,6 +149,9 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             ps.setString(1,familyUsername);
             ps.executeUpdate();
             con.close();
+            /**Delete the bio file*/
+            File f=new File("Biographies\\"+username+".txt");
+            f.delete();
         } catch (SQLException e) {
             e.printStackTrace();
         }

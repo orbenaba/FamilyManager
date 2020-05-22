@@ -1,7 +1,6 @@
 package Controllers;
 
-import Models.Child;
-import Models.Parent;
+
 import Views.*;
 
 import javax.swing.*;

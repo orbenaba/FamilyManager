@@ -1,15 +1,28 @@
 package Views;
 
 
+import Models.ShoppingCart;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ShoppingCartView extends BaseForHomeSeqView {
+    public ShoppingCart shoppingCart;
     public String username;
     public JLabel title;
     public JPanel outcomesPanel;
     public JButton addOutcome;
+    public JLabel totalOutcomes;
+
+
+
+
+
+
+
+
+
 
     public JScrollPane outcomeScroller;
     @Override
@@ -41,6 +54,16 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         outcomeScroller.setBackground(Color.black);
         outcomesPanel.add(outcomeScroller);
 
+
+        /**Shopping cart*/
+        shoppingCart=new ShoppingCart(username);
+        totalOutcomes=new JLabel("Total outcomes: "+shoppingCart.calculateShoppingCart());
+        totalOutcomes.setForeground(new Color(4, 62, 103));
+        totalOutcomes.setFont(new Font("Arial",Font.PLAIN,30));
+        totalOutcomes.setBounds(500,120,400,40);
+
+
+
         /**Add new outcome button*/
         addOutcome=new JButton("New outcome");
         addOutcome.setFont(new Font("Arial",Font.PLAIN,30));
@@ -49,6 +72,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         addOutcome.setBounds(200,120,250,100);
 
 
+        add(totalOutcomes);
         add(addOutcome);
         add(outcomesPanel);
         add(title);
