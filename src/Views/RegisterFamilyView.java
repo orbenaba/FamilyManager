@@ -34,7 +34,6 @@ public class RegisterFamilyView extends Jframe {
     public RegisterFamilyView()
     {
         //get rid of the ugly frame which is given by default
-        setUndecorated(true);
         setSize(700,650);
         setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

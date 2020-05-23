@@ -4,7 +4,7 @@ package Models;
 import java.sql.Date;
 
 public class Outcome {
-    protected int id;//an identifier of the object
+    public int id;//an identifier of the object
     public String username,title;//connect with family class
     public int price;
     public Date purchasedDate;//presents the date with seconds

@@ -14,6 +14,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
         super(scview);
         this.scview=scview;
         scview.addOutcomeAction(new OutcomeAction());
+        scview.addDeletesListener(new DeletesListener());
     }
 
     class OutcomeAction implements ActionListener {
@@ -22,6 +23,31 @@ public class ShoppingCartController extends BaseForHomeSeqController{
         public void actionPerformed(ActionEvent e) {
             new OutcomeController(new OutcomeView(scview.username));
             scview.dispose();
+        }
+    }
+
+    class DeletesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
+            Object src = e.getSource();
+            ShoppingCartView.RowInShoppingCart clicked = null;
+            for (ShoppingCartView.RowInShoppingCart row : scview.outcomeButtons) {
+                if (src == row.delete) {
+                    clicked = row;
+                    break;
+                }
+            }
+            /**So far, we got the specific delete button which invoked*/
+            if (clicked != null) {
+                scview.shoppingCart.deleteOutcome(clicked.outcome.id);
+                /**Despite we delete the outcome from the shopping cart,
+                 * We didn't yet update the view, so in order to create nice Look&Feel,
+                 * we'll remove components*/
+                new ShoppingCartController(new ShoppingCartView(clicked.outcome.username));
+                scview.dispose();
+            }
         }
     }
 }

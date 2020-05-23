@@ -28,7 +28,6 @@ public class AreYouChildOrParentView extends Jframe {
     public AreYouChildOrParentView(String familyUsername){
         this.familyUsername=familyUsername;
         setSize(500,500);
-        setUndecorated(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(85, 246, 44));

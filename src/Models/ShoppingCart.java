@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.File;
 import java.sql.*;
 import java.util.LinkedList;
 
@@ -39,6 +40,7 @@ public class ShoppingCart {
         }
 
     }
+    /**Internal function which calculates the total outcomes which were spent*/
     public int calculateShoppingCart(){
         int sum=0;
         for(Outcome c : outcomes)
@@ -49,4 +51,27 @@ public class ShoppingCart {
     public LinkedList<Outcome> getOutcomes() {
         return outcomes;
     }
+    /**Deleting an outcome by its id form the shoppingCart*/
+    /**Returned true in case the delete was a successful operation*/
+    public boolean deleteOutcome(int id){
+        Connection con;
+        PreparedStatement ps;
+        String query="DELETE FROM outcome WHERE id = ?;";
+        try {
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps=con.prepareStatement(query);
+            ps.setInt(1,id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+            /**Deleting the file which holds the description of the outcome*/
+            File deleted=new File("Outcomes\\"+id+".txt");
+            deleted.delete();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

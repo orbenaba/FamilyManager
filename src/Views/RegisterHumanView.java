@@ -64,8 +64,7 @@ public class RegisterHumanView extends Jframe {
 
         Color color=new Color(48,48,48);
         //get rid of the ugly frame which is given by default
-        setUndecorated(true);
-        setSize(850, 750);
+        setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
