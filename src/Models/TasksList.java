@@ -1,5 +1,6 @@
 package Models;
 
+import java.io.File;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -68,5 +69,26 @@ public class TasksList {
             ex.printStackTrace();
         }
         return id;
+    }
+
+    public boolean deleteTask(int id) {
+        Connection con;
+        PreparedStatement ps;
+        String query = "DELETE FROM task WHERE id = ?;";
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+            /**Deleting the file which holds the description of the outcome*/
+            File deleted = new File("Tasks\\" + id + ".txt");
+            deleted.delete();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

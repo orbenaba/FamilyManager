@@ -16,7 +16,7 @@ public class TasksListView extends BaseForHomeSeqView {
     public JPanel tasksPanel;
     public JButton addTask;
 
-    public JList<RowInTasksList> taskButtons;
+    public LinkedList<RowInTasksList> taskButtons;
 
 
     public JScrollPane tasksScroller;
@@ -66,7 +66,7 @@ public class TasksListView extends BaseForHomeSeqView {
 
     public void convertListToButtons(LinkedList<Task> tasks) {
         int i = 0;
-        taskButtons= new JList<RowInTasksList>();
+        taskButtons= new LinkedList<RowInTasksList>();
         Font f=new Font("Arial",Font.ITALIC,30);
         int red=255,green=31,blue=31;
         for (Task oc : tasks) {
@@ -85,6 +85,7 @@ public class TasksListView extends BaseForHomeSeqView {
             tasksPanel.add(row.title, BorderLayout.CENTER);
             tasksPanel.add(row.delete, BorderLayout.CENTER);
             tasksPanel.add(row.edit, BorderLayout.CENTER);
+            taskButtons.add(row);
             i++;
             System.out.println("In TaskListPanel "+oc.title);
         }
@@ -94,11 +95,10 @@ public class TasksListView extends BaseForHomeSeqView {
     }
 
 
-
     public class RowInTasksList{
-        JButton title;
-        JButton edit,delete;
-        Task task;
+        public JButton title;
+        public JButton edit,delete;
+        public Task task;
         public RowInTasksList(JButton title, JButton edit, JButton delete,Task task) {
             this.title = title;
             this.edit = edit;
@@ -112,5 +112,16 @@ public class TasksListView extends BaseForHomeSeqView {
             this.task=task;
         }
 
+    }
+    /**Adding a listener for each delete button*/
+    public void addDeletesListener(ActionListener mal){
+        for(RowInTasksList ob : taskButtons)
+            ob.delete.addActionListener(mal);
+    }
+
+    /**Adding a listener for each edit button*/
+    public void addEditsListener(ActionListener mal){
+        for(RowInTasksList ob : taskButtons)
+            ob.edit.addActionListener(mal);
     }
 }
