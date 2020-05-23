@@ -133,9 +133,9 @@ public class LoginController extends JframeController{
                     /**The user is actually a parent/child*/
                     if (rs.next())//username and password are correct
                     {
-                        rs.close();
                         new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
+                        rs.close();
                     } else {
                         st2 = con.prepareStatement(familyQuery);
                         st2.setString(1, uname);

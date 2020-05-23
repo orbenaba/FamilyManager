@@ -24,11 +24,7 @@ public class RegisterView extends Jframe {
     {
         super(700);
         //get rid of the ugly frame which is given by default
-        setUndecorated(true);
         setSize(700,650);
-        setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(null);
         p1=new JPanel();
         p2=new JPanel();
         decorateBackground(p1,p2,this,getWidth()-30,getHeight());

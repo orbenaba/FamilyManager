@@ -16,6 +16,7 @@ public abstract class Jframe extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
+
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1, Color.black);
         exit=new JLabel("X");
         minimize=new JLabel("-");

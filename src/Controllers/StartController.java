@@ -1,5 +1,6 @@
 package Controllers;
 
+import Views.RegisterFamilyView;
 import Views.StartView;
 import Views.LoginView;
 import Views.RegisterView;
@@ -23,8 +24,7 @@ public class StartController extends JframeController{
     class RegisterListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            RegisterView rv = new RegisterView();
-            RegisterController rc=new RegisterController(rv);
+            new RegisterFamilyController(new RegisterFamilyView());
             sview.dispose();
         }
         @Override

@@ -2,8 +2,12 @@ package Controllers;
 
 import Views.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 
 
@@ -17,6 +21,7 @@ public class HomeController extends JframeController{
         homeView.addFamilyTreeAction(new FamilyTreeAction());
         homeView.addShoppingCartAction(new ShoppingCartAction());
         homeView.addTasksAction(new TasksAction());
+        homeView.addLogoffListener(new LogoffListener());
     }
 
     class SettingsAction implements ActionListener {
@@ -74,6 +79,22 @@ public class HomeController extends JframeController{
         @Override
         public void actionPerformed(ActionEvent e) {
             new TasksListController(new TasksListView(homeView.username));
+            homeView.dispose();
+        }
+    }
+
+    class LogoffListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            homeView.logOff.setBorder(BorderFactory.createMatteBorder(0,0,2,0, Color.blue));
+        }
+        @Override
+        public void mouseExited(MouseEvent e){
+            homeView.logOff.setBorder(null);
+        }
+        @Override
+        public void mouseClicked(MouseEvent e){
+            new StartController(new StartView());
             homeView.dispose();
         }
     }

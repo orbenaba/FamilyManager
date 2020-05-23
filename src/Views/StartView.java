@@ -19,10 +19,6 @@ public class StartView extends Jframe {
         super(800);
         setSize(800,800);
         setTitle("Start");
-        setLocationRelativeTo(null);//Center of screen's user
-        setLayout(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//kill current process
-        setUndecorated(true);//get rid of the ugly frame
         initMatrix(0,0,getWidth()/8,getHeight()/8);
 
         initTitle(20,50,55);

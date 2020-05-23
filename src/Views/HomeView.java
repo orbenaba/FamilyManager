@@ -6,64 +6,73 @@ import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 
 public class HomeView extends Jframe {
 
     public JButton settingsButton,familyTreeButton,tasksButton,shoppingCartButton;
-
+    public JLabel background,logOff;
     public String username;
 
+
     public HomeView(String username){
-        super(600);
+        super((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         this.username=username;
         Font font=new Font("Arial",Font.BOLD,40);
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
-        setSize(600,800);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setLayout(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);//Full screen undependable platform
+    //    setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        /**Adding background*/
+        int width=getWidth(),height=getHeight();
+
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/homeBack.jpg")));
+        background.setBounds(0,0,width,height);
+
 
         /**Private user settings*/
         settingsButton=new JButton("Settings");
-        settingsButton.setBackground(Color.black);
+        settingsButton.setBackground(Color.blue);
         settingsButton.setForeground(Color.white);
         settingsButton.setFont(font);
-        settingsButton.setBounds(10,10,250,250);
+        settingsButton.setBounds(width/2-450,height/2-300,400,250);
 
         /**Family tree*/
         familyTreeButton=new JButton("Family Tree");
-        familyTreeButton.setBackground(Color.black);
+        familyTreeButton.setBackground(Color.blue);
         familyTreeButton.setForeground(Color.white);
         familyTreeButton.setFont(font);
-        familyTreeButton.setBounds(260,10,250,250);
+        familyTreeButton.setBounds(width/2,height/2-300,400,250);
 
 
         /**Family's tasks*/
         tasksButton=new JButton("Tasks");
-        tasksButton.setBackground(Color.black);
+        tasksButton.setBackground(Color.blue);
         tasksButton.setForeground(Color.white);
         tasksButton.setFont(font);
-        tasksButton.setBounds(10,260,250,250);
+        tasksButton.setBounds(width/2-450,height/2,400,250);
 
 
         /**Family's shopping cart*/
         shoppingCartButton=new JButton("Shopping cart");
-        shoppingCartButton.setBackground(Color.black);
+        shoppingCartButton.setBackground(Color.blue);
         shoppingCartButton.setForeground(Color.white);
         shoppingCartButton.setFont(font);
-        shoppingCartButton.setBounds(260,260,250,250);
+        shoppingCartButton.setBounds(width/2,height/2,400,250);
+        /**Adding an option to log off in homeView*/
+        logOff=new JLabel("Log off");
+        logOff.setFont(new Font("David",Font.ITALIC,35));
+        logOff.setForeground(new Color(0, 30, 255));
+        logOff.setBounds(width/2-65,750,130,40);
 
 
 
-
-
+        add(logOff);
         add(settingsButton);
         add(familyTreeButton);
         add(shoppingCartButton);
         add(tasksButton);
-
+        add(background);
         setVisible(true);
     }
     public void addSettingsAction(ActionListener mal){
@@ -82,6 +91,8 @@ public class HomeView extends Jframe {
         tasksButton.addActionListener(mal);
     }
 
-
+    public void addLogoffListener(MouseAdapter mal){
+        logOff.addMouseListener(mal);
+    }
 
 }
