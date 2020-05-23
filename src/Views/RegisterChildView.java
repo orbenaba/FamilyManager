@@ -25,11 +25,11 @@ public class RegisterChildView extends RegisterHumanView {
         status=new JTextField();
         status.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.green));
 
-        status.setBounds(490,350,200,40);
-        statusLabel.setBounds(340,350,150,40);
+        status.setBounds(570,420,200,40);
+        statusLabel.setBounds(460,420,150,40);
 
         isSingle.setHorizontalTextPosition(SwingConstants.LEFT);
-        isSingle.setBounds(620,550,180,40);
+        isSingle.setBounds(620,610,180,40);
 
         Font f=new Font("Arial",Font.BOLD,25);
         status.setFont(f);

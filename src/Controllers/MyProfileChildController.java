@@ -44,10 +44,10 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             /**Adding new components*/
             ImageIcon image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
             mpcview.imageContainer=new JLabel(image);
-            mpcview.imageContainer.setBounds(mpcview.getWidth()/2-239, 20, 478, 300);
-
+            mpcview.imageContainer.setBounds(mpcview.width/2-130, 22, 250, 300);
             mpcview.addImage=new CircleButton("",new Color(219, 102, 0));
-            mpcview.addImage.setBounds(mpcview.getWidth()/2-39, 210, 78, 78);//Covers the plus that belongs to the image
+            mpcview.addImage.setBounds(mpcview.width/2-40,190, 78, 78);//Covers the plus that belongs to the image            add(imageContainer);
+
             mpcview.add(mpcview.imageContainer);
             mpcview.add(mpcview.addImage);
             mpcview.addImageAction(new AddImage_action());
@@ -68,7 +68,7 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             if (fileState == JFileChooser.APPROVE_OPTION) {
                 String imagePath;
                 imagePath=chooser.getSelectedFile().getAbsolutePath();
-                int width = mpcview.imageContainer.getWidth(), height = mpcview.imageContainer.getHeight();
+                int width = mpcview.imageContainer.getWidth()+150, height = mpcview.imageContainer.getHeight();
                 int x=mpcview.imageContainer.getX(),y=mpcview.imageContainer.getY();
                 //Remove old components- profile image and circle button
                 mpcview.getContentPane().remove(mpcview.imageContainer);
@@ -86,7 +86,7 @@ public class MyProfileChildController extends BaseForHomeSeqController {
                 //Adding the bin trash near the selected picture
                 mpcview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
                 mpcview.removePhotoLabel=new JLabel(mpcview.removePhoto);
-                mpcview.removePhotoLabel.setBounds(x+width+50,y,40,50);
+                mpcview.removePhotoLabel.setBounds(x+width+20,y,40,50);
                 mpcview.add(mpcview.removePhotoLabel);
                 mpcview.add(mpcview.imageContainer);
                 mpcview.addRemovePhotoListener(new RemovePhotoListener());

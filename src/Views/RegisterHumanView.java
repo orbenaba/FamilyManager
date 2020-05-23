@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
+import static Models.Gender.getGenders;
 
 
 public class RegisterHumanView extends Jframe {
@@ -40,7 +40,7 @@ public class RegisterHumanView extends Jframe {
     public Calendar calendar;
     //Bio
     public JTextArea bio;
-    //public JScrollPane pane;
+    public JScrollPane pane;
     //Submit
     public JButton create;
     //image path
@@ -49,38 +49,40 @@ public class RegisterHumanView extends Jframe {
 
 
     public RegisterHumanView() {
-        super(850);
+        super(((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()));
         //Changing the caret in the entire text fields
         UIManager.put("TextField.caretForeground", new ColorUIResource(Color.red));
-
+        setExtendedState(MAXIMIZED_BOTH);
         Color color=new Color(48,48,48);
-        //get rid of the ugly frame which is given by default
-        setSize(850, 750);
+        int width=getWidth(),height=getHeight();
+
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.black);
 
         image = new ImageIcon(getClass().getResource("/Icons/profile2.png"));
         imageContainer = new JLabel(image);
-        imageContainer.setBounds(300, 10, 250, 250);
+        imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
         addImage = new CircleButton("",Color.black);
-        addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
-        firstNameLabel = new JLabel("*First name:");
+        addImage.setBounds(width/2-38, 190, 78, 78);//Covers the plus that belongs to the image
+
+
+        firstNameLabel = new JLabel("First name:");
         firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
         firstNameLabel.setForeground(Color.green);
-        firstNameLabel.setBounds(50, 280, 150, 35);
+        firstNameLabel.setBounds(150, 350, 150, 35);
         firstName = new JTextField();
         firstName.setFont(new Font("Arial", Font.BOLD, 25));
         firstName.setForeground(Color.green);
         firstName.setBackground(color);
-        firstName.setBounds(200, 280, 200, 35);
+        firstName.setBounds(300, 350, 200, 35);
         firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
 
 
         java.util.List<String> gendersArray = getGenders();
-        gendersArray.add("*Select gender");
+        gendersArray.add("Select gender");
 
         genders = new JComboBox(gendersArray.toArray());
-        genders.setBounds(450, 280, 240, 35);
+        genders.setBounds(580, 350, 240, 35);
         genders.setFont(new Font("Arial", Font.BOLD, 25));
         genders.setForeground(Color.green);
         genders.setBackground(color);
@@ -88,9 +90,9 @@ public class RegisterHumanView extends Jframe {
         genders.setSelectedItem(("Select gender"));
 
 
-        addUsernamePassword(50, 350, 50);
-        birthdayLabel = new JLabel("*Date of birth:");
-        birthdayLabel.setBounds(50, 480, 180, 35);
+        addUsernamePassword(150, 420, 50);
+        birthdayLabel = new JLabel("Date of birth:");
+        birthdayLabel.setBounds(150, 610, 180, 35);
         birthdayLabel.setForeground(Color.green);
         birthdayLabel.setFont(new Font("Arial", Font.BOLD, 25));
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +105,7 @@ public class RegisterHumanView extends Jframe {
         java.util.Date minDate=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
         dateChooser.setMaxSelectableDate(currentDate);
         dateChooser.setMinSelectableDate(minDate);
-        dateChooser.setBounds(230, 480, 170, 35);
+        dateChooser.setBounds(330, 610, 170, 35);
         dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
         dateChooser.setBackground(color);
         dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
@@ -113,31 +115,31 @@ public class RegisterHumanView extends Jframe {
         ///////////////////////////~~~ADD BIO FIELD~~~////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////
         bio = new JTextArea(4, 30);
-        bio.setBounds(100, 540, 450, 200);
         bio.setFont(new Font("Arial", Font.BOLD, 20));
         bio.setBackground(color);
         bio.setForeground(Color.green);
         bio.setLineWrap(true);
         bio.setWrapStyleWord(true);
         bio.setForeground(Color.green);
-        bio.setText("\t            Bio...");                     /*      pane=new JScrollPane(bio);
-                                                                 pane.setBounds(520,540,30,200);
-                                                                   pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-                                                                */
+        bio.setText("\t            Bio...");
+
+        pane = new JScrollPane(bio, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setBounds(900, 400, 450, 300);
+        pane.setPreferredSize(new Dimension(250,300));
+
 
 
         create=new JButton("Create");
-        create.setBounds(600,685,200,50);
+        create.setBounds(1200,750,200,50);
         create.setBackground(color);
         create.setForeground(Color.green);
         create.setFont(new Font("Arial",Font.BOLD,25));
         create.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-        //////////////////////////////////////////////   add(pane);
 
         add(create);
-        add(bio);
+        add(pane);
         add(birthdayLabel);
         add(usernameLabel);
         add(passwordLabel);
@@ -170,21 +172,6 @@ public class RegisterHumanView extends Jframe {
         genders.addActionListener(mal);
     }
 
-    public static java.util.List<String>getGenders() {
-        List<String> lst = new ArrayList<>();
-        String query = "SELECT*FROM gender";
-        try {
-            PreparedStatement con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            ResultSet rs = con.executeQuery();
-            while (rs.next()) {
-                lst.add(rs.getString(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return lst;
-    }
-
 
     //Listeners
     public void addUsernamePassword(int x, int y, int iconSize) {
@@ -207,8 +194,8 @@ public class RegisterHumanView extends Jframe {
         usernameLabel.setBounds(x, y, iconSize, iconSize);
 
 
-        passwordLabel.setBounds(x, y + iconSize + 10, iconSize, iconSize);
-        confirmPasswordLabel.setBounds(x + 330, y + iconSize + 10, iconSize, iconSize);
+        passwordLabel.setBounds(x, y + iconSize + 40, iconSize, iconSize);
+        confirmPasswordLabel.setBounds(x + 360, y + iconSize + 40, iconSize, iconSize);
 
         password.setBackground(color);
         confirmPassword.setBackground(color);
@@ -218,8 +205,8 @@ public class RegisterHumanView extends Jframe {
         confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
         username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
 
-        password.setBounds(x + iconSize + 10, y + iconSize + 10, 200, iconSize - 10);
-        confirmPassword.setBounds(x + iconSize + 340, y + iconSize + 10, 200, iconSize - 10);
+        password.setBounds(x + iconSize + 10, y + iconSize + 40, 200, iconSize - 10);
+        confirmPassword.setBounds(x + iconSize + 370, y + iconSize + 40, 200, iconSize - 10);
         username.setBounds(x + iconSize + 10, y, 200, iconSize - 10);
     }
 

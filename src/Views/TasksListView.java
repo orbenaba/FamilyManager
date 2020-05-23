@@ -15,7 +15,6 @@ public class TasksListView extends BaseForHomeSeqView {
     public JLabel title;
     public JPanel tasksPanel;
     public JButton addTask;
-
     public LinkedList<RowInTasksList> taskButtons;
 
 

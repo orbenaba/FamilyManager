@@ -1,7 +1,6 @@
 package Views;
 
 
-import Models.Family;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -21,7 +20,6 @@ public class RegisterParentView extends RegisterHumanView {
 
     public RegisterParentView(String familyUsername) {
         this.familyUsername=familyUsername;
-        System.out.println("Family name= "+this.familyUsername);
         Border frame=BorderFactory.createMatteBorder(1,1,1,1,Color.green);
         //Initialize
         salary=new JTextField();
@@ -30,16 +28,16 @@ public class RegisterParentView extends RegisterHumanView {
         jobNameLabel=new JLabel("Job name:");
         salaryLabel=new JLabel("Salary:");
         //set Bounds
-        salary.setBounds(570,480,200,40);
-        salaryLabel.setBounds(450,480,120,40);
+        salary.setBounds(610,700,200,40);
+        salaryLabel.setBounds(500,700,120,40);
 
 
-        jobName.setBounds(490,350,200,40);
-        jobNameLabel.setBounds(340,350,150,40);
+        jobName.setBounds(620,420,200,40);
+        jobNameLabel.setBounds(460,420,150,40);
 
 
         isMarried.setHorizontalTextPosition(SwingConstants.LEFT);
-        isMarried.setBounds(620,550,180,40);
+        isMarried.setBounds(620,610,180,40);
 
 
         //Style

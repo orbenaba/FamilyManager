@@ -19,6 +19,7 @@ public class TaskView extends BaseForHomeSeqView {
     public JTextField titleText;
     public JButton addTask;
     public TasksList tasksList;
+    public JScrollPane pane;
 
     @Override
     public String getUsername(){
@@ -59,11 +60,15 @@ public class TaskView extends BaseForHomeSeqView {
         descriptionLabel.setFont(new Font("Arial",Font.ITALIC,30));
         descriptionLabel.setForeground(new Color(176, 221, 252));
         descriptionLabel.setBounds(getWidth()/2-200,300,220,50);
-        description=new JTextArea();
+        description=new JTextArea(4,30);
         description.setBackground(new Color(176, 221, 252));
         description.setForeground(new Color(4, 62, 103));
         description.setFont(new Font("Arial",Font.ITALIC,30));
-        description.setBounds(getWidth()/2-200,350,500,350);
+    //    description.setBounds(getWidth()/2-200,350,500,350);
+   //     description.setColumns(34);
+        pane = new JScrollPane(description, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setBounds(getWidth()/2-200,350,500,350);
+        pane.setPreferredSize(new Dimension(500,350));
 
 
         addTask=new JButton("Add");
@@ -87,7 +92,7 @@ public class TaskView extends BaseForHomeSeqView {
         add(titleText);
         add(dateLabel);
         add(addTask);
-        add(description);
+        add(pane);
         add(descriptionLabel);
         add(title);
     }

@@ -62,10 +62,10 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text=new JLabel(parent.firstName);
                 text.setForeground(Color.black);
                 text.setFont(font);
-                text.setBounds(xStartParents+i*150+60,170,200,200);
+                text.setBounds(xStartParents+i*150+45,170,200,200);
                 add(text);
 
-                JButton button=new JButton(parent.firstName+'\n'+parent.uName);
+                JButton button=new JButton();
                 if(parent.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
                 else
@@ -87,7 +87,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text=new JLabel(parent.firstName);
                 text.setFont(font);
                 text.setForeground(Color.black);
-                text.setBounds(xStartParents+i*150+60,170,200,200);
+                text.setBounds(xStartParents+i*300+45,170,200,200);
                 add(text);
 
                 JButton button=new JButton();
@@ -113,10 +113,10 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text=new JLabel(child.firstName);
                 text.setFont(font);
                 text.setForeground(Color.black);
-                text.setBounds(xStartChildren+i*150+60,500,200,200);
+                text.setBounds(xStartChildren+i*190+45,500,200,200);
                 add(text);
 
-                JButton button = new JButton(child.firstName + '\n' + child.uName);
+                JButton button = new JButton();
                 if(child.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
                 else
@@ -136,7 +136,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text=new JLabel(child.firstName);
                 text.setFont(font);
                 text.setForeground(Color.black);
-                text.setBounds(xStartChildren+i*300+60,500,200,200);
+                text.setBounds(xStartChildren+i*300+60,500,240,200);
                 add(text);
 
                 JButton button = new JButton(child.firstName + '\n' + child.uName);

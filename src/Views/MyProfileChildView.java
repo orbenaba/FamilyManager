@@ -25,7 +25,7 @@ public class MyProfileChildView extends BaseForHomeSeqView {
     public JLabel usernameLabel,passwordLabel,firstNameLabel;
     public JTextArea bioArea;
     public JTextField usernameField,passwordField,firstNameField;
-
+    public int width;
     @Override
     public String getUsername(){
         return this.username;
@@ -34,21 +34,22 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         this.username = username;
         Font font = new Font("Arial", Font.BOLD, 40);
         Color bordo=new Color(219, 0, 40);
-
+        width=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 
         getContentPane().setBackground(new Color(219, 102, 0));
 
         child = new Child(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
-        imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
         if (child.image == null) {
+            imageContainer.setBounds(width/2-110, 22, 250, 300);
             imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
             addImage = new CircleButton("",new Color(219, 102, 0));
-            addImage.setBounds(448, 150, 78, 78);//Covers the plus that belongs to the image
+            addImage.setBounds(width/2-38, 190, 78, 78);//Covers the plus that belongs to the image            add(imageContainer);
             add(imageContainer);
             add(addImage);
         } else {
+            imageContainer.setBounds(width/2-239, 20, 478, 300);
             Image temp = child.image.getImage();
             Image newImage = temp.getScaledInstance(imageContainer.getWidth(), imageContainer.getHeight(), java.awt.Image.SCALE_SMOOTH);
             imageContainer.setIcon(new ImageIcon(newImage));
@@ -85,12 +86,12 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         passwordLabel.setFont(regFont);
         usernameLabel.setForeground(Color.black);
         passwordLabel.setForeground(Color.black);
-        usernameLabel.setBounds(getWidth()/2-400,400,150,30);
+        usernameLabel.setBounds(width/2-400,400,150,30);
         usernameField=new JTextField();
-        usernameField.setBounds(getWidth()/2-250,400,300,50);
-        passwordLabel.setBounds(getWidth()/2-400,470,150,30);
+        usernameField.setBounds(width/2-250,400,300,50);
+        passwordLabel.setBounds(width/2-400,470,150,30);
         passwordField=new JTextField();
-        passwordField.setBounds(getWidth()/2-250,470,300,50);
+        passwordField.setBounds(width/2-250,470,300,50);
         usernameField.setFont(regFont);
         passwordField.setFont(regFont);
         passwordField.setBackground(Color.orange);
@@ -101,9 +102,9 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         firstNameLabel=new JLabel("Name:");
         firstNameLabel.setFont(regFont);
         firstNameLabel.setForeground(Color.black);
-        firstNameLabel.setBounds(getWidth()/2-400,540,150,30);
+        firstNameLabel.setBounds(width/2-400,540,150,30);
         firstNameField=new JTextField();
-        firstNameField.setBounds(getWidth()/2-250,540,300,50);
+        firstNameField.setBounds(width/2-250,540,300,50);
         firstNameField.setFont(regFont);
         firstNameField.setBackground(Color.orange);
         /***/
@@ -124,14 +125,14 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         JLabel bio=new JLabel("Bio:");
         bio.setFont(regFont);
         bio.setForeground(Color.black);
-        bio.setBounds(getWidth()/2+100,360,50,30);
+        bio.setBounds(width/2+100,360,50,30);
         bioArea=new JTextArea(bioContent.toString());
         bioArea.setFont(regFont);
         bio.setVerticalTextPosition(0);
         bio.setHorizontalTextPosition(0);
         bioArea.setBackground(new Color(122, 5, 69));
         bioArea.setForeground(Color.orange);
-        bioArea.setBounds(getWidth()/2+100,400,400,400);
+        bioArea.setBounds(width/2+100,400,400,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
 
         /**Set all the data*/

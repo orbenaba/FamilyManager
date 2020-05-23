@@ -17,6 +17,7 @@ public class OutcomeView extends BaseForHomeSeqView {
     public JTextField price,titleText;
     public JButton addOutcome;
     public ShoppingCart shoppingCart;
+    public JScrollPane pane;
 
     @Override
     public String getUsername(){
@@ -71,11 +72,14 @@ public class OutcomeView extends BaseForHomeSeqView {
         descriptionLabel.setFont(new Font("Arial",Font.ITALIC,30));
         descriptionLabel.setForeground(new Color(176, 221, 252));
         descriptionLabel.setBounds(getWidth()/2-200,300,220,50);
-        description=new JTextArea();
+        description=new JTextArea(4,30);
         description.setBackground(new Color(176, 221, 252));
         description.setForeground(new Color(4, 62, 103));
         description.setFont(new Font("Arial",Font.ITALIC,30));
         description.setBounds(getWidth()/2-200,350,500,350);
+        pane = new JScrollPane(description, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setBounds(getWidth()/2-200,350,500,350);
+        pane.setPreferredSize(new Dimension(500,350));
 
 
         addOutcome=new JButton("Add");
@@ -99,7 +103,7 @@ public class OutcomeView extends BaseForHomeSeqView {
         add(titleText);
         add(dateLabel);
         add(addOutcome);
-        add(description);
+        add(pane);
         add(descriptionLabel);
         add(price);
         add(priceLabel);
