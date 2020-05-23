@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import static Views.StartView.init_Exit_Minimize;
 
 
 public class RegisterView extends Jframe {

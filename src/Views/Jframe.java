@@ -16,7 +16,8 @@ public abstract class Jframe extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
-
+        if(width==(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth())//Full screen undependable platform
+            setExtendedState(MAXIMIZED_BOTH);
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1, Color.black);
         exit=new JLabel("X");
         minimize=new JLabel("-");

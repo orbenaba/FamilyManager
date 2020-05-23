@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 
 import static Views.RegisterView.addTitle;
 import static Views.RegisterView.decorateBackground;
-import static Views.StartView.init_Exit_Minimize;
 
 public class RegisterFamilyView extends Jframe {
     public Family family;

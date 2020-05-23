@@ -2,6 +2,7 @@ package Controllers;
 
 
 
+import Models.Task;
 import Views.TaskView;
 import Views.TasksListView;
 
@@ -28,28 +29,8 @@ public class TaskController extends BaseForHomeSeqController {
     class AddTaskAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Connection con;
-            PreparedStatement ps;
-            ResultSet rs;
-            String query;
-            Integer id = null;
-            try {
-
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-                query = "INSERT INTO task(Username,executedDate,Title) VALUES(?,?,?)";
-                ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, tview.username);
-                ps.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
-                ps.setString(3, tview.titleText.getText().trim().equals("") ? "No title" : tview.titleText.getText());
-                ps.executeUpdate();
-                rs = ps.getGeneratedKeys();
-                rs.next();
-                id = rs.getInt(1);
-                ps.close();
-                con.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            Task task=new Task(new Date(Calendar.getInstance().getTimeInMillis()), tview.username,tview.titleText.getText().trim().equals("")?"No title":tview.titleText.getText());
+            Integer id = tview.tasksList.addTask(task);
             mappingTextareaIntoFile(id, tview.description, "Tasks");
             new TasksListController(new TasksListView(tview.username));
             tview.dispose();

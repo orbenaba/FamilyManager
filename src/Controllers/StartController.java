@@ -3,10 +3,8 @@ package Controllers;
 import Views.RegisterFamilyView;
 import Views.StartView;
 import Views.LoginView;
-import Views.RegisterView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -20,6 +18,7 @@ public class StartController extends JframeController{
         this.sview = sview;
         sview.addRegisterAction(new RegisterListener());
         sview.addLoginAction(new LoginListener());
+        sview.addTitleListener(new TitleListener());
     }
     class RegisterListener extends MouseAdapter {
         @Override
@@ -29,30 +28,48 @@ public class StartController extends JframeController{
         }
         @Override
         public void mouseEntered(MouseEvent e) {
-            Border fr = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.red);
-            sview.register.setBorder(fr);
+            sview.register.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            sview.register.setBorder(BorderFactory.createLineBorder(new Color(195, 0, 255),2,true));
+            sview.register.setForeground(new Color(195, 0, 255));
         }
         @Override
         public void mouseExited(MouseEvent e) {
+            sview.register.setForeground(Color.blue);
             sview.register.setBorder(null);
         }
     }
     class LoginListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            LoginView lv=new LoginView();
-            LoginController rv = new LoginController(lv);
+            new LoginController(new LoginView());
             sview.dispose();
         }
+
         @Override
         public void mouseEntered(MouseEvent e) {
-            Border fr = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.red);
-            sview.login.setBorder(fr);
+            sview.login.setBorder(BorderFactory.createLineBorder(new Color(195, 0, 255), 2, true));
+            sview.login.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            sview.login.setForeground(new Color(195, 0, 255));
         }
+
         @Override
         public void mouseExited(MouseEvent e) {
             sview.login.setBorder(null);
+            sview.login.setForeground(Color.blue);
         }
+    }
+
+    class TitleListener extends MouseAdapter{
+        @Override
+        public void mouseEntered(MouseEvent e){
+            sview.title.setForeground(new Color(195, 0, 255));
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e){
+            sview.title.setForeground(Color.blue);
+        }
+
     }
 
 }

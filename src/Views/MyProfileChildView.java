@@ -4,18 +4,12 @@ package Views;
 import Models.Child;
 import com.company.CircleButton;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
 import java.util.Scanner;
 
 
@@ -44,7 +38,7 @@ public class MyProfileChildView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(219, 102, 0));
 
-        child = getChild(username);
+        child = new Child(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
         imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
@@ -140,20 +134,10 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         bioArea.setBounds(getWidth()/2+100,400,400,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
 
-
-
-
-
-
-
-
-
         /**Set all the data*/
         usernameField.setText(child.username);
         passwordField.setText(child.password);
         firstNameField.setText(child.firstName);
-
-
         add(bio);
         add(bioArea);
         add(firstNameLabel);
@@ -163,54 +147,6 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         add(usernameLabel);
         add(passwordLabel);
     }
-
-
-    public static Child getChild(String username) {
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        String query;
-        /**Child's details*/
-        String password = null, familyUsername = null, firstName = null, status = null;
-        byte genderId = 1;
-        java.sql.Date birthday = null;
-        ImageIcon image = new ImageIcon();
-
-        boolean isSingle = true;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            query = "SELECT Birthday,FamilyUsername,FirstName,GenderId,Image,Password,Status,IsObligated FROM human WHERE Username=?";
-            ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            rs.next();
-            birthday = rs.getDate("Birthday");
-            familyUsername = rs.getString("FamilyUsername");
-            firstName = rs.getString("FirstName");
-            genderId = rs.getByte("GenderId");
-            ////////////////
-            /////Image/////
-            ////////////////
-            Blob b=rs.getBlob("Image");
-            if(b!=null) {
-                InputStream in = b.getBinaryStream();
-                BufferedImage img = ImageIO.read(in);
-                image.setImage(img);
-            }
-            else
-                image=null;
-            ////////////////
-            ////////////////
-            ////////////////
-            password = rs.getString("Password");
-            status = rs.getString("Status");
-            isSingle = rs.getBoolean("IsObligated");
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return new Child(password, username, firstName, genderId, familyUsername, birthday, status, isSingle, image);
-    }
-
     public void addRemovePhotoListener(MouseAdapter mal){
         removePhotoLabel.addMouseListener(mal);
     }

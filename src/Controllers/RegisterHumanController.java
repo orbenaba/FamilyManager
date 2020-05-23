@@ -14,8 +14,6 @@ import java.awt.event.MouseEvent;
 
 import java.io.File;
 
-import static Controllers.RegisterController.isUsernameExist;
-import static Views.RegisterView.*;
 
 public class RegisterHumanController extends JframeController{
     private RegisterHumanView rview;

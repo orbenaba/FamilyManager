@@ -1,19 +1,14 @@
 package Views;
 
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static Views.StartView.init_Exit_Minimize;
 
 public class FamilyTreeView extends BaseForHomeSeqView{
  /*   public JLabel exit,minimize;

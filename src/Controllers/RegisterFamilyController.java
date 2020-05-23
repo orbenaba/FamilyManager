@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.LoginView;
 import Views.RegisterFamilyView;
@@ -15,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static Controllers.RegisterController.isUsernameExist;
+import static Models.User.isUsernameExist;
 
 public class RegisterFamilyController extends JframeController{
     private RegisterFamilyView rfview;
@@ -42,7 +43,8 @@ public class RegisterFamilyController extends JframeController{
 
     class CreateMouseAction implements ActionListener {
         private String confirmPassword;
-        public boolean verify(String lastName,String username,String createPassword) {
+
+        public boolean verify(String lastName, String username, String createPassword) {
             if (lastName.trim().equals("") || username.trim().equals("") ||
                     createPassword.trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty Fields", 2);
@@ -57,32 +59,15 @@ public class RegisterFamilyController extends JframeController{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String username=rfview.username.getText();
-            String createPassword= String.valueOf(rfview.createPassword.getPassword());
-            String lastName=rfview.lastname.getText();
+            String username = rfview.username.getText();
+            String createPassword = String.valueOf(rfview.createPassword.getPassword());
+            String lastName = rfview.lastname.getText();
             confirmPassword = String.valueOf(rfview.confirmPassword.getPassword());
-            if (verify(lastName,username,createPassword))
+            if (verify(lastName, username, createPassword))
                 if (!isUsernameExist(username)) {
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    String registerFamilyQuery = "INSERT INTO family(Username,Counter,CurrentMonthProfit,LastName,Password) VALUES(?,?,?,?,?)";
-                    try {
-                        ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerFamilyQuery);
-                        ps.setString(1, username);
-                        ps.setString(2, String.valueOf(0));
-                        ps.setString(3, String.valueOf(0));
-                        ps.setString(4, lastName);
-                        ps.setString(5, createPassword);
-                        if (ps.executeUpdate() != 0) {
-                            new AreYouChildOrParentController(new AreYouChildOrParentView(username));
-                            rfview.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Failed in creating your account");
-                        }
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-
+                    new Family(username, createPassword, String.valueOf(0), lastName, String.valueOf(0));
+                    new AreYouChildOrParentController(new AreYouChildOrParentView(username));
+                    rfview.dispose();
                 }
         }
     }

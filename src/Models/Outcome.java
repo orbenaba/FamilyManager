@@ -16,6 +16,12 @@ public class Outcome {
         this.purchasedDate = purchasedDate;
         this.title=title;
     }
+    public Outcome(int price,Date purchasedDate, String username,String title) {
+        this.username = username;
+        this.price = price;
+        this.purchasedDate = purchasedDate;
+        this.title=title;
+    }
     //Copy ctor
     public Outcome(Outcome other){
         this.title= new String(other.title);

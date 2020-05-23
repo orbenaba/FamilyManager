@@ -1,6 +1,8 @@
 package Views;
 
 
+import Models.TasksList;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,14 +18,15 @@ public class TaskView extends BaseForHomeSeqView {
     public JLabel title,descriptionLabel,dateLabel,titleLabel;
     public JTextField titleText;
     public JButton addTask;
-
+    public TasksList tasksList;
 
     @Override
     public String getUsername(){
         return this.username;
     }
 
-    public TaskView(String username) {
+    public TaskView(String username,TasksList tasksList) {
+        this.tasksList=tasksList;
         this.username = username;
         getContentPane().setBackground(new Color(6, 103, 172));
 

@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
 
-import static Controllers.RegisterController.isUsernameExist;
+import static Models.User.isUsernameExist;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 
@@ -65,7 +65,6 @@ public class RegisterChildController extends RegisterHumanController {
         public void actionPerformed(ActionEvent e) {
             String username = rview.username.getText();
             if (!isUsernameExist(username)) {
-                String bioNameFile = username + ".txt";
                 java.sql.Date birthday = new java.sql.Date(rview.dateChooser.getDate().getTime());
 
                 String familyUsername = rview.familyUsername;

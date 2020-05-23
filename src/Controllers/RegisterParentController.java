@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
 
-import static Controllers.RegisterController.isUsernameExist;
+import static Models.User.isUsernameExist;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 

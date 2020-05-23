@@ -45,7 +45,7 @@ public class MyProfileParentView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(219, 102, 0));
 
-        parent = getParent(username);
+        parent = new Parent(username);
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
         imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
@@ -164,57 +164,6 @@ public class MyProfileParentView extends BaseForHomeSeqView {
         add(usernameLabel);
         add(passwordLabel);
     }
-
-
-    public static Parent getParent(String username) {
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        String query;
-        /**Parent's details*/
-        String password = null, familyUsername = null, firstName = null, jobName = null;
-        byte genderId = 1;
-        java.sql.Date birthday = null;
-        ImageIcon image = new ImageIcon();
-        int salary=0;
-
-        boolean isSingle = true,isLimited=false;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            query = "SELECT Birthday,FamilyUsername,FirstName,GenderId,Image,Password,JobName,IsObligated,Salary,isLimited FROM human WHERE Username=?";
-            ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            rs.next();
-            birthday = rs.getDate("Birthday");
-            familyUsername = rs.getString("FamilyUsername");
-            firstName = rs.getString("FirstName");
-            genderId = rs.getByte("GenderId");
-            ////////////////
-            /////Image/////
-            ////////////////
-            Blob b=rs.getBlob("Image");
-            if(b!=null) {
-                InputStream in = b.getBinaryStream();
-                BufferedImage img = ImageIO.read(in);
-                image.setImage(img);
-            }
-            else
-                image=null;
-            ////////////////
-            ////////////////
-            ////////////////
-            password = rs.getString("Password");
-            jobName = rs.getString("JobName");
-            isSingle = rs.getBoolean("IsObligated");
-            salary=rs.getInt("Salary");
-            isLimited=rs.getBoolean("isLimited");
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-        return new Parent(password, username, firstName, genderId, familyUsername, birthday,image,salary, jobName, isSingle,isLimited);
-    }
-
     public void addRemovePhotoListener(MouseAdapter mal){
         removePhotoLabel.addMouseListener(mal);
     }

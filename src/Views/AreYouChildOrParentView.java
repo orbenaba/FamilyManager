@@ -18,11 +18,8 @@ public class AreYouChildOrParentView extends Jframe {
         super(500);
         this.familyUsername=familyUsername;
         setSize(500,500);
-        setUndecorated(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(85, 246, 44));
-        setLayout(null);
         title=new JLabel("Are you considered as");
         addTitle(title,10,15,400,80);
         title2=new JLabel("a child or as a parent?");

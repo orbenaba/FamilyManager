@@ -6,11 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.*;
 import java.util.Scanner;
 
 import static Models.Gender.getGenderById;
-import static Views.MyProfileChildView.getChild;
+import static Models.Human.getHumanData;
 
 
 public class showProfileByIdView extends BaseForHomeSeqView {
@@ -34,7 +33,7 @@ public class showProfileByIdView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(122, 205, 19));
 
-        human=getUserData(watchedUsername);
+        human=getHumanData(watchedUsername);
         imgContainer=new JLabel();
         if(human.image==null){
             imgContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/noProfile.jpg")));
@@ -48,38 +47,11 @@ public class showProfileByIdView extends BaseForHomeSeqView {
             imgContainer.setIcon(new ImageIcon(newImage));
         }
         addPersonalDataToView(isHeParent,amIParent);
-
-
-
-
-
         add(imgContainer);
         setVisible(true);
     }
 
-    public static Human getUserData(String username) {
-        Connection con = null;
-        PreparedStatement ps;
-        ResultSet rs;
-        Human human;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            String query = "SELECT*FROM human WHERE Username=?";
-            ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            rs.next();
-            if (rs.getInt("Salary") < 0) {
-                con.close();
-                return getChild(username);
-            }
-            con.close();
-            return Views.MyProfileParentView.getParent(username);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
     public void addPersonalDataToView(boolean amIParent,boolean isHeParent){
         usernameLabel=new JLabel("Username: "+human.username);
         nameLabel=new JLabel("Name: "+human.firstName);

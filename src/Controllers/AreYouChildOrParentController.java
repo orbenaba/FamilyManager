@@ -1,11 +1,8 @@
 package Controllers;
 
-import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.RegisterChildView;
 import Views.RegisterParentView;
-import Views.RegisterView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

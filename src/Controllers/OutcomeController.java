@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.Outcome;
 import Views.OutcomeView;
 import Views.ShoppingCartView;
 
@@ -39,29 +40,8 @@ public class OutcomeController extends BaseForHomeSeqController{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (verify()) {
-                Connection con;
-                PreparedStatement ps;
-                ResultSet rs;
-                String query;
-                Integer id = null;
-                try {
-
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-                    query = "INSERT INTO outcome(Username,Price,PurchasedDate,Title) VALUES(?,?,?,?)";
-                    ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                    ps.setString(1, ocview.username);
-                    ps.setInt(2, Integer.parseInt((ocview.price.getText())));
-                    ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
-                    ps.setString(4,ocview.titleText.getText().trim().equals("")?"No title":ocview.titleText.getText());
-                    ps.executeUpdate();
-                    rs = ps.getGeneratedKeys();
-                    rs.next();
-                    id = rs.getInt(1);
-                    ps.close();
-                    con.close();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                Outcome outcome=new Outcome(Integer.parseInt(ocview.price.getText()),new Date(Calendar.getInstance().getTimeInMillis()), ocview.username,ocview.titleText.getText().trim().equals("")?"No title":ocview.titleText.getText());
+                Integer id= ocview.shoppingCart.addOutcome(outcome);
                 mappingTextareaIntoFile(id, ocview.description, "Outcomes");
                 new ShoppingCartController(new ShoppingCartView(ocview.username));
                 ocview.dispose();
@@ -69,8 +49,6 @@ public class OutcomeController extends BaseForHomeSeqController{
                 JOptionPane.showMessageDialog(null, "You must insert non-negative number to price");
             }
         }
-
-
         /**Helper function which intended to check if price is empty*/
         public boolean verify(){
             return !ocview.price.getText().trim().equals("");

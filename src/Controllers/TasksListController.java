@@ -20,7 +20,7 @@ public class TasksListController extends BaseForHomeSeqController{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            new TaskController(new TaskView(tlview.username));
+            new TaskController(new TaskView(tlview.username,tlview.tasksList));
             tlview.dispose();
         }
     }

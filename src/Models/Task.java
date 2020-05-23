@@ -12,4 +12,9 @@ public class Task {
         this.executedDate = executedDate;
         this.title=title;
     }
+    public Task(Date executedDate, String username,String title) {
+        this.username = username;
+        this.executedDate = executedDate;
+        this.title=title;
+    }
 }

@@ -23,7 +23,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            new OutcomeController(new OutcomeView(scview.username));
+            new OutcomeController(new OutcomeView(scview.username,scview.shoppingCart));
             scview.dispose();
         }
     }

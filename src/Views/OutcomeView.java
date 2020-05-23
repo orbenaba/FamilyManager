@@ -1,5 +1,7 @@
 package Views;
 
+import Models.ShoppingCart;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,14 +16,15 @@ public class OutcomeView extends BaseForHomeSeqView {
     public JLabel priceLabel,title,descriptionLabel,dateLabel,titleLabel;
     public JTextField price,titleText;
     public JButton addOutcome;
-
+    public ShoppingCart shoppingCart;
 
     @Override
     public String getUsername(){
         return this.username;
     }
 
-    public OutcomeView(String username) {
+    public OutcomeView(String username,ShoppingCart shoppingCart) {
+        this.shoppingCart=shoppingCart;
         this.username = username;
         getContentPane().setBackground(new Color(6, 103, 172));
 

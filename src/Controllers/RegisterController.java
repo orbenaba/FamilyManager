@@ -1,6 +1,5 @@
 package Controllers;
 
-import Views.Jframe;
 import Views.LoginView;
 import Views.RegisterView;
 
@@ -18,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Models.User.isUsernameExist;
 import static Views.RegisterView.*;
 import static java.sql.Types.NULL;
 
@@ -47,8 +47,6 @@ public class RegisterController extends JframeController{
                 //set a border to text field-username
                 rview.username.setBorder(rview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
         }
 
         //if the text is equal to username or to an empty string
@@ -76,8 +74,6 @@ public class RegisterController extends JframeController{
                 rview.createPassword.setForeground(Color.black);
                 rview.createPassword.setBorder(rview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
         }
 
         //if the text is equal to password or to an empty string
@@ -145,7 +141,7 @@ public class RegisterController extends JframeController{
             if (rview.female.isSelected()) {
                 gender = "Female";
             }
-            if (verify())
+            if (verify()) {
                 if (!isUsernameExist(uname2)) {
                     PreparedStatement ps;
                     ResultSet rs;
@@ -173,7 +169,9 @@ public class RegisterController extends JframeController{
                         ex.printStackTrace();
                     }
 
-                }
+                } else
+                    JOptionPane.showMessageDialog(null, "This username is already exist", "Username validation", 2);
+            }
         }
     }
 
@@ -224,24 +222,4 @@ public class RegisterController extends JframeController{
         }
     }
 
-    //Checking if the given username exists neither in family nor in human Tables:
-    public static boolean isUsernameExist(String username) {
-        PreparedStatement st;
-        ResultSet rs;
-        boolean exist = false;
-        String query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?) ";
-        try {
-            st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            st.setString(1, username);
-            st.setString(2,username);
-            rs = st.executeQuery();
-            if (rs.next()) {
-                exist = true;
-                JOptionPane.showMessageDialog(null, "This username is already exist", "Username validation", 2);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return exist;
-    }
 }
