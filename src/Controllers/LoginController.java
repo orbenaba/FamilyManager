@@ -1,6 +1,6 @@
 package Controllers;
 
-import Models.Parent;
+
 import Views.*;
 
 import javax.swing.*;
@@ -9,23 +9,19 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
-
-public class LoginController {
+public class LoginController extends JframeController{
     private LoginView lview;
 
     public LoginController(LoginView lview) {
+        super(lview);
         this.lview = lview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(lview, true), lview.minimize);
-        addExitAction(new RegisterController.ExitListeners(lview, true), lview.exit);
         lview.addUsernameFocus(new FocusUsernameListener());
         lview.addPasswordFocus(new FocusPasswordListener());
         lview.addRegisterContextAction(new RegisterContextAction());
         lview.addLoginListener(new LoginExecutable());
         lview.addLoginMouse(new LoginMouseListener());
     }
+
 
     class FocusUsernameListener extends FocusAdapter {
         //clear the text field-username if it is "username"

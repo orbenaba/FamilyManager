@@ -10,19 +10,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
 
-public class StartController extends MouseAdapter {
+public class StartController extends JframeController{
     private StartView sview;
 
     public StartController(StartView sview) {
+        super(sview);
         this.sview = sview;
-
-
-        //Add listeners to minimize label
-        addMinimizeAction(new RegisterController.MinimizeListeners(sview,true),sview.minimize);
-        addExitAction(new RegisterController.ExitListeners(sview,true),sview.exit);
         sview.addRegisterAction(new RegisterListener());
         sview.addLoginAction(new LoginListener());
     }

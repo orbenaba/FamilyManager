@@ -11,12 +11,11 @@ import java.awt.event.ActionListener;
 
 import static Views.RegisterView.*;
 
-public class AreYouChildOrParentController {
+public class AreYouChildOrParentController extends JframeController{
     private AreYouChildOrParentView cpview;
     public AreYouChildOrParentController(AreYouChildOrParentView cpview){
+        super(cpview);
         this.cpview=cpview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(cpview,true), cpview.minimize);
-        addExitAction(new RegisterController.ExitListeners(cpview,true), cpview.exit);
         changeColor(new RegisterController.changeButtonColor(cpview.child),cpview.child);//change the colors of both buttons when hovering above em
         changeColor(new RegisterController.changeButtonColor(cpview.parent),cpview.parent);
         cpview.addActionChild(new ChildAction());

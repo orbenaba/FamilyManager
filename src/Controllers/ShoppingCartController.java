@@ -1,5 +1,6 @@
 package Controllers;
 
+import Views.EditOutcomeView;
 import Views.OutcomeView;
 import Views.ShoppingCartView;
 
@@ -15,6 +16,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
         this.scview=scview;
         scview.addOutcomeAction(new OutcomeAction());
         scview.addDeletesListener(new DeletesListener());
+        scview.addEditsListener(new EditsListener());
     }
 
     class OutcomeAction implements ActionListener {
@@ -27,7 +29,6 @@ public class ShoppingCartController extends BaseForHomeSeqController{
     }
 
     class DeletesListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
@@ -46,6 +47,26 @@ public class ShoppingCartController extends BaseForHomeSeqController{
                  * We didn't yet update the view, so in order to create nice Look&Feel,
                  * we'll remove components*/
                 new ShoppingCartController(new ShoppingCartView(clicked.outcome.username));
+                scview.dispose();
+            }
+        }
+    }
+    class EditsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
+            Object src = e.getSource();
+            ShoppingCartView.RowInShoppingCart clicked = null;
+            for (ShoppingCartView.RowInShoppingCart row : scview.outcomeButtons) {
+                if (src == row.edit) {
+                    clicked = row;
+                    break;
+                }
+            }
+            /**So far, we got the specific edit button which invoked*/
+            if (clicked != null) {
+                /**Needs to update the username*/
+                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username));
                 scview.dispose();
             }
         }

@@ -6,52 +6,35 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
-
 import static Views.RegisterView.addTitle;
 import static Views.RegisterView.decorateBackground;
-import static Views.StartView.init_Exit_Minimize;
 
 
 public class LoginView extends Jframe {
      public Family family;
      JPanel p1, p2;
-     public JLabel title, passIcon1, userIcon, exit, minimize, registerContext;
+     public JLabel title, passIcon1, userIcon, registerContext;
      public JTextField username;
      public JPasswordField createPassword;
-     public Border frameTitle, frameExMin, frameTextfield;
-
+     public Border frameTitle, frameTextfield;
      public JButton login;
-     @Override
-     public JLabel getMinimize(){
-          return this.minimize;
-     }
-     @Override
-     public JLabel getExit(){
-          return this.exit;
-     }
+
+
      public LoginView() {
+          super(700);
           //get rid of the ugly frame which is given by default
-          setUndecorated(true);
           setSize(700, 500);
-          setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
           setLocationRelativeTo(null);
-          setLayout(null);
           p1=new JPanel();
           p2=new JPanel();
 
           decorateBackground(p1,p2,this,getWidth()-30,getHeight());
           title=new JLabel("Login");
           addTitle(title,245, 15, 210, 80);
-          exit=new JLabel("X");
-          minimize=new JLabel("-");
-          frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-          init_Exit_Minimize(getWidth()-85,15,35,exit,minimize,frameExMin,true);//prevent code replication
           addSubmitBTN();
           addLoginForm();
           add(login);
-          add(exit);
-          add(minimize);
+
           add(username);
           add(createPassword);
           add(userIcon);
@@ -81,10 +64,7 @@ public class LoginView extends Jframe {
           //Border title
           frameTitle=BorderFactory.createMatteBorder(0,2,2,2,Color.yellow);
           title.setBorder(frameTitle);
-          //Border minimize and exit
-          frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-          exit.setBorder(frameExMin);
-          minimize.setBorder(frameExMin);
+
           //Borders for each text field
           frameTextfield =BorderFactory.createMatteBorder(1,1,1,1,Color.blue);
 

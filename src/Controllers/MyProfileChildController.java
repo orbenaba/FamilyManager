@@ -51,7 +51,7 @@ public class MyProfileChildController extends BaseForHomeSeqController {
             mpcview.imageContainer=new JLabel(image);
             mpcview.imageContainer.setBounds(mpcview.getWidth()/2-239, 20, 478, 300);
 
-            mpcview.addImage=new CircleButton("");
+            mpcview.addImage=new CircleButton("",new Color(219, 102, 0));
             mpcview.addImage.setBounds(mpcview.getWidth()/2-39, 160, 78, 78);//Covers the plus that belongs to the image
             mpcview.add(mpcview.imageContainer);
             mpcview.add(mpcview.addImage);

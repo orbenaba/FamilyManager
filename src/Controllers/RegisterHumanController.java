@@ -17,13 +17,12 @@ import java.io.File;
 import static Controllers.RegisterController.isUsernameExist;
 import static Views.RegisterView.*;
 
-public class RegisterHumanController {
+public class RegisterHumanController extends JframeController{
     private RegisterHumanView rview;
 
     public RegisterHumanController(RegisterHumanView rview) {
+        super(rview);
         this.rview = rview;
-        addExitAction(new RegisterController.ExitListeners(rview, false), rview.exit);
-        addMinimizeAction(new RegisterController.MinimizeListeners(rview, false), rview.minimize);
         rview.addImageAction(new AddImage_action());
         rview.addFirstNameListener(new FirstNameListener());
         rview.handleComboAction(new Combo());
@@ -203,7 +202,7 @@ public class RegisterHumanController {
             rview.image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
             rview.imageContainer=new JLabel(rview.image);
             rview.imageContainer.setBounds(300,10,250,250);
-            rview.addImage=new CircleButton("");
+            rview.addImage=new CircleButton("",Color.black);
             rview.addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
             rview.add(rview.imageContainer);
             rview.add(rview.addImage);

@@ -103,7 +103,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             i++;
             /**Adding the new row at the created table into a list in order to listen to its buttons later on*/
             outcomeButtons.add(row);
-            System.out.println(oc.title);
         }
     }
 
@@ -128,9 +127,15 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     }
 
 
-    /**Adding a listener for each button*/
+    /**Adding a listener for each delete button*/
     public void addDeletesListener(ActionListener mal){
         for(RowInShoppingCart ob : outcomeButtons)
             ob.delete.addActionListener(mal);
+    }
+
+    /**Adding a listener for each edit button*/
+    public void addEditsListener(ActionListener mal){
+        for(RowInShoppingCart ob : outcomeButtons)
+            ob.edit.addActionListener(mal);
     }
 }
