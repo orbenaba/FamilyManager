@@ -61,6 +61,7 @@ public class Parent extends Human {
             if(b!=null) {
                 InputStream in = b.getBinaryStream();
                 BufferedImage img = ImageIO.read(in);
+                this.image=new ImageIcon();
                 this.image.setImage(img);
             }
             else

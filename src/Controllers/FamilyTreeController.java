@@ -52,7 +52,6 @@ public class FamilyTreeController extends BaseForHomeSeqController {
             for (TreeNode button : ftview.children) {
                 if (src == button.button) {
                     clickedButton = button;
-                    clickedOnParent=true;
                     break;
                 }
             }
@@ -60,6 +59,7 @@ public class FamilyTreeController extends BaseForHomeSeqController {
                 for (TreeNode button : ftview.parents) {
                     if (src == button.button) {
                         clickedButton = button;
+                        clickedOnParent=true;
                         break;
                     }
                 }

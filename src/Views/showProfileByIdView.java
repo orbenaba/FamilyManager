@@ -46,7 +46,7 @@ public class showProfileByIdView extends BaseForHomeSeqView {
             Image newImage = temp.getScaledInstance(imgContainer.getWidth(), imgContainer.getHeight(), java.awt.Image.SCALE_SMOOTH);
             imgContainer.setIcon(new ImageIcon(newImage));
         }
-        addPersonalDataToView(isHeParent,amIParent);
+        addPersonalDataToView(amIParent,isHeParent);
         add(imgContainer);
         setVisible(true);
     }
