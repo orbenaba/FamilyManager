@@ -3,6 +3,7 @@ package Views;
 
 import Models.Child;
 import com.company.CircleButton;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.Scanner;
 
 
@@ -21,11 +23,18 @@ public class MyProfileChildView extends BaseForHomeSeqView {
     public CircleButton addImage;
     public ImageIcon removePhoto;
     public JLabel imageContainer;
-    public JButton deleteAccount;
-    public JLabel usernameLabel,passwordLabel,firstNameLabel;
+    public JButton deleteAccount,updateAccount;
+    public JLabel usernameLabel,passwordLabel,firstNameLabel,birthdayLabel,statusLabel;
     public JTextArea bioArea;
-    public JTextField usernameField,passwordField,firstNameField;
-    public int width;
+    public JTextField usernameField,passwordField,firstNameField,statusField;
+    public JCheckBox isSingle;
+    //image path
+    public String imagePath=null;
+
+    /**Birthday calendar */
+    public JDateChooser dateChooser;
+    public Calendar calendar;
+    public int width,height;
     @Override
     public String getUsername(){
         return this.username;
@@ -35,6 +44,7 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         Font font = new Font("Arial", Font.BOLD, 40);
         Color bordo=new Color(219, 0, 40);
         width=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        height=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
         getContentPane().setBackground(new Color(219, 102, 0));
 
@@ -68,10 +78,35 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         deleteAccount.setBounds(10,getHeight()-70,200,50);
         deleteAccount.setBackground(bordo);
         deleteAccount.setForeground(Color.black);
+        deleteAccount.setFocusPainted(false);
         /**-----------------------------------------------------------------------------------------------------*/
         addView();
+        /**Now we must add the qualities which characteristic the child from parent*/
+        statusLabel=new JLabel("Status:");
+        statusLabel.setFont(new Font("Arial",Font.BOLD,25));
+        statusLabel.setForeground(Color.black);
+        statusLabel.setBounds(width/2-400, 670, 150, 35);
+        statusField=new JTextField(child.status);
+        statusField.setBounds(width/2-250,670,300,50);
+        statusField.setFont(new Font("Arial",Font.BOLD,25));
+        statusField.setBackground(Color.orange);
 
-        add(backToHome);
+        isSingle=new JCheckBox("Single?");
+        isSingle.setHorizontalTextPosition(SwingConstants.LEFT);
+        isSingle.setFont(new Font("Arial",Font.BOLD,25));
+        isSingle.setBackground(new Color(219, 102, 0));
+        //get rid of the border which is drawn by default around the checkBox
+        isSingle.setFocusPainted(false);
+        isSingle.setOpaque(true);
+        isSingle.setForeground(Color.black);
+        isSingle.setSelected(child.isSingle);
+        isSingle.setBounds(width/2-397,740,300,50);
+
+
+
+        add(isSingle);
+        add(statusLabel);
+        add(statusField);
         add(deleteAccount);
 
 
@@ -134,11 +169,39 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         bioArea.setForeground(Color.orange);
         bioArea.setBounds(width/2+100,400,400,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
+        calendar = Calendar.getInstance();
+
+        /**Set the date in the calendar to the previous date of birth which the user was insert before*/
+        dateChooser = new JDateChooser(child.birthday);
+        //enforcing the user to choose a valid date. I range [NOW,NOW-120]
+        java.util.Date currentDate= new java.util.Date();
+        java.util.Date minDate=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
+        dateChooser.setMaxSelectableDate(currentDate);
+        dateChooser.setMinSelectableDate(minDate);
+        dateChooser.setBounds(width/2-250, 610, 170, 35);
+        dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
+        dateChooser.setBackground(new Color(1,23,122));
+        dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        birthdayLabel=new JLabel("Birthday:");
+        birthdayLabel.setFont(regFont);
+        birthdayLabel.setForeground(Color.black);
+        birthdayLabel.setBounds(width/2-400, 610, 150, 35);
+        /**----------------------------------------------------------------------------------*/
+        updateAccount=new JButton("Update account");
+        updateAccount.setFont(new Font("Arial",Font.BOLD,20));
+        updateAccount.setBounds(width/2+400,250,200,50);
+        updateAccount.setBackground(new Color(122, 5, 69));
+        updateAccount.setForeground(Color.black);
+        updateAccount.setFocusPainted(false);
 
         /**Set all the data*/
         usernameField.setText(child.username);
         passwordField.setText(child.password);
         firstNameField.setText(child.firstName);
+        add(updateAccount);
+        add(birthdayLabel);
+        add(dateChooser);
         add(bio);
         add(bioArea);
         add(firstNameLabel);
@@ -160,6 +223,8 @@ public class MyProfileChildView extends BaseForHomeSeqView {
         deleteAccount.addActionListener(mal);
     }
 
-
+    public void addUpdateAccountAction(ActionListener mal){
+        updateAccount.addActionListener(mal);
+    }
 
 }

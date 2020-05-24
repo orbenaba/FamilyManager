@@ -64,7 +64,7 @@ public class RegisterChildController extends RegisterHumanController {
         @Override
         public void actionPerformed(ActionEvent e) {
             String username = rview.username.getText();
-            if (!isUsernameExist(username)) {
+            if (!isUsernameExist(username,false,"")) {
                 java.sql.Date birthday = new java.sql.Date(rview.dateChooser.getDate().getTime());
 
                 String familyUsername = rview.familyUsername;
@@ -110,7 +110,7 @@ public class RegisterChildController extends RegisterHumanController {
                     ps.setBoolean(12, false);//isLimited
 
                     if (ps.executeUpdate() != 0) {
-                        mappingTextareaIntoFile(username, rview.bio,"Biographies");//saving bio in file
+                        mappingTextareaIntoFile(username, rview.bio,"Biographies");//saving bio as file
  //                       Child child = new Child(pass,username,firstname,genderId,familyUsername,bioNameFile,rview.imagePath,birthday,status,isSingle);
                         /**Needs to update the counter*/
                         String updateCounter="UPDATE family SET Counter=Counter+1 WHERE Username= ?";

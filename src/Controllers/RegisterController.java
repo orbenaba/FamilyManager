@@ -142,7 +142,7 @@ public class RegisterController extends JframeController{
                 gender = "Female";
             }
             if (verify()) {
-                if (!isUsernameExist(uname2)) {
+                if (!isUsernameExist(uname2,false,"")) {
                     PreparedStatement ps;
                     ResultSet rs;
                     String registerUserQuery = "INSERT INTO users(fullname,username,password,phone,gender,image) VALUES(?,?,?,?,?,?)";

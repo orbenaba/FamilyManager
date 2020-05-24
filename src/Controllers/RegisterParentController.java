@@ -92,7 +92,7 @@ public class RegisterParentController extends RegisterHumanController {
         @Override
         public void actionPerformed(ActionEvent e) {
             String username = rview.username.getText();
-            if (!isUsernameExist(username)) {
+            if (!isUsernameExist(username,false,"")) {
                 if(verify()) {
                     String bioNameFile = username + ".txt";
                     java.sql.Date birthday = new java.sql.Date(rview.dateChooser.getDate().getTime());

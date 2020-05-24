@@ -1,24 +1,17 @@
 package Views;
 
 
-import Models.Family;
+
 import com.company.CircleButton;
 import com.toedter.calendar.JDateChooser;
-
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.plaf.ColorUIResource;
-import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 import java.io.*;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import static Models.Gender.getGenders;
 
@@ -27,7 +20,6 @@ public class RegisterHumanView extends Jframe {
     public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel;
     public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
 
-    public Border frameExMin;
     public JTextField firstName;
     public ImageIcon image,removePhoto;
     public CircleButton addImage;

@@ -64,7 +64,7 @@ public class RegisterFamilyController extends JframeController{
             String lastName = rfview.lastname.getText();
             confirmPassword = String.valueOf(rfview.confirmPassword.getPassword());
             if (verify(lastName, username, createPassword))
-                if (!isUsernameExist(username)) {
+                if (!isUsernameExist(username,false,"")) {
                     new Family(username, createPassword, String.valueOf(0), lastName, String.valueOf(0));
                     new AreYouChildOrParentController(new AreYouChildOrParentView(username));
                     rfview.dispose();
