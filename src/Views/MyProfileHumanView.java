@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import static Controllers.HomeController.isParent;
+import static Models.Parent.isParent;
 
 
 public class MyProfileHumanView extends BaseForHomeSeqView {
@@ -87,7 +87,7 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         //delete personal account button
         deleteAccount=new JButton("Delete account");
         deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
-        deleteAccount.setBounds(10,getHeight()-70,200,50);
+        deleteAccount.setBounds(30,getHeight()-70,200,50);
         deleteAccount.setBackground(bordo);
         deleteAccount.setForeground(Color.black);
         deleteAccount.setFocusPainted(false);
@@ -146,14 +146,14 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         JLabel bio=new JLabel("Bio:");
         bio.setFont(regFont);
         bio.setForeground(Color.black);
-        bio.setBounds(width/2+100,360,50,30);
+        bio.setBounds(width/2+150,360,50,30);
         bioArea=new JTextArea(bioContent.toString());
         bioArea.setFont(regFont);
         bio.setVerticalTextPosition(0);
         bio.setHorizontalTextPosition(0);
         bioArea.setBackground(new Color(122, 5, 69));
         bioArea.setForeground(Color.orange);
-        bioArea.setBounds(width/2+100,400,400,400);
+        bioArea.setBounds(width/2+150,400,500,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
         calendar = Calendar.getInstance();
 
@@ -176,10 +176,11 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         /**----------------------------------------------------------------------------------*/
         updateAccount=new JButton("Update account");
         updateAccount.setFont(new Font("Arial",Font.BOLD,20));
-        updateAccount.setBounds(width/2+400,250,200,50);
+        updateAccount.setBounds(30,getHeight()-200,200,50);
         updateAccount.setBackground(new Color(122, 5, 50));
         updateAccount.setForeground(Color.black);
         updateAccount.setFocusPainted(false);
+
 
         /**Set all the data*/
         usernameField.setText(human.username);

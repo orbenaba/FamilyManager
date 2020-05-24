@@ -90,7 +90,6 @@ public class Parent extends Human {
         /**First, we need to ensure that there is no other user with this username*/
         if (!isUsernameExist(username, true, this.username)) {
             try {
-                System.out.println("Date is going to be in DB: "+birthday);
                 String query;
                 if (flag == false)
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,JobName=?,Birthday=?,IsObligated=?,Salary=?,Image=? WHERE Username=?";
@@ -114,15 +113,6 @@ public class Parent extends Human {
                 else
                     ps.setString(8,this.username);
                 ps.executeUpdate();
-
-                /**Temp code*/
-  /*              query="SELECT Birthday FROM human WHERE Username = ?";
-                ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-                ps.setString(1,username);
-                ResultSet rs=ps.executeQuery();
-                rs.next();
-                System.out.println("BD in DB: "+rs.getDate("Birthday"));
-*/
                 ps.close();
                 return username;
             } catch (SQLException e) {
@@ -130,6 +120,80 @@ public class Parent extends Human {
             }
         }
         return "";
+    }
+
+    public static boolean isParent(String username) {
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT Salary FROM human WHERE Username=?";
+        boolean ret = false;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            rs.next();
+            if (rs.getInt("Salary") >= 0)
+                ret = true;
+            rs.close();
+            con.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+
+    /**Most complicated action, many edge cases*/
+    public boolean limitChildren(){
+        try {
+            //salary can distinct between child and parent
+            String query="UPDATE human SET isLimited = 1 WHERE FamilyUsername = ? AND Salary < 0";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,this.familyUsername);
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**Most complicated action, many edge cases*/
+    public boolean unLimitChildren(){
+        try {
+            //salary can distinct between child and parent
+            String query="UPDATE human SET isLimited = 0 WHERE FamilyUsername = ? AND Salary < 0";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,this.familyUsername);
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isLimitChildren(){
+        boolean ret=false;
+        try {
+            //salary can distinct between child and parent
+            String query="SELECT isLimited FROM human WHERE FamilyUsername = ? AND Salary < 0";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,this.familyUsername);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            ret=rs.getBoolean("isLimited");
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
 }

@@ -10,6 +10,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 
+import static Models.Parent.isParent;
+
 
 public class HomeController extends JframeController{
     private HomeView homeView;
@@ -34,27 +36,7 @@ public class HomeController extends JframeController{
             homeView.dispose();
         }
     }
-    public static boolean isParent(String username) {
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        String query = "SELECT Salary FROM human WHERE Username=?";
-        System.out.println("Username= "+username);
-        boolean ret = false;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            rs.next();
-            if (rs.getInt("Salary") >= 0)
-                ret = true;
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ret;
-    }
+
 
 
     class FamilyTreeAction implements ActionListener {

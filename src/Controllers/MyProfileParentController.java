@@ -22,7 +22,10 @@ public class MyProfileParentController extends MyProfileHumanController {
         this.mpcview = mpcview;
 
         mpcview.addUpdateAccountAction(new UpdateAccountAction());
-
+        if (mpcview.limitButton!=null)
+            mpcview.addLimitAction(new LimitAction());
+        else
+            mpcview.addUnLimitAction(new UnLimitAction());
         /**==========Back to home label===============*/
     }
 
@@ -77,6 +80,48 @@ public class MyProfileParentController extends MyProfileHumanController {
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
+            }
+        }
+    }
+
+    class LimitAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object[] options = {"Save changes",
+                    "Cancel"};
+            int n = JOptionPane.showOptionDialog(mpcview,
+                    "Are you sure you want to limit your children?",
+                    "Limit children",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            if (n == 0) {
+                mpcview.parent.limitChildren();
+                new MyProfileParentController(new MyProfileParentView(mpcview.parent.username));
+                mpcview.dispose();
+            }
+        }
+    }
+
+    class UnLimitAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object[] options = {"Save changes",
+                    "Cancel"};
+            int n = JOptionPane.showOptionDialog(mpcview,
+                    "Are you sure you want to unLimit your children?",
+                    "UnLimit children",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            if (n == 0) {
+                mpcview.parent.unLimitChildren();
+                new MyProfileParentController(new MyProfileParentView(mpcview.parent.username));
+                mpcview.dispose();
             }
         }
     }
