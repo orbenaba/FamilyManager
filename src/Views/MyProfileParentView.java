@@ -1,181 +1,66 @@
 package Views;
 
 
-import Models.Child;
 import Models.Parent;
-import com.company.CircleButton;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.Scanner;
 
 
-public class MyProfileParentView extends BaseForHomeSeqView {
-    public JLabel removePhotoLabel;
+public class MyProfileParentView extends MyProfileHumanView {
     public String username;
+    public JLabel jobNameLabel,salaryLabel;
+    public JTextField jobNameField,salaryField;
+    public JCheckBox isMarried;
     public Parent parent;
-
-    public CircleButton addImage;
-    public ImageIcon removePhoto;
-    public JLabel imageContainer;
-    public JButton deleteAccount;
-    public JLabel usernameLabel,passwordLabel,firstNameLabel;
-    public JTextArea bioArea;
-    public JTextField usernameField,passwordField,firstNameField;
-
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return this.username;
     }
+
     public MyProfileParentView(String username) {
+        super(username);
         this.username = username;
-        Font font = new Font("Arial", Font.BOLD, 40);
-        Color bordo=new Color(219, 0, 40);
-
-
+        //Up cast
+        parent = (Parent) human;
         getContentPane().setBackground(new Color(219, 102, 0));
-
-        parent = new Parent(username);
-        /**Loading child's image-if there is*/
-        imageContainer=new JLabel();
-        imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
-        if (parent.image == null) {
-            imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
-            addImage = new CircleButton("",new Color(219, 102, 0));
-            addImage.setBounds(448, 150, 78, 78);//Covers the plus that belongs to the image
-            add(imageContainer);
-            add(addImage);
-        } else {
-            Image temp = parent.image.getImage();
-            Image newImage = temp.getScaledInstance(imageContainer.getWidth(), imageContainer.getHeight(), java.awt.Image.SCALE_SMOOTH);
-            imageContainer.setIcon(new ImageIcon(newImage));
-            //adding bin trash
-            removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
-            removePhotoLabel=new JLabel(removePhoto);
-            removePhotoLabel.setBounds(imageContainer.getX()+imageContainer.getWidth()+50,imageContainer.getY(),40,50);
-            add(removePhotoLabel);
-            add(imageContainer);
-        }
         /**-----------------------------------------------------------------------------------------------------*/
+        /**Now we must add the qualities which characteristic the parent from child*/
+        jobNameLabel = new JLabel("Status:");
+        jobNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        jobNameLabel.setForeground(Color.black);
+        jobNameLabel.setBounds(width / 2 - 400, 670, 150, 35);
+        jobNameField = new JTextField(parent.jobName);
+        jobNameField.setBounds(width / 2 - 250, 670, 300, 50);
+        jobNameField.setFont(new Font("Arial", Font.BOLD, 25));
+        jobNameField.setBackground(Color.orange);
+        isMarried = new JCheckBox("Married?");
+        isMarried.setHorizontalTextPosition(SwingConstants.LEFT);
+        isMarried.setFont(new Font("Arial", Font.BOLD, 25));
+        isMarried.setBackground(new Color(219, 102, 0));
+        //get rid of the border which is drawn by default around the checkBox
+        isMarried.setFocusPainted(false);
+        isMarried.setOpaque(true);
+        isMarried.setForeground(Color.black);
+        isMarried.setSelected(parent.isMarried);
+        isMarried.setBounds(width / 2 - 500, 740, 150, 50);
 
-        //delete personal account button
-        deleteAccount=new JButton("Delete account");
-        deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
-        deleteAccount.setBounds(10,getHeight()-70,200,50);
-        deleteAccount.setBackground(bordo);
-        deleteAccount.setForeground(Color.black);
-        /**-----------------------------------------------------------------------------------------------------*/
-        addView();
 
-        add(backToHome);
-        add(deleteAccount);
+        salaryLabel = new JLabel("Salary:");
+        salaryLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        salaryLabel.setForeground(Color.black);
+        salaryLabel.setBounds(width / 2 - 330, 745, 150, 35);
+        salaryField = new JTextField(String.valueOf(parent.salary));
+        salaryField.setBounds(width / 2 - 220, 745, 280, 50);
+        salaryField.setFont(new Font("Arial", Font.BOLD, 25));
+        salaryField.setBackground(Color.orange);
 
 
+        add(salaryField);
+        add(salaryLabel);
+        add(isMarried);
+        add(jobNameLabel);
+        add(jobNameField);
         setVisible(true);
     }
-
-    public void addView(){
-        Font regFont=new Font("Arial",Font.BOLD,25);
-        usernameLabel=new JLabel("Username:");
-        passwordLabel=new JLabel("Password:");
-        usernameLabel.setFont(regFont);
-        passwordLabel.setFont(regFont);
-        usernameLabel.setForeground(Color.black);
-        passwordLabel.setForeground(Color.black);
-        usernameLabel.setBounds(getWidth()/2-400,400,150,30);
-        usernameField=new JTextField();
-        usernameField.setBounds(getWidth()/2-250,400,300,50);
-        passwordLabel.setBounds(getWidth()/2-400,470,150,30);
-        passwordField=new JTextField();
-        passwordField.setBounds(getWidth()/2-250,470,300,50);
-        usernameField.setFont(regFont);
-        passwordField.setFont(regFont);
-        passwordField.setBackground(Color.orange);
-        usernameField.setBackground(Color.orange);
-        /***/
-        /***/
-        /***/
-        firstNameLabel=new JLabel("Name:");
-        firstNameLabel.setFont(regFont);
-        firstNameLabel.setForeground(Color.black);
-        firstNameLabel.setBounds(getWidth()/2-400,540,150,30);
-        firstNameField=new JTextField();
-        firstNameField.setBounds(getWidth()/2-250,540,300,50);
-        firstNameField.setFont(regFont);
-        firstNameField.setBackground(Color.orange);
-        /***/
-        /***/
-        /***/
-        bioArea=new JTextArea();
-        StringBuilder bioContent=new StringBuilder();
-        File file=new File("Biographies\\"+username+".txt");
-        Scanner myScan= null;
-        try {
-            myScan = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while(myScan.hasNextLine()) {
-            bioContent.append(myScan.nextLine()+'\n');
-        }
-        JLabel bio=new JLabel("Bio:");
-        bio.setFont(regFont);
-        bio.setForeground(Color.black);
-        bio.setBounds(getWidth()/2+100,360,50,30);
-        bioArea=new JTextArea(bioContent.toString());
-        bioArea.setFont(regFont);
-        bio.setVerticalTextPosition(0);
-        bio.setHorizontalTextPosition(0);
-        bioArea.setBackground(new Color(122, 5, 69));
-        bioArea.setForeground(Color.orange);
-        bioArea.setBounds(getWidth()/2+100,400,400,400);
-        bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
-
-
-
-
-
-
-
-
-
-        /**Set all the data*/
-        usernameField.setText(parent.username);
-        passwordField.setText(parent.password);
-        firstNameField.setText(parent.firstName);
-
-
-        add(bio);
-        add(bioArea);
-        add(firstNameLabel);
-        add(firstNameField);
-        add(passwordField);
-        add(usernameField);
-        add(usernameLabel);
-        add(passwordLabel);
-    }
-    public void addRemovePhotoListener(MouseAdapter mal){
-        removePhotoLabel.addMouseListener(mal);
-    }
-
-    public void addImageAction(ActionListener mal) {
-        addImage.addActionListener(mal);
-    }
-    //Delete account action
-    public void addDeleteAccountAction(ActionListener mal){
-        deleteAccount.addActionListener(mal);
-    }
-
-
-
 }

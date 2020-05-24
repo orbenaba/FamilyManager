@@ -95,13 +95,13 @@ public class Child extends Human {
                 ps.executeUpdate();
 
                 /**Temp code*/
-                query="SELECT Birthday FROM human WHERE Username = ?";
+  /*              query="SELECT Birthday FROM human WHERE Username = ?";
                 ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
                 ps.setString(1,username);
                 ResultSet rs=ps.executeQuery();
                 rs.next();
                 System.out.println("BD in DB: "+rs.getDate("Birthday"));
-
+*/
                 ps.close();
                 return username;
             } catch (SQLException e) {
