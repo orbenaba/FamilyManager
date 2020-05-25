@@ -112,4 +112,8 @@ public class TasksList {
 
         return false;
     }
+
+    public boolean isEmpty(){
+        return this.tasks.isEmpty();
+    }
 }

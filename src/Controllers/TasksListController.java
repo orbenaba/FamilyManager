@@ -12,12 +12,15 @@ public class TasksListController extends BaseForHomeSeqController {
     public TasksListController(TasksListView tlview) {
         super(tlview);
         this.tlview = tlview;
-        if (!tlview.readOnly) {
-            tlview.addTaskAction(new TaskAction());
-            tlview.addDeletesListener(new DeletesListener());
-            tlview.addEditsListener(new EditsListener());
+        if (!tlview.tasksList.isEmpty()) {
+            if (!tlview.readOnly) {
+                tlview.addDeletesListener(new DeletesListener());
+                tlview.addEditsListener(new EditsListener());
+            }
+            tlview.addTitlesListener(new TitlesListener());
         }
-        tlview.addTitlesListener(new TitlesListener());
+        if (!tlview.readOnly)
+            tlview.addTaskAction(new TaskAction());
     }
 
     class TaskAction implements ActionListener {

@@ -20,7 +20,7 @@ public class TasksListView extends BaseForHomeSeqView {
     public JButton addTask;
     public LinkedList<RowInTasksList> taskButtons;
     public boolean readOnly=false;
-    public JLabel background;
+    public JLabel background,noTasks;
 
 
     public JScrollPane tasksScroller;
@@ -61,18 +61,28 @@ public class TasksListView extends BaseForHomeSeqView {
         background.setBounds(0,0,getWidth(),getHeight());
 
 
-        /**Out comes panel*/
+        /**Tasks list panel*/
         tasksPanel = new JPanel();
-        tasksPanel.setLayout(new GridLayout(0, readOnly?1:3, 0, 15));
-        convertListToButtons(tasksList.getTasks());
-        tasksScroller = new JScrollPane(tasksPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        tasksScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
-        tasksScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
-        /**Increasing the speed of the scrolling:*/
-        tasksScroller.getVerticalScrollBar().setUnitIncrement(12);
+        if(!tasksList.isEmpty()) {
+            tasksPanel.setLayout(new GridLayout(0, readOnly ? 1 : 3, 0, 15));
+            convertListToButtons(tasksList.getTasks());
+            tasksScroller = new JScrollPane(tasksPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            tasksScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
+            tasksScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
+            /**Increasing the speed of the scrolling:*/
+            tasksScroller.getVerticalScrollBar().setUnitIncrement(12);
+            add(tasksScroller);
+        }
+        else{
+            tasksPanel.setBounds(getWidth()/2-500,250,1000,getHeight()-250);
+            tasksPanel.setBackground(Color.gray.darker());
+            noTasks=new JLabel();
+            noTasks.setIcon(new ImageIcon(getClass().getResource("/Icons/X2.jpg")));
+            tasksPanel.add(noTasks);
+            noTasks.setBounds(0,50,500,500);
+            add(tasksPanel);
+        }
 
-
-        add(tasksScroller);
         if (!readOnly)
             add(addTask);
         add(title);

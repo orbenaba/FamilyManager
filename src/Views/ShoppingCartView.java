@@ -18,7 +18,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public JLabel title;
     public JPanel outcomesPanel;
     public JButton addOutcome;
-    public JLabel totalOutcomes;
+    public JLabel totalOutcomes,noOutcomes;
     public boolean readOnly=false;
 
 
@@ -70,16 +70,26 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         }
         /**Out comes panel*/
         outcomesPanel = new JPanel();
-        outcomesPanel.setLayout(new GridLayout(0, readOnly?1:3, 0, 15));
-        convertListToButtons(shoppingCart.getOutcomes());
-        outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
-        outcomeScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
-        /**Increasing the speed of the scrolling as we wish:*/
-        outcomeScroller.getVerticalScrollBar().setUnitIncrement(12);
+        if(!shoppingCart.isEmpty()) {
+            outcomesPanel.setLayout(new GridLayout(0, readOnly ? 1 : 3, 0, 15));
+            convertListToButtons(shoppingCart.getOutcomes());
+            outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
+            outcomeScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
+            /**Increasing the speed of the scrolling as we wish:*/
+            outcomeScroller.getVerticalScrollBar().setUnitIncrement(12);
+            add(outcomeScroller);
+        }
+        else{
+            outcomesPanel.setBounds(getWidth()/2-500,250,1000,getHeight()-250);
+            outcomesPanel.setBackground(Color.gray.darker());
+            noOutcomes=new JLabel();
+            noOutcomes.setIcon(new ImageIcon(getClass().getResource("/Icons/X2.jpg")));
+            outcomesPanel.add(noOutcomes);
+            noOutcomes.setBounds(0,50,500,500);
+            add(outcomesPanel);
+        }
 
-
-        add(outcomeScroller);
         add(totalOutcomes);
         if (!readOnly)
             add(addOutcome);

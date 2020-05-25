@@ -134,4 +134,8 @@ public class ShoppingCart {
         return false;
     }
 
+    public boolean isEmpty(){
+        return this.outcomes.isEmpty();
+    }
+
 }

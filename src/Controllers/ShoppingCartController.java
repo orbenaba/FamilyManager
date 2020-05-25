@@ -11,15 +11,18 @@ import java.awt.event.ActionListener;
 public class ShoppingCartController extends BaseForHomeSeqController{
     private ShoppingCartView scview;
 
-    public ShoppingCartController(ShoppingCartView scview){
+    public ShoppingCartController(ShoppingCartView scview) {
         super(scview);
-        this.scview=scview;
-        if(!scview.readOnly) {
-            scview.addOutcomeAction(new OutcomeAction());
-            scview.addDeletesListener(new DeletesListener());
-            scview.addEditsListener(new EditsListener());
+        this.scview = scview;
+        if (!scview.shoppingCart.isEmpty()) {
+            if (!scview.readOnly) {
+                scview.addDeletesListener(new DeletesListener());
+                scview.addEditsListener(new EditsListener());
+            }
+            scview.addTitlesListener(new TitlesListener());
         }
-        scview.addTitlesListener(new TitlesListener());
+        if(!scview.readOnly)
+            scview.addOutcomeAction(new OutcomeAction());
     }
 
     class OutcomeAction implements ActionListener {
