@@ -70,7 +70,7 @@ public class TasksListController extends BaseForHomeSeqController {
             /**So far, we got the specific edit button which invoked*/
             if (clicked != null) {
                 /**Needs to update the username*/
-                new EditTaskController(new EditTaskView(clicked.task, tlview.username,false));
+                new EditTaskController(new EditTaskView(clicked.task, tlview.username,tlview.readOnly));
                 tlview.dispose();
             }
         }

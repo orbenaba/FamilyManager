@@ -93,7 +93,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
             /**So far, we got the specific edit button which invoked*/
             if (clicked != null) {
                 /**Needs to update the username*/
-                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username,scview.readOnly));
+                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username,true));
                 scview.dispose();
             }
         }

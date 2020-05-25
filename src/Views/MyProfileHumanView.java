@@ -71,7 +71,7 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         imageContainer=new JLabel();
         if (human.image == null) {
             imageContainer.setBounds(width/2-110, 22, 250, 300);
-            imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile2.png")));
+            imageContainer.setIcon(new ImageIcon(getClass().getResource("/Icons/profile3.png")));
             addImage = new CircleButton("",new Color(219, 102, 0));
             addImage.setBounds(width/2-38, 190, 78, 78);//Covers the plus that belongs to the image            add(imageContainer);
             add(imageContainer);

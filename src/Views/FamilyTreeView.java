@@ -26,7 +26,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
     }
     public FamilyTreeView(String username){
         this.username=username;
-        Font font=new Font("Arial",Font.BOLD,40);
+        Font font=new Font("David",Font.ITALIC,40);
 
         /**=========================================================*/
         /**=========================================================*/
@@ -38,9 +38,11 @@ public class FamilyTreeView extends BaseForHomeSeqView{
 
        /**Title*/
         title=new JLabel("Family Hierarchy");
-        title.setFont(new Font("Italic",Font.BOLD,70));
+        title.setFont(new Font("David",Font.ITALIC,90));
         title.setForeground(new Color(255, 15, 15));
-        title.setBounds(getWidth()/2-300,20,600,80);
+        title.setBackground(new Color(7,0,204));
+        title.setOpaque(true);
+        title.setBounds(getWidth()/2-340,20,680,80);
 
 
         FamilyMembers familyMembers=getFamilyMembers(username);
@@ -55,7 +57,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         int totalParents=familyTree.parents.size();
         int i=0;
         JLabel text;
-        if(totalParents>=6){
+        if(totalParents>=5){
             /**The width of each button is 145px and the distance between two buttons is 5px--->>(145+5)/2*/
             int xStartParents=getWidth()/2 - (totalParents*75);
             for(UserData parent: familyTree.parents){
@@ -107,7 +109,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         children=new ArrayList<>();
         int totalChildren=familyTree.children.size();
         i=0;
-        if(totalChildren>=6) {
+        if(totalChildren>=5) {
             int xStartChildren=getWidth()/2-(totalChildren*75)-150;
             for (UserData child : familyTree.children) {
                 text=new JLabel(child.firstName);

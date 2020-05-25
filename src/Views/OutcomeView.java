@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 public class OutcomeView extends BaseForHomeSeqView {
     public String username;
     public JTextArea description;
-    public JLabel priceLabel,title,descriptionLabel,dateLabel,titleLabel;
+    public JLabel priceLabel,title,descriptionLabel,dateLabel,titleLabel,background;
     public JTextField price,titleText;
     public JButton addOutcome;
     public ShoppingCart shoppingCart;
@@ -30,20 +30,24 @@ public class OutcomeView extends BaseForHomeSeqView {
         getContentPane().setBackground(new Color(6, 103, 172));
 
         title=new JLabel("New outcome");
-        title.setForeground(Color.white);
-        title.setFont(new Font("Arial", Font.ITALIC,50));
+        title.setFont(new Font("David", Font.ITALIC,60));
         title.setBounds(getWidth()/2-200,20,400,60);
         title.setForeground(new Color(176, 221, 252));
+        title.setBackground(new Color(168, 0, 0));
+        title.setOpaque(true);
 
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setBounds(0,0,getWidth(),getHeight());
 
 
         priceLabel=new JLabel("Price:");
-        priceLabel.setFont(new Font("Arial",Font.ITALIC,30));
-        priceLabel.setForeground(new Color(176, 221, 252));
+        priceLabel.setFont(new Font("David",Font.ITALIC,36));
+        priceLabel.setForeground(new Color(208, 0, 0));
         priceLabel.setBounds(getWidth()/2-220,200,100,50);
         price=new JTextField();
-        price.setFont(new Font("Arial",Font.ITALIC,30));
-        price.setBackground(new Color(176, 221, 252));
+        price.setFont(new Font("David",Font.ITALIC,36));
+        price.setBackground(new Color(238, 145, 145));
         price.setForeground(new Color(4, 62, 103));
         price.setBounds(getWidth()/2-120,200,300,50);
 
@@ -53,12 +57,12 @@ public class OutcomeView extends BaseForHomeSeqView {
 
 
         titleLabel=new JLabel("Title:");
-        titleLabel.setFont(new Font("Arial",Font.ITALIC,30));
-        titleLabel.setForeground(new Color(176, 221, 252));
+        titleLabel.setFont(new Font("David",Font.ITALIC,36));
+        titleLabel.setForeground(new Color(208, 0, 0));
         titleLabel.setBounds(getWidth()/2+220,200,100,50);
         titleText=new JTextField();
-        titleText.setFont(new Font("Arial",Font.ITALIC,30));
-        titleText.setBackground(new Color(176, 221, 252));
+        titleText.setFont(new Font("David",Font.ITALIC,35));
+        titleText.setBackground(new Color(238, 145, 145));
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth()/2+320,200,300,50);
 
@@ -69,13 +73,13 @@ public class OutcomeView extends BaseForHomeSeqView {
 
 
         descriptionLabel=new JLabel("Description:");
-        descriptionLabel.setFont(new Font("Arial",Font.ITALIC,30));
-        descriptionLabel.setForeground(new Color(176, 221, 252));
+        descriptionLabel.setFont(new Font("David",Font.ITALIC,36));
+        descriptionLabel.setForeground(new Color(208, 0, 0));
         descriptionLabel.setBounds(getWidth()/2-200,300,220,50);
         description=new JTextArea(4,30);
-        description.setBackground(new Color(176, 221, 252));
+        description.setBackground(new Color(238, 145, 145));
         description.setForeground(new Color(4, 62, 103));
-        description.setFont(new Font("Arial",Font.ITALIC,30));
+        description.setFont(new Font("David",Font.ITALIC,35));
         description.setBounds(getWidth()/2-200,350,500,350);
         pane = new JScrollPane(description, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pane.setBounds(getWidth()/2-200,350,500,350);
@@ -83,9 +87,9 @@ public class OutcomeView extends BaseForHomeSeqView {
 
 
         addOutcome=new JButton("Add");
-        addOutcome.setBackground(new Color(176, 221, 252));
+        addOutcome.setBackground(new Color(238, 145, 145));
         addOutcome.setForeground(new Color(4, 62, 103));
-        addOutcome.setFont(new Font("Arial",Font.ITALIC,30));
+        addOutcome.setFont(new Font("David",Font.ITALIC,36));
         addOutcome.setBounds(getWidth()/2-100,740,200,50);
 
 
@@ -93,9 +97,9 @@ public class OutcomeView extends BaseForHomeSeqView {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         dateLabel=new JLabel("Today is "+ dateFormat.format(date));
-        dateLabel.setForeground(new Color(176, 221, 252));
-        dateLabel.setFont(new Font("Arial",Font.ITALIC,30));
-        dateLabel.setBounds(100,200,320,30);
+        dateLabel.setForeground(new Color(208, 0, 0));
+        dateLabel.setFont(new Font("David",Font.ITALIC,36));
+        dateLabel.setBounds(100,400,320,30);
 
 
 
@@ -108,6 +112,7 @@ public class OutcomeView extends BaseForHomeSeqView {
         add(price);
         add(priceLabel);
         add(title);
+        add(background);
     }
 
     public void addEnforcingPrice(KeyAdapter mal){

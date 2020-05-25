@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class EditOutcomeView extends BaseForHomeSeqView {
     public Outcome outcome;
     public JTextArea description;
-    public JLabel priceLabel, title, descriptionLabel, dateLabel, titleLabel;
+    public JLabel priceLabel, title, descriptionLabel, dateLabel, titleLabel,background;
     public JTextField price, titleText;
     public JButton editOutcome;
     public String username;
@@ -36,41 +36,47 @@ public class EditOutcomeView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(6, 103, 172));
         title = new JLabel(readOnly?"Read - only:Outcome":"Edit outcome");
-        title.setForeground(Color.white);
-        title.setFont(new Font("Arial", Font.ITALIC, 50));
-        title.setBounds(readOnly?getWidth() / 2 - 250 : getWidth()/2-200, 20, readOnly?500:400, 60);
+        title.setBackground(new Color(168, 0, 0));
+        title.setOpaque(true);
+        title.setFont(new Font("David", Font.ITALIC, 60));
+        title.setBounds(readOnly?getWidth() / 2 - 270 : getWidth()/2-220, 20, readOnly?540:440, 60);
         title.setForeground(new Color(176, 221, 252));
+
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setBounds(0,0,getWidth(),getHeight());
+
 
 
         priceLabel = new JLabel("Price:");
-        priceLabel.setFont(new Font("Arial", Font.ITALIC, 30));
-        priceLabel.setForeground(new Color(176, 221, 252));
+        priceLabel.setFont(new Font("David", Font.ITALIC, 36));
+        priceLabel.setForeground(new Color(208, 0, 0));
         priceLabel.setBounds(getWidth() / 2 - 220, 200, 100, 50);
         /**Setting the price text as the current price*/
         price = new JTextField(String.valueOf(oldOutcome.price));
-        price.setFont(new Font("Arial", Font.ITALIC, 30));
-        price.setBackground(new Color(176, 221, 252));
+        price.setFont(new Font("David", Font.ITALIC, 36));
+        price.setBackground(new Color(238, 145, 145));
         price.setForeground(new Color(4, 62, 103));
         price.setBounds(getWidth() / 2 - 120, 200, 300, 50);
         price.setEditable(!readOnly);
 
 
         titleLabel = new JLabel("Title:");
-        titleLabel.setFont(new Font("Arial", Font.ITALIC, 30));
-        titleLabel.setForeground(new Color(176, 221, 252));
+        titleLabel.setFont(new Font("David", Font.ITALIC, 36));
+        titleLabel.setForeground(new Color(208, 0, 0));
         titleLabel.setBounds(getWidth() / 2 + 220, 200, 100, 50);
         /**Setting the title text as the current title*/
         titleText = new JTextField(oldOutcome.title);
-        titleText.setFont(new Font("Arial", Font.ITALIC, 30));
-        titleText.setBackground(new Color(176, 221, 252));
+        titleText.setFont(new Font("David", Font.ITALIC, 36));
+        titleText.setBackground(new Color(238, 145, 145));
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth() / 2 + 320, 200, 300, 50);
         titleText.setEditable(!readOnly);
 
 
         descriptionLabel = new JLabel("Description:");
-        descriptionLabel.setFont(new Font("Arial", Font.ITALIC, 30));
-        descriptionLabel.setForeground(new Color(176, 221, 252));
+        descriptionLabel.setFont(new Font("David", Font.ITALIC, 36));
+        descriptionLabel.setForeground(new Color(208, 0, 0));
         descriptionLabel.setBounds(getWidth() / 2 - 200, 300, 220, 50);
         /**Reading the description from the required file in order to fulfill the textArea*/
         StringBuilder outcomeContent = new StringBuilder();
@@ -88,25 +94,25 @@ public class EditOutcomeView extends BaseForHomeSeqView {
 
 
         description = new JTextArea(outcomeContent.toString());
-        description.setBackground(new Color(176, 221, 252));
+        description.setBackground(new Color(238, 145, 145));
         description.setForeground(new Color(4, 62, 103));
-        description.setFont(new Font("Arial", Font.ITALIC, 30));
+        description.setFont(new Font("David", Font.ITALIC, 36));
         description.setBounds(getWidth() / 2 - 200, 350, 500, 350);
         description.setEditable(!readOnly);
 
         if (!readOnly) {
             editOutcome = new JButton("Apply changes");
-            editOutcome.setBackground(new Color(176, 221, 252));
+            editOutcome.setBackground(new Color(238, 145, 145));
             editOutcome.setForeground(new Color(4, 62, 103));
-            editOutcome.setFont(new Font("Arial", Font.ITALIC, 30));
+            editOutcome.setFont(new Font("David", Font.ITALIC, 36));
             editOutcome.setBounds(getWidth() / 2 - 100, 740, 250, 50);
         }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         dateLabel = new JLabel("Date purchased: " + dateFormat.format(this.outcome.purchasedDate));
-        dateLabel.setForeground(new Color(176, 221, 252));
-        dateLabel.setFont(new Font("Arial", Font.ITALIC, 30));
-        dateLabel.setBounds(100, 200, 400, 30);
+        dateLabel.setForeground(new Color(208, 0, 0));
+        dateLabel.setFont(new Font("David", Font.ITALIC, 36));
+        dateLabel.setBounds(100, 400, 400, 30);
 
 
         add(titleLabel);
@@ -119,6 +125,7 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         add(price);
         add(priceLabel);
         add(title);
+        add(background);
     }
 
     public void addEnforcingPrice(KeyAdapter mal) {

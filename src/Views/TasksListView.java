@@ -33,13 +33,14 @@ public class TasksListView extends BaseForHomeSeqView {
             if (isLimitChildren(username))
                 readOnly = true;
         this.username = username;
-        getContentPane().setBackground(new Color(6, 103, 172));
+      //  getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel(readOnly?"View your tasks!":"Manage your tasks!");
-        title.setForeground(Color.white);
-        title.setFont(new Font("Arial", Font.ITALIC, 50));
-        title.setBounds(getWidth() / 2 - 300, 20, 600, 60);
-        title.setForeground(new Color(176, 221, 252));
+        title.setForeground(new Color(168, 0, 0));
+        title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
+
+        title.setFont(new Font("David", Font.ITALIC, 70));
+        title.setBounds(getWidth() / 2 - 290, 20, 580, 60);
 
 
         /**Shopping cart*/
@@ -49,8 +50,9 @@ public class TasksListView extends BaseForHomeSeqView {
         /**Add new outcome button*/
         if (!readOnly) {
             addTask = new JButton("New task");
-            addTask.setFont(new Font("Arial", Font.PLAIN, 30));
-            addTask.setBackground(new Color(176, 221, 252));
+            addTask.setFocusPainted(false);
+            addTask.setFont(new Font("David", Font.ITALIC, 36));
+            addTask.setBackground(new Color(238, 145, 145));
             addTask.setForeground(new Color(4, 62, 103));
             addTask.setBounds(200, 120, 250, 100);
         }
@@ -92,7 +94,7 @@ public class TasksListView extends BaseForHomeSeqView {
     public void convertListToButtons(LinkedList<Task> tasks) {
         int i = 0;
         taskButtons= new LinkedList<RowInTasksList>();
-        Font f=new Font("Arial",Font.ITALIC,30);
+        Font f=new Font("David",Font.ITALIC,36);
         int red=255,green=31,blue=31;
         if(!readOnly) {
             for (Task oc : tasks) {

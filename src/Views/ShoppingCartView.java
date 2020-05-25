@@ -46,25 +46,28 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel(readOnly?"View your outcomes":"Manage your outcomes!");
-        title.setForeground(Color.white);
-        title.setFont(new Font("Arial", Font.ITALIC, 50));
-        title.setBounds(getWidth() / 2 - 300, 20, 600, 60);
-        title.setForeground(new Color(176, 221, 252));
+        title.setForeground(new Color(168, 0, 0));
+        title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
+        title.setFont(new Font("David", Font.ITALIC, 70));
+        title.setBounds(getWidth() / 2 - 350, 20, 700, 70);
 
 
         /**Shopping cart*/
         shoppingCart = new ShoppingCart(username);
         totalOutcomes = new JLabel("Total outcomes: " + shoppingCart.calculateShoppingCart());
-        totalOutcomes.setForeground(new Color(4, 62, 103));
-        totalOutcomes.setFont(new Font("Arial", Font.PLAIN, 30));
-        totalOutcomes.setBounds(500, 120, 400, 40);
+        totalOutcomes.setOpaque(true);
+        totalOutcomes.setBackground(new Color(168, 0, 0));
+        totalOutcomes.setForeground(Color.white);
+        totalOutcomes.setFont(new Font("David", Font.ITALIC, 36));
+        totalOutcomes.setBounds(800, 120, 450, 40);
 
 
         /**Add new outcome button*/
         if (!readOnly) {
             addOutcome = new JButton("New outcome");
-            addOutcome.setFont(new Font("Arial", Font.PLAIN, 30));
-            addOutcome.setBackground(new Color(176, 221, 252));
+            addOutcome.setFocusPainted(false);
+            addOutcome.setFont(new Font("David", Font.ITALIC, 36));
+            addOutcome.setBackground(new Color(238, 145, 145));
             addOutcome.setForeground(new Color(4, 62, 103));
             addOutcome.setBounds(200, 120, 250, 100);
         }
