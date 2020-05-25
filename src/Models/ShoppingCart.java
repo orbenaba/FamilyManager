@@ -112,4 +112,26 @@ public class ShoppingCart {
         }
         return id;
     }
+
+    //Deletes all the files of the deleted human
+    public static boolean deleteShoppingCart(String username){
+        try {
+            String query="SELECT id FROM outcome WHERE Username = ?;";
+            PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,username);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                File file=new File("Outcomes\\"+rs.getInt("id")+".txt");
+                System.out.println(file.delete());
+            }
+            rs.close();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }

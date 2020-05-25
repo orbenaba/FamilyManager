@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.io.File;
 import java.sql.*;
 
+import static Models.ShoppingCart.deleteShoppingCart;
+import static Models.TasksList.deleteTasksList;
+
 
 public abstract class Human extends User {
     public String firstName, familyUsername;
@@ -62,10 +65,14 @@ public abstract class Human extends User {
         Connection con;
         PreparedStatement ps;
         try {
+            /**Delete the bio file*/
+            /**Deleting all the X user outcome files*/
+            deleteShoppingCart(this.username);
+            deleteTasksList(this.username);
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
             /**First of all we need to ensure that there are no other family members
              * if there are - no problem
-             * if there are no members- you need to delete the family account*/
+             * if there are no members- we need to delete the family account*/
             //this statement deletes the family if and only if it has 1 member
             String deleteFamily = "DELETE FROM family WHERE Counter<=1 AND Username=?";
             ps = con.prepareStatement(deleteFamily);
@@ -81,9 +88,18 @@ public abstract class Human extends User {
             ps = con.prepareStatement(updateCounter);
             ps.setString(1, familyUsername);
             ps.executeUpdate();
+            /**Edge case- if there are no more parents in the family, we need to update the isLimit field in the DB of the children*/
+            String updateIsLimit="UPDATE human SET isLimited=0 WHERE(FamilyUsername = ?) AND " +
+                    "0=ANY(SELECT COUNT(*) FROM (SELECT h2.Username FROM" +
+                    " human AS h2 WHERE h2.FamilyUSername = ? AND h2.Salary>=0)AS h3)";
+            ps=con.prepareStatement(updateIsLimit);
+            ps.setString(1,familyUsername);
+            ps.setString(2,familyUsername);
+            ps.executeUpdate();
+
             ps.close();
             con.close();
-            /**Delete the bio file*/
+
             File f = new File("Biographies\\" + username + ".txt");
             f.delete();
         } catch (SQLException e) {

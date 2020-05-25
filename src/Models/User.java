@@ -28,10 +28,10 @@ public class User {
         boolean exist = false;
         String query;
         if(checker) {
-            query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=? AND Username NOT IN(SELECT Username FROM human WHERE username= ?))";
+            query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=? AND Username NOT IN(SELECT Username FROM human WHERE username= ?));";
             System.out.println("In isUsernameExist");
         }else
-            query = "((SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?) ";
+            query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?);";
         try {
             st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             st.setString(1, username);

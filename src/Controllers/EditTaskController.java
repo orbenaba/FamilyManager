@@ -19,7 +19,8 @@ public class EditTaskController extends BaseForHomeSeqController {
     public EditTaskController(EditTaskView eoview) {
         super(eoview);
         this.eoview = eoview;
-        eoview.addEditOutcomeAction(new EditOutcomeAction());
+        if (!eoview.readOnly)
+            eoview.addEditOutcomeAction(new EditOutcomeAction());
     }
 
     class EditOutcomeAction implements ActionListener {

@@ -91,4 +91,25 @@ public class TasksList {
         }
         return false;
     }
+
+
+    //Deletes all the files of the deleted human
+    public static boolean deleteTasksList(String username){
+        try {
+            String query="SELECT id FROM task WHERE Username = ?;";
+            PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,username);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                File file=new File("Tasks\\"+rs.getInt(1)+".txt");
+                file.delete();
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

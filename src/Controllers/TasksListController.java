@@ -6,21 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class TasksListController extends BaseForHomeSeqController{
+public class TasksListController extends BaseForHomeSeqController {
     private TasksListView tlview;
 
-    public TasksListController(TasksListView tlview){
+    public TasksListController(TasksListView tlview) {
         super(tlview);
-        this.tlview=tlview;
-        tlview.addTaskAction(new TaskAction());
-        tlview.addDeletesListener(new DeletesListener());
-        tlview.addEditsListener(new EditsListener());
+        this.tlview = tlview;
+        if (!tlview.readOnly) {
+            tlview.addTaskAction(new TaskAction());
+            tlview.addDeletesListener(new DeletesListener());
+            tlview.addEditsListener(new EditsListener());
+        }
+        tlview.addTitlesListener(new TitlesListener());
     }
 
     class TaskAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new TaskController(new TaskView(tlview.username,tlview.tasksList));
+            new TaskController(new TaskView(tlview.username, tlview.tasksList));
             tlview.dispose();
         }
     }
@@ -29,10 +32,9 @@ public class TasksListController extends BaseForHomeSeqController{
         @Override
         public void actionPerformed(ActionEvent e) {
             /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
-            System.out.println("In DeletesListener");
             Object src = e.getSource();
             TasksListView.RowInTasksList clicked = null;
-            for(TasksListView.RowInTasksList row : tlview.taskButtons) {
+            for (TasksListView.RowInTasksList row : tlview.taskButtons) {
                 if (src == row.delete) {
                     clicked = row;
                     break;
@@ -49,6 +51,7 @@ public class TasksListController extends BaseForHomeSeqController{
             }
         }
     }
+
     class EditsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -64,9 +67,32 @@ public class TasksListController extends BaseForHomeSeqController{
             /**So far, we got the specific edit button which invoked*/
             if (clicked != null) {
                 /**Needs to update the username*/
-                new EditTaskController(new EditTaskView(clicked.task,tlview.username));
+                new EditTaskController(new EditTaskView(clicked.task, tlview.username,false));
                 tlview.dispose();
             }
+        }
+    }
+
+    class TitlesListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
+            Object src = e.getSource();
+            TasksListView.RowInTasksList clicked = null;
+            for (TasksListView.RowInTasksList row : tlview.taskButtons) {
+                if (src == row.title) {
+                    clicked = row;
+                    break;
+                }
+            }
+            /**So far, we got the specific edit button which invoked*/
+            if (clicked != null) {
+                /**Needs to update the username*/
+                new EditTaskController(new EditTaskView(clicked.task, tlview.username,true));
+                tlview.dispose();
+            }
+
         }
     }
 }

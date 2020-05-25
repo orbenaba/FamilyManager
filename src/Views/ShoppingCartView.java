@@ -43,7 +43,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
-        title = new JLabel("Manage your outcomes!");
+        title = new JLabel(readOnly?"View your outcomes":"Manage your outcomes!");
         title.setForeground(Color.white);
         title.setFont(new Font("Arial", Font.ITALIC, 50));
         title.setBounds(getWidth() / 2 - 300, 20, 600, 60);
@@ -68,7 +68,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         }
         /**Out comes panel*/
         outcomesPanel = new JPanel();
-        outcomesPanel.setLayout(new GridLayout(0, 3, 0, 15));
+        outcomesPanel.setLayout(new GridLayout(0, readOnly?1:3, 0, 15));
         convertListToButtons(shoppingCart.getOutcomes());
         outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
