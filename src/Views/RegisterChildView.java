@@ -12,52 +12,59 @@ import java.awt.event.MouseAdapter;
 public class RegisterChildView extends RegisterHumanView {
     public String familyUsername;
 
-    public JLabel statusLabel;
     public JCheckBox isSingle;
     public JTextField status;
-    public JLabel parentView;
+    public JLabel parentView,statusLabel;
 
 
     public RegisterChildView(String familyUsername){
+        super();
         this.familyUsername=familyUsername;
         isSingle=new JCheckBox("Single?");
-        statusLabel=new JLabel("Status:");
-        status=new JTextField();
-        status.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.green));
-
-        status.setBounds(570,420,200,40);
-        statusLabel.setBounds(460,420,150,40);
-
         isSingle.setHorizontalTextPosition(SwingConstants.LEFT);
         isSingle.setBounds(620,610,180,40);
-
-        Font f=new Font("Arial",Font.BOLD,25);
-        status.setFont(f);
-        statusLabel.setFont(f);
         isSingle.setFont(f);
 
-        Color color=new Color(48,48,48);
-        status.setBackground(color);
-        isSingle.setBackground(Color.black);
+        isSingle.setBackground(back);
         //get rid of the border which is drawn by default around the checkBox
         isSingle.setFocusPainted(false);
         isSingle.setOpaque(true);
 
 
-        statusLabel.setForeground(Color.green);
-        status.setForeground(Color.green);
-        isSingle.setForeground(Color.green);
+
+        status=new JTextField();
+        status.setBorder(BorderFactory.createMatteBorder(1,1,1,1, fore));
+        status.setBackground(back);
+        status.setFont(f);
+        status.setForeground(fore);
+        status.setBounds(240,650,240,50);
+
+
+
+        statusLabel=new JLabel("Status:");
+        statusLabel.setFont(f);
+        statusLabel.setForeground(fore);
+        statusLabel.setBounds(130,650,150,40);
+        add(status);
+        add(statusLabel);
+
+
+
+        isSingle.setForeground(fore);
 
         parentView=new JLabel("Actually, I'm a parent");
-        parentView.setForeground(Color.green);
-        parentView.setFont(new Font("Arial",Font.ITALIC,20));
-        parentView.setBounds(50,50,200,25);
+        parentView.setForeground(fore);
+        parentView.setFont(f);
+        parentView.setBounds(50,50,270,25);
+
+
 
 
         add(parentView);
-        add(status);
-        add(statusLabel);
+
         add(isSingle);
+        add(background);
+        setVisible(true);
     }
 
     public void addStatusListener(MouseAdapter mal){

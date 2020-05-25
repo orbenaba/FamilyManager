@@ -37,8 +37,8 @@ public class RegisterChildController extends RegisterHumanController {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.status.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-            rview.statusLabel.setForeground(Color.green);
+            rview.status.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
+            rview.statusLabel.setForeground(rview.fore);
         }
     }
 
@@ -50,7 +50,7 @@ public class RegisterChildController extends RegisterHumanController {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            rview.parentView.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.green));
+            rview.parentView.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, rview.fore));
         }
 
         @Override

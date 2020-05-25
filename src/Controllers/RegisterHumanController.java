@@ -67,8 +67,11 @@ public class RegisterHumanController extends JframeController{
                 rview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
                 rview.removePhotoLabel=new JLabel(rview.removePhoto);
                 rview.removePhotoLabel.setBounds(x+width+50,y,40,50);
+                /**Removing old background and add it again*/
+                rview.getContentPane().remove(rview.background);
                 rview.add(rview.removePhotoLabel);
                 rview.add(rview.imageContainer);
+                rview.add(rview.background);
                 rview.addRemovePhotoListener(new RemovePhotoListenerr());
                 //Refresh view
                 rview.repaint();
@@ -79,8 +82,8 @@ public class RegisterHumanController extends JframeController{
     class FirstNameListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-            rview.firstNameLabel.setForeground(Color.green);
+            rview.firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
+            rview.firstNameLabel.setForeground(rview.fore);
         }
 
         @Override
@@ -102,7 +105,7 @@ public class RegisterHumanController extends JframeController{
     class GendersListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+            rview.genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
         }
 
         @Override
@@ -114,7 +117,7 @@ public class RegisterHumanController extends JframeController{
     class UsernameListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.username.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+            rview.username.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
         }
 
         @Override
@@ -126,7 +129,7 @@ public class RegisterHumanController extends JframeController{
     class PasswordListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.password.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+            rview.password.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,rview.fore));
         }
 
         @Override
@@ -138,7 +141,7 @@ public class RegisterHumanController extends JframeController{
     class ConfirmPasswordListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.confirmPassword.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+            rview.confirmPassword.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,rview.fore));
         }
 
         @Override
@@ -155,8 +158,8 @@ public class RegisterHumanController extends JframeController{
         }
         @Override
         public void mouseExited(MouseEvent e){
-            rview.dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
-            rview.birthdayLabel.setForeground(Color.green);
+            rview.dateChooser.setBorder(BorderFactory.createMatteBorder(1,1,1,1,rview.fore));
+            rview.birthdayLabel.setForeground(rview.fore);
         }
     }
 
@@ -167,22 +170,20 @@ public class RegisterHumanController extends JframeController{
         }
         @Override
         public void mouseExited(MouseEvent e){
-            rview.create.setBackground(new Color(48,48,48));
+            rview.create.setBackground(rview.back);
         }
     }
 
     class BioListener extends MouseAdapter{
         @Override
         public void mouseEntered(MouseEvent e){
-            rview.bio.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
-            if(rview.bio.getText().equals("\t            Bio..."))
-                rview.bio.setText("");
+            rview.bio.setBorder(BorderFactory.createMatteBorder(1,1,1,1,rview.fore));
+            rview.bioLabel.setForeground(Color.white);
         }
         @Override
         public void mouseExited(MouseEvent e){
             rview.bio.setBorder(null);
-            if(rview.bio.getText().equals(""))
-                rview.bio.setText("\t            Bio...");
+            rview.bioLabel.setForeground(rview.fore);
         }
     }
 
@@ -197,13 +198,15 @@ public class RegisterHumanController extends JframeController{
             rview.getContentPane().remove(rview.imageContainer);
             rview.getContentPane().remove(rview.removePhotoLabel);
             /**Adding new components*/
-            rview.image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
-            rview.imageContainer=new JLabel(rview.image);
-            rview.imageContainer.setBounds(300,10,250,250);
-            rview.addImage=new CircleButton("",Color.black);
-            rview.addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
+            rview.image=new ImageIcon(getClass().getResource("/Icons/profile3.png"));
+            rview.imageContainer = new JLabel(rview.image);
+            rview.imageContainer.setBounds(rview.getWidth()/2-239, 20, 478, 300);
+            rview.addImage = new CircleButton("",Color.ORANGE);
+            rview.addImage.setBounds(rview.getWidth()/2-38, 190, 78, 78);//Covers the plus that belongs to the image
+            rview.getContentPane().remove(rview.background);
             rview.add(rview.imageContainer);
             rview.add(rview.addImage);
+            rview.add(rview.background);
             rview.addImageAction(new AddImage_action());
             rview.repaint();
         }

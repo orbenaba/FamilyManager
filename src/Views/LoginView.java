@@ -49,7 +49,7 @@ public class LoginView extends Jframe {
      public void addLoginForm(){
           //username+password icons
           ImageIcon u=new ImageIcon(getClass().getResource("/Icons/userIcon.png"));
-          ImageIcon pii1=new ImageIcon(getClass().getResource("/Icons/passIcon.png"));
+          ImageIcon pii1=new ImageIcon(getClass().getResource("/Icons/passIcon2.png"));
           passIcon1=new JLabel();
           userIcon=new JLabel();
           passIcon1.setIcon(pii1);

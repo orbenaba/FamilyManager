@@ -41,8 +41,8 @@ public class RegisterParentController extends RegisterHumanController {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.jobName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-            rview.jobNameLabel.setForeground(Color.green);
+            rview.jobName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
+            rview.jobNameLabel.setForeground(rview.fore);
         }
     }
 
@@ -55,8 +55,8 @@ public class RegisterParentController extends RegisterHumanController {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            rview.salary.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-            rview.salaryLabel.setForeground(Color.green);
+            rview.salary.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, rview.fore));
+            rview.salaryLabel.setForeground(rview.fore);
         }
     }
 
@@ -68,7 +68,7 @@ public class RegisterParentController extends RegisterHumanController {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            rview.childView.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.green));
+            rview.childView.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,rview.fore));
         }
 
         @Override

@@ -17,7 +17,7 @@ import static Models.Gender.getGenders;
 
 
 public class RegisterHumanView extends Jframe {
-    public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel;
+    public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel,bioLabel;
     public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
 
     public JTextField firstName;
@@ -37,6 +37,9 @@ public class RegisterHumanView extends Jframe {
     public JButton create;
     //image path
     public String imagePath=null;
+    public JLabel background;
+    public Color fore,back;
+    public Font f;
 
 
 
@@ -45,29 +48,33 @@ public class RegisterHumanView extends Jframe {
         //Changing the caret in the entire text fields
         UIManager.put("TextField.caretForeground", new ColorUIResource(Color.red));
         setExtendedState(MAXIMIZED_BOTH);
-        Color color=new Color(48,48,48);
+        fore=new Color(7, 0, 204).brighter();
+        back=new Color(128, 153, 255).brighter();
+        f=new Font("David",Font.ITALIC,30);
         int width=getWidth(),height=getHeight();
 
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.black);
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/registerBackground.jpg")));
+        background.setBounds(0,0,width,height);
 
-        image = new ImageIcon(getClass().getResource("/Icons/profile2.png"));
+        image = new ImageIcon(getClass().getResource("/Icons/profile3.png"));
         imageContainer = new JLabel(image);
         imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
-        addImage = new CircleButton("",Color.black);
+        addImage = new CircleButton("",Color.ORANGE);
         addImage.setBounds(width/2-38, 190, 78, 78);//Covers the plus that belongs to the image
 
 
         firstNameLabel = new JLabel("First name:");
-        firstNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        firstNameLabel.setForeground(Color.green);
-        firstNameLabel.setBounds(150, 350, 150, 35);
+        firstNameLabel.setFont(f);
+        firstNameLabel.setForeground(fore);
+        firstNameLabel.setBounds(130, 350, 150, 35);
         firstName = new JTextField();
-        firstName.setFont(new Font("Arial", Font.BOLD, 25));
-        firstName.setForeground(Color.green);
-        firstName.setBackground(color);
-        firstName.setBounds(300, 350, 200, 35);
-        firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+        firstName.setFont(f);
+        firstName.setForeground(fore);
+        firstName.setBackground(back);
+        firstName.setBounds(280, 350, 250, 50);
+        firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
 
 
         java.util.List<String> gendersArray = getGenders();
@@ -75,46 +82,27 @@ public class RegisterHumanView extends Jframe {
 
         genders = new JComboBox(gendersArray.toArray());
         genders.setBounds(580, 350, 240, 35);
-        genders.setFont(new Font("Arial", Font.BOLD, 25));
-        genders.setForeground(Color.green);
-        genders.setBackground(color);
-        genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
+        genders.setFont(f);
+        genders.setForeground(fore);
+        genders.setBackground(back);
+        genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
         genders.setSelectedItem(("Select gender"));
 
 
-        addUsernamePassword(150, 420, 50);
-        birthdayLabel = new JLabel("Date of birth:");
-        birthdayLabel.setBounds(150, 610, 180, 35);
-        birthdayLabel.setForeground(Color.green);
-        birthdayLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////~~~ADD BIRTHDAY FIELD~~~////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        calendar = Calendar.getInstance();
-        dateChooser = new JDateChooser(calendar.getTime());
-        //enforcing the user to choose a valid date. I range [NOW,NOW-120]
-        java.util.Date currentDate= new java.util.Date();
-        java.util.Date minDate=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
-        dateChooser.setMaxSelectableDate(currentDate);
-        dateChooser.setMinSelectableDate(minDate);
-        dateChooser.setBounds(330, 610, 170, 35);
-        dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
-        dateChooser.setBackground(color);
-        dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
-        dateChooser.setDateFormatString("dd/MM/yyyy");
-        add(dateChooser);
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////~~~ADD BIO FIELD~~~////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        addUsernamePassword(130, 440, 55);
+
+        bioLabel=new JLabel("Bio:");
+        bioLabel.setFont(f);
+        bioLabel.setForeground(fore);
+        bioLabel.setBounds(910,365,60,30);
         bio = new JTextArea(4, 30);
-        bio.setFont(new Font("Arial", Font.BOLD, 20));
-        bio.setBackground(color);
-        bio.setForeground(Color.green);
+        bio.setFont(f);
+        bio.setBackground(back);
+        bio.setForeground(fore);
         bio.setLineWrap(true);
         bio.setWrapStyleWord(true);
-        bio.setForeground(Color.green);
-        bio.setText("\t            Bio...");
-
+        bio.setForeground(fore);
+        /**Adding a scroll bar to the TextArea in case there is no place*/
         pane = new JScrollPane(bio, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pane.setBounds(900, 400, 450, 300);
         pane.setPreferredSize(new Dimension(250,300));
@@ -123,14 +111,15 @@ public class RegisterHumanView extends Jframe {
 
         create=new JButton("Create");
         create.setBounds(1200,750,200,50);
-        create.setBackground(color);
-        create.setForeground(Color.green);
-        create.setFont(new Font("Arial",Font.BOLD,25));
+        create.setBackground(back);
+        create.setForeground(fore);
+        create.setFont(f);
         create.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
-
+        add(dateChooser);
         add(create);
+        add(bioLabel);
         add(pane);
         add(birthdayLabel);
         add(usernameLabel);
@@ -144,7 +133,7 @@ public class RegisterHumanView extends Jframe {
         add(firstName);
         add(imageContainer);
         add(addImage);
-        setVisible(true);
+
     }
 
     public void addImageAction(ActionListener mal) {
@@ -171,31 +160,54 @@ public class RegisterHumanView extends Jframe {
         username = new JTextField();
         password = new JPasswordField();
         confirmPassword = new JPasswordField();
-        password.setFont(new Font("Arial", Font.BOLD, 25));
-        confirmPassword.setFont(new Font("Arial", Font.BOLD, 25));
-        username.setFont(new Font("Arial", Font.BOLD, 25));
-        password.setForeground(Color.green);
-        confirmPassword.setForeground(Color.green);
-        username.setForeground(Color.green);
+        password.setFont(f);
+        confirmPassword.setFont(f);
+        username.setFont(f);
+        password.setForeground(fore);
+        confirmPassword.setForeground(fore);
+        username.setForeground(fore);
         usernameLabel = new JLabel();
         passwordLabel = new JLabel();
         confirmPasswordLabel = new JLabel();
-        passwordLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/passIcon.png")));
-        confirmPasswordLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/passIcon.png")));
+        passwordLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/passIcon2.png")));
+        confirmPasswordLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/passIcon2.png")));
         usernameLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/userIcon.png")));
-        usernameLabel.setBounds(x, y, iconSize, iconSize);
+        usernameLabel.setBounds(x-20, y, iconSize, iconSize);
+
+
+
+
+
+        birthdayLabel = new JLabel("Date of birth:");
+        birthdayLabel.setBounds(x+300, y+5, 180, 35);
+        birthdayLabel.setForeground(fore);
+        birthdayLabel.setFont(f);
+
+        calendar = Calendar.getInstance();
+        dateChooser = new JDateChooser(calendar.getTime());
+        //enforcing the user to choose a valid date. I range [NOW,NOW-120]
+        java.util.Date currentDate= new java.util.Date();
+        java.util.Date minDate=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
+        dateChooser.setMaxSelectableDate(currentDate);
+        dateChooser.setMinSelectableDate(minDate);
+        dateChooser.setBounds(x+480, y, 170, 35);
+        dateChooser.setFont(f);
+        dateChooser.setBackground(back);
+        dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+
 
 
         passwordLabel.setBounds(x, y + iconSize + 40, iconSize, iconSize);
         confirmPasswordLabel.setBounds(x + 360, y + iconSize + 40, iconSize, iconSize);
 
-        password.setBackground(color);
-        confirmPassword.setBackground(color);
-        username.setBackground(color);
+        password.setBackground(back);
+        confirmPassword.setBackground(back);
+        username.setBackground(back);
 
-        password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
-        confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
-        username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
+        password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
+        confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
+        username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
 
         password.setBounds(x + iconSize + 10, y + iconSize + 40, 200, iconSize - 10);
         confirmPassword.setBounds(x + iconSize + 370, y + iconSize + 40, 200, iconSize - 10);
