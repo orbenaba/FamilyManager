@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.Child;
 import Views.MyProfileHumanView;
 import Views.StartView;
 import com.company.CircleButton;
@@ -43,14 +42,16 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
             mphview.getContentPane().remove(mphview.imageContainer);
             mphview.getContentPane().remove(mphview.removePhotoLabel);
             /**Adding new components*/
-            ImageIcon image = new ImageIcon(getClass().getResource("/Icons/profile2.png"));
+            ImageIcon image = new ImageIcon(getClass().getResource("/Icons/profile3.png"));
             mphview.imageContainer = new JLabel(image);
             mphview.imageContainer.setBounds(mphview.width / 2 - 130, 22, 250, 300);
-            mphview.addImage = new CircleButton("", new Color(219, 102, 0));
+            mphview.addImage = new CircleButton("", Color.ORANGE);
             mphview.addImage.setBounds(mphview.width / 2 - 40, 190, 78, 78);//Covers the plus that belongs to the image            add(imageContainer);
             mphview.imagePath = null;
+            mphview.getContentPane().remove(mphview.background);
             mphview.add(mphview.imageContainer);
             mphview.add(mphview.addImage);
+            mphview.add(mphview.background);
             mphview.addImageAction(new AddImage_action());
             mphview.repaint();
         }
@@ -88,8 +89,11 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
                 mphview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
                 mphview.removePhotoLabel = new JLabel(mphview.removePhoto);
                 mphview.removePhotoLabel.setBounds(x + width + 20, y, 40, 50);
+
+                mphview.getContentPane().remove(mphview.background);
                 mphview.add(mphview.removePhotoLabel);
                 mphview.add(mphview.imageContainer);
+                mphview.add(mphview.background);
                 mphview.addRemovePhotoListener(new RemovePhotoListener());
                 //Refresh view
                 mphview.repaint();

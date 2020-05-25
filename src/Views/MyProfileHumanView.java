@@ -33,6 +33,9 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
     public JTextField usernameField,passwordField,firstNameField;
     //image path
     public String imagePath=null;
+    public JLabel background;
+    public JScrollPane pane;
+
 
     /**Birthday calendar */
     public JDateChooser dateChooser;
@@ -59,7 +62,10 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         width=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         height=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-        getContentPane().setBackground(new Color(219, 102, 0));
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/registerBackground.jpg")));
+        background.setBounds(0,0,width,height);
+
 
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
@@ -153,10 +159,16 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         bio.setHorizontalTextPosition(0);
         bioArea.setBackground(new Color(122, 5, 69));
         bioArea.setForeground(Color.orange);
-        bioArea.setBounds(width/2+150,400,500,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(4,4,4,4,Color.blue));
-        calendar = Calendar.getInstance();
+        pane = new JScrollPane(bioArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setBounds(width/2+150,400,500,400);
+        pane.setPreferredSize(new Dimension(500,400));
 
+
+
+
+
+        calendar = Calendar.getInstance();
         /**Set the date in the calendar to the previous date of birth which the user was insert before*/
         dateChooser = new JDateChooser(human.birthday);
         //enforcing the user to choose a valid date. I range [NOW,NOW-120]
@@ -186,11 +198,12 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         usernameField.setText(human.username);
         passwordField.setText(human.password);
         firstNameField.setText(human.firstName);
+        add(pane);
         add(updateAccount);
         add(birthdayLabel);
         add(dateChooser);
         add(bio);
-        add(bioArea);
+ //       add(bioArea);
         add(firstNameLabel);
         add(firstNameField);
         add(passwordField);

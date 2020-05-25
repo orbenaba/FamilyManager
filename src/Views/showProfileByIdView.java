@@ -18,8 +18,8 @@ public class showProfileByIdView extends BaseForHomeSeqView {
     public JLabel imgContainer;
     public JLabel nameLabel,usernameLabel;
     public JLabel genderLabel,birthdayLabel,relationLabel;
-    public JTextArea bioLabel;
-
+    public JTextArea bioArea;
+    public JScrollPane pane;
 
 
     @Override
@@ -93,20 +93,25 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         bio.setFont(f);
         bio.setForeground(Color.blue);
         bio.setBounds(getWidth()/2+100,360,50,30);
-        bioLabel=new JTextArea(bioContent.toString());
-        bioLabel.setFont(f);
+        bioArea =new JTextArea(bioContent.toString());
+        bioArea.setFont(f);
         bio.setVerticalTextPosition(0);
         bio.setHorizontalTextPosition(0);
-        bioLabel.setBackground(new Color(122, 5, 69));
-        bioLabel.setForeground(Color.blue);
-        bioLabel.setBounds(getWidth()/2+100,400,400,400);
-        bioLabel.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.blue));
-        bioLabel.setEditable(false);
+        bioArea.setBackground(new Color(122, 5, 69));
+        bioArea.setForeground(Color.blue);
+      //  bioArea.setBounds(getWidth()/2+100,400,400,400);
+        bioArea.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.blue));
+        bioArea.setEditable(false);
+        pane = new JScrollPane(bioArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pane.setBounds(getWidth()/2+50,400,550,400);
+        pane.setPreferredSize(new Dimension(550,400));
+
+
 
 
         myScan.close();
         add(bio);
-        add(bioLabel);
+        add(pane);
         add(relationLabel);
         add(nameLabel);
         add(birthdayLabel);

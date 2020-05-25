@@ -47,6 +47,7 @@ public class MyProfileChildView extends MyProfileHumanView {
         add(isSingle);
         add(statusLabel);
         add(statusField);
+        add(background);
         setVisible(true);
     }
 

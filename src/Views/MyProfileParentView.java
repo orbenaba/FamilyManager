@@ -87,6 +87,7 @@ public class MyProfileParentView extends MyProfileHumanView {
         add(isMarried);
         add(jobNameLabel);
         add(jobNameField);
+        add(background);
         setVisible(true);
     }
 

@@ -207,6 +207,7 @@ public class RegisterHumanController extends JframeController{
             rview.add(rview.imageContainer);
             rview.add(rview.addImage);
             rview.add(rview.background);
+            rview.add(rview.background);
             rview.addImageAction(new AddImage_action());
             rview.repaint();
         }
