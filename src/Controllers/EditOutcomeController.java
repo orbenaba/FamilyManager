@@ -17,9 +17,11 @@ public class EditOutcomeController extends BaseForHomeSeqController {
     private EditOutcomeView eoview;
     public EditOutcomeController(EditOutcomeView eoview) {
         super(eoview);
-        this.eoview=eoview;
-        eoview.addEditOutcomeAction(new EditOutcomeAction());
-        eoview.addEnforcingPrice(new EnforcingPrice());
+        this.eoview = eoview;
+        if (!eoview.readOnly) {
+            eoview.addEditOutcomeAction(new EditOutcomeAction());
+            eoview.addEnforcingPrice(new EnforcingPrice());
+        }
     }
 
     /**

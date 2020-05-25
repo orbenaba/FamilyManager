@@ -1,8 +1,9 @@
 package Views;
 
 
+import com.sun.xml.internal.ws.util.HandlerAnnotationInfo;
+
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -34,6 +35,9 @@ public class HomeView extends Jframe {
         settingsButton.setForeground(Color.white);
         settingsButton.setFont(font);
         settingsButton.setBounds(width/2-450,height/2-300,400,250);
+        settingsButton.setFocusPainted(false);
+        settingsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
         /**Family tree*/
         familyTreeButton=new JButton("Family Tree");
@@ -41,6 +45,9 @@ public class HomeView extends Jframe {
         familyTreeButton.setForeground(Color.white);
         familyTreeButton.setFont(font);
         familyTreeButton.setBounds(width/2,height/2-300,400,250);
+        familyTreeButton.setFocusPainted(false);
+        familyTreeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
 
         /**Family's tasks*/
@@ -49,6 +56,9 @@ public class HomeView extends Jframe {
         tasksButton.setForeground(Color.white);
         tasksButton.setFont(font);
         tasksButton.setBounds(width/2-450,height/2,400,250);
+        tasksButton.setFocusPainted(false);
+        tasksButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
 
         /**Family's shopping cart*/
@@ -57,6 +67,10 @@ public class HomeView extends Jframe {
         shoppingCartButton.setForeground(Color.white);
         shoppingCartButton.setFont(font);
         shoppingCartButton.setBounds(width/2,height/2,400,250);
+        shoppingCartButton.setFocusPainted(false);
+        shoppingCartButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+
         /**Adding an option to log off in homeView*/
         logOff=new JLabel("Log off");
         logOff.setFont(new Font("David",Font.ITALIC,35));

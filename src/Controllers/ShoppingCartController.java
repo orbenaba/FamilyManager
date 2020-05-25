@@ -14,9 +14,12 @@ public class ShoppingCartController extends BaseForHomeSeqController{
     public ShoppingCartController(ShoppingCartView scview){
         super(scview);
         this.scview=scview;
-        scview.addOutcomeAction(new OutcomeAction());
-        scview.addDeletesListener(new DeletesListener());
-        scview.addEditsListener(new EditsListener());
+        if(!scview.readOnly) {
+            scview.addOutcomeAction(new OutcomeAction());
+            scview.addDeletesListener(new DeletesListener());
+            scview.addEditsListener(new EditsListener());
+        }
+        scview.addTitlesListener(new TitlesListener());
     }
 
     class OutcomeAction implements ActionListener {
@@ -66,9 +69,31 @@ public class ShoppingCartController extends BaseForHomeSeqController{
             /**So far, we got the specific edit button which invoked*/
             if (clicked != null) {
                 /**Needs to update the username*/
-                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username));
+                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username,scview.readOnly));
                 scview.dispose();
             }
         }
     }
+
+    class TitlesListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            /**First, we must identify the button which was clicked in order to delete its associated Outcome*/
+            Object src = e.getSource();
+            ShoppingCartView.RowInShoppingCart clicked = null;
+            for (ShoppingCartView.RowInShoppingCart row : scview.outcomeButtons) {
+                if (src == row.title) {
+                    clicked = row;
+                    break;
+                }
+            }
+            /**So far, we got the specific edit button which invoked*/
+            if (clicked != null) {
+                /**Needs to update the username*/
+                new EditOutcomeController(new EditOutcomeView(clicked.outcome,scview.username,scview.readOnly));
+                scview.dispose();
+            }
+        }
+    }
+
 }

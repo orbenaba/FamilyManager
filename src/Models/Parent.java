@@ -196,4 +196,22 @@ public class Parent extends Human {
         return ret;
     }
 
+    public static boolean isLimitChildren(String username){
+        boolean ret=false;
+        try {
+            //salary can distinct between child and parent
+            String query="SELECT isLimited FROM human WHERE FamilyUsername =ANY(SELECT FamilyUsername FROM human WHERE Username = ? AND Salary < 0)";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            ret=rs.getBoolean("isLimited");
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
 }

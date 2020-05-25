@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
+import static Models.Parent.isLimitChildren;
+import static Models.Parent.isParent;
+
 public class ShoppingCartView extends BaseForHomeSeqView {
     public ShoppingCart shoppingCart;
     public String username;
@@ -16,6 +19,8 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public JPanel outcomesPanel;
     public JButton addOutcome;
     public JLabel totalOutcomes;
+    public boolean readOnly=false;
+
 
     public LinkedList<RowInShoppingCart> outcomeButtons;
 
@@ -30,6 +35,12 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
     public ShoppingCartView(String username) {
         this.username = username;
+        if (!isParent(username))
+            if (isLimitChildren(username)) {
+                readOnly = true;
+            }
+
+
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel("Manage your outcomes!");
@@ -48,12 +59,13 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
 
         /**Add new outcome button*/
-        addOutcome = new JButton("New outcome");
-        addOutcome.setFont(new Font("Arial", Font.PLAIN, 30));
-        addOutcome.setBackground(new Color(176, 221, 252));
-        addOutcome.setForeground(new Color(4, 62, 103));
-        addOutcome.setBounds(200, 120, 250, 100);
-
+        if (!readOnly) {
+            addOutcome = new JButton("New outcome");
+            addOutcome.setFont(new Font("Arial", Font.PLAIN, 30));
+            addOutcome.setBackground(new Color(176, 221, 252));
+            addOutcome.setForeground(new Color(4, 62, 103));
+            addOutcome.setBounds(200, 120, 250, 100);
+        }
         /**Out comes panel*/
         outcomesPanel = new JPanel();
         outcomesPanel.setLayout(new GridLayout(0, 3, 0, 15));
@@ -65,10 +77,10 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         outcomeScroller.getVerticalScrollBar().setUnitIncrement(12);
 
 
-
         add(outcomeScroller);
         add(totalOutcomes);
-        add(addOutcome);
+        if (!readOnly)
+            add(addOutcome);
         add(title);
     }
 
@@ -77,32 +89,46 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     }
 
 
-
-
-
     public void convertListToButtons(LinkedList<Outcome> outcomes) {
         int i = 0;
         outcomeButtons = new LinkedList<RowInShoppingCart>();
         Font f=new Font("Arial",Font.ITALIC,30);
         int red=255,green=31,blue=31;
-        for (Outcome oc : outcomes) {
-            RowInShoppingCart row=new RowInShoppingCart(oc);
-            row.title.setPreferredSize(new Dimension(300, 100));
-            row.title.setVerticalTextPosition(SwingConstants.CENTER);
-            row.title.setHorizontalTextPosition(SwingConstants.CENTER);
-            Color currentRowColor=new Color(((red+=15)%100)+100,((green+=25)%100)+100,48);
-            row.title.setFont(f);
-            row.edit.setFont(f);
-            row.delete.setFont(f);
-            row.title.setBackground(currentRowColor);
-            row.delete.setBackground(currentRowColor);
-            row.edit.setBackground(currentRowColor);
-            outcomesPanel.add(row.title, BorderLayout.CENTER);
-            outcomesPanel.add(row.delete, BorderLayout.CENTER);
-            outcomesPanel.add(row.edit, BorderLayout.CENTER);
-            i++;
-            /**Adding the new row at the created table into a list in order to listen to its buttons later on*/
-            outcomeButtons.add(row);
+        if(!readOnly) {
+            for (Outcome oc : outcomes) {
+                RowInShoppingCart row = new RowInShoppingCart(oc);
+                row.title.setPreferredSize(new Dimension(300, 100));
+                row.title.setVerticalTextPosition(SwingConstants.CENTER);
+                row.title.setHorizontalTextPosition(SwingConstants.CENTER);
+                Color currentRowColor = new Color(((red += 15) % 100) + 100, ((green += 25) % 100) + 100, 48);
+                row.title.setFont(f);
+                row.edit.setFont(f);
+                row.delete.setFont(f);
+                row.title.setBackground(currentRowColor);
+                row.delete.setBackground(currentRowColor);
+                row.edit.setBackground(currentRowColor);
+                outcomesPanel.add(row.title, BorderLayout.CENTER);
+                outcomesPanel.add(row.delete, BorderLayout.CENTER);
+                outcomesPanel.add(row.edit, BorderLayout.CENTER);
+                i++;
+                /**Adding the new row at the created table into a list in order to listen to its buttons later on*/
+                outcomeButtons.add(row);
+            }
+        }
+        else{
+            for (Outcome oc : outcomes) {
+                RowInShoppingCart row = new RowInShoppingCart(oc);
+                row.title.setPreferredSize(new Dimension(1000, 100));
+                row.title.setVerticalTextPosition(SwingConstants.CENTER);
+                row.title.setHorizontalTextPosition(SwingConstants.CENTER);
+                Color currentRowColor = new Color(((red += 15) % 100) + 100, ((green += 25) % 100) + 100, 48);
+                row.title.setFont(f);
+                row.title.setBackground(currentRowColor);
+                outcomesPanel.add(row.title, BorderLayout.CENTER);
+                i++;
+                /**Adding the new row at the created table into a list in order to listen to its buttons later on*/
+                outcomeButtons.add(row);
+            }
         }
     }
 
@@ -137,5 +163,10 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public void addEditsListener(ActionListener mal){
         for(RowInShoppingCart ob : outcomeButtons)
             ob.edit.addActionListener(mal);
+    }
+
+    public void addTitlesListener(ActionListener mal){
+        for(RowInShoppingCart ob : outcomeButtons)
+            ob.title.addActionListener(mal);
     }
 }
