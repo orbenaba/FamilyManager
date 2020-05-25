@@ -3,13 +3,9 @@ package Views;
 import Models.Family;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-
-import static Views.RegisterView.addTitle;
-import static Views.RegisterView.decorateBackground;
 
 public class RegisterFamilyView extends Jframe {
     public Family family;
@@ -19,19 +15,43 @@ public class RegisterFamilyView extends Jframe {
     public JPasswordField createPassword,confirmPassword;
     public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel,loginContext;
     public JButton create;
+    Font f;
 
 
     public RegisterFamilyView()
     {
         super(700);
+        f=new Font("David",Font.ITALIC,30);
         //get rid of the ugly frame which is given by default
         setSize(700,650);
         setLocationRelativeTo(null);
         p1=new JPanel();
         p2=new JPanel();
-        decorateBackground(p1,p2,this,getWidth()-30,getHeight());
+        getContentPane().setBackground(new Color(0,7,204));
+        p1.setBackground(new Color(153, 0, 92));
+        p1.setBounds(15,15,getWidth()-30,100);
+        p2.setBackground(Color.orange);
+        p2.setBounds(15,115,getWidth()-30,getHeight()-130);
+
+
+
+
+
+
+
         title=new JLabel("Create a family account!");
-        addTitle(title,170,15,360,80);
+        title.setFont(new Font("David",Font.ITALIC,40));
+        title.setForeground(Color.white);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setVerticalAlignment(SwingConstants.CENTER);
+        title.setBackground(new Color(0,7,204));
+        title.setOpaque(true);//The default is the background is transparent
+        title.setBounds(150,15,420,80);
+
+
+
+
+
 
 
         lastnameLabel=new JLabel("Last name:");
@@ -43,18 +63,18 @@ public class RegisterFamilyView extends Jframe {
         username=new JTextField();
         confirmPassword=new JPasswordField();
         createPassword=new JPasswordField();
-        addFields(lastname,username,confirmPassword,createPassword,250,160);
+        addFields(lastname,username,confirmPassword,createPassword,300,160);
         //Add  create button
         create=new JButton("Create");
         create.setBounds(150,570,300,50);
         create.setForeground(Color.white);
-        create.setFont(new Font("Arial",Font.BOLD,22));
-        create.setBackground(new Color(0,84,104));
+        create.setFont(f);
+        create.setBackground(new Color(0,7,204));
         create.setCursor(new Cursor(Cursor.HAND_CURSOR));
         /**Add a context to login view*/
         loginContext=new JLabel("Already have an account?");
-        loginContext.setFont(new Font("Arial",Font.BOLD,15));
-        loginContext.setBounds(200,500,185,20);
+        loginContext.setFont(new Font("David",Font.ITALIC,20));
+        loginContext.setBounds(200,515,215,20);
         loginContext.setForeground(Color.BLUE);
 
 
@@ -75,22 +95,20 @@ public class RegisterFamilyView extends Jframe {
     }
 
     public void addFields(JTextField lastname,JTextField username,JPasswordField createPassword,JPasswordField confirmPassword,int x,int y){
-        Font f=new Font("Arial",Font.BOLD,20);
-        lastname.setBounds(x,y,230,36);
-        username.setBounds(x,y+71,230,36);
-        createPassword.setBounds(x,y+142,230,36);
-        confirmPassword.setBounds(x,y+213,230,36);
+        lastname.setBounds(x,y,250,50);
+        username.setBounds(x,y+91,250,50);
+        createPassword.setBounds(x,y+182,250,50);
+        confirmPassword.setBounds(x,y+273,250,50);
         lastname.setFont(f);
         username.setFont(f);
         createPassword.setFont(f);
         confirmPassword.setFont(f);
     }
     public void addJLabels(JLabel lastnameLabel,JLabel usernameLabel,JLabel createPasswordLabel,JLabel confirmPasswordLabel,int x,int y) {
-        Font f = new Font("Arial", Font.BOLD, 20);
         lastnameLabel.setBounds(x, y, 180, 30);
-        usernameLabel.setBounds(x, y + 71, 180, 30);
-        createPasswordLabel.setBounds(x, y + 142, 220, 30);
-        confirmPasswordLabel.setBounds(x, y + 213, 220, 30);
+        usernameLabel.setBounds(x, y + 91, 180, 30);
+        createPasswordLabel.setBounds(x, y + 182, 220, 30);
+        confirmPasswordLabel.setBounds(x, y + 273, 250, 30);
         lastnameLabel.setFont(f);
         usernameLabel.setFont(f);
         createPasswordLabel.setFont(f);

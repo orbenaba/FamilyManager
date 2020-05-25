@@ -67,18 +67,18 @@ public class RegisterView extends Jframe {
     public static void decorateBackground(JPanel p1,JPanel p2,JFrame This,int width,int height) {
         //Yellow background
         This.getContentPane().setBackground(Color.yellow);
-        p1.setBackground(new Color(116,119,139));
+        p1.setBackground(new Color(153, 0, 92));
         p1.setBounds(15,15,width,100);
         p2.setBackground(new Color(205,206,213));
         p2.setBounds(15,115,width,height-130);
     }
     public static void addTitle(JLabel title, int x, int y, int width, int height) {
         //Label for "Register" title
-        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setFont(new Font("David",Font.ITALIC,40));
         title.setForeground(Color.white);
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setVerticalAlignment(SwingConstants.CENTER);
-        title.setBackground(new Color(0,84,104));
+        title.setBackground(new Color(0,7,204));
         title.setOpaque(true);//The default is the background is transparent
         title.setBounds(x,y,width,height);
     }

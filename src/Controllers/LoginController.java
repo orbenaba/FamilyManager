@@ -33,9 +33,6 @@ public class LoginController extends JframeController{
                 //set a border to text field-username
                 lview.username.setBorder(lview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
-            lview.userIcon.setBorder(frameYellow);
         }
 
         //if the text is equal to username or to an empty string
@@ -63,9 +60,6 @@ public class LoginController extends JframeController{
                 //set a border to text password field
                 lview.createPassword.setBorder(lview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
-            lview.passIcon1.setBorder(frameYellow);
         }
 
         //if the text is equal to username or to an empty string
@@ -178,7 +172,7 @@ public class LoginController extends JframeController{
     class LoginMouseListener extends MouseAdapter{
         @Override
         public void mouseExited(MouseEvent e) {
-            lview.login.setBackground(new Color(0,84,104));
+            lview.login.setBackground(new Color(0,7,204));
         }
         @Override
         public void mouseEntered(MouseEvent e){

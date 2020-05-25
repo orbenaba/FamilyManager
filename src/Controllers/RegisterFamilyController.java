@@ -31,7 +31,7 @@ public class RegisterFamilyController extends JframeController{
     class CreateMouseListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rfview.create.setBackground(new Color(0, 84, 104));
+            rfview.create.setBackground(new Color(0,7,204));
         }
 
         @Override
