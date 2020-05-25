@@ -23,7 +23,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
 
     public LinkedList<RowInShoppingCart> outcomeButtons;
-
+    public JLabel background;
 
     public JScrollPane outcomeScroller;
 
@@ -39,7 +39,9 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             if (isLimitChildren(username)) {
                 readOnly = true;
             }
-
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setBounds(0,0,getWidth(),getHeight());
 
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
@@ -82,6 +84,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         if (!readOnly)
             add(addOutcome);
         add(title);
+        add(background);
     }
 
     public void addOutcomeAction(ActionListener mal) {

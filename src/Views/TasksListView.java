@@ -20,6 +20,8 @@ public class TasksListView extends BaseForHomeSeqView {
     public JButton addTask;
     public LinkedList<RowInTasksList> taskButtons;
     public boolean readOnly=false;
+    public JLabel background;
+
 
     public JScrollPane tasksScroller;
     @Override
@@ -52,6 +54,13 @@ public class TasksListView extends BaseForHomeSeqView {
             addTask.setForeground(new Color(4, 62, 103));
             addTask.setBounds(200, 120, 250, 100);
         }
+
+
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setBounds(0,0,getWidth(),getHeight());
+
+
         /**Out comes panel*/
         tasksPanel = new JPanel();
         tasksPanel.setLayout(new GridLayout(0, readOnly?1:3, 0, 15));
@@ -67,6 +76,7 @@ public class TasksListView extends BaseForHomeSeqView {
         if (!readOnly)
             add(addTask);
         add(title);
+        add(background);
     }
 
     public void convertListToButtons(LinkedList<Task> tasks) {
