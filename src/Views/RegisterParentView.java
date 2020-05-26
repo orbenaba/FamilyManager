@@ -83,7 +83,7 @@ public class RegisterParentView extends RegisterHumanView {
     }
 
     public void addJobName20Limit(KeyAdapter mal){
-        salary.addKeyListener(mal);
+        jobName.addKeyListener(mal);
     }
 
     public void addJobnameListener(MouseAdapter mal){

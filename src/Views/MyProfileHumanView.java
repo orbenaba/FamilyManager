@@ -10,6 +10,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,7 +58,7 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         else
             human=new Child(username);
 
-        Font font = new Font("Arial", Font.BOLD, 40);
+        Font font = new Font("David", Font.ITALIC, 47);
         Color bordo=new Color(219, 0, 40);
         width=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         height=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -92,11 +93,12 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
 
         //delete personal account button
         deleteAccount=new JButton("Delete account");
-        deleteAccount.setFont(new Font("Arial",Font.BOLD,20));
-        deleteAccount.setBounds(30,getHeight()-70,200,50);
+        deleteAccount.setFont(new Font("David",Font.ITALIC,30));
+        deleteAccount.setBounds(30,getHeight()-70,230,50);
         deleteAccount.setBackground(bordo);
         deleteAccount.setForeground(Color.black);
         deleteAccount.setFocusPainted(false);
+        deleteAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
         /**-----------------------------------------------------------------------------------------------------*/
         addView();
         /**Now we must add the qualities which characteristic the child from parent*/
@@ -105,8 +107,20 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         add(deleteAccount);
     }
 
+
+    public void addLimit12CharactersFName(KeyAdapter mal){
+        firstNameField.addKeyListener(mal);
+    }
+    public void addLimit18CharactersUName(KeyAdapter mal){
+        usernameField.addKeyListener(mal);
+    }
+    public void addLimit18CharactersPass(KeyAdapter mal){
+        passwordField.addKeyListener(mal);
+    }
+
+
     public void addView(){
-        Font regFont=new Font("Arial",Font.BOLD,25);
+        Font regFont=new Font("David",Font.ITALIC,30);
         usernameLabel=new JLabel("Username:");
         passwordLabel=new JLabel("Password:");
         usernameLabel.setFont(regFont);
@@ -152,7 +166,7 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         JLabel bio=new JLabel("Bio:");
         bio.setFont(regFont);
         bio.setForeground(Color.black);
-        bio.setBounds(width/2+150,360,50,30);
+        bio.setBounds(width/2+150,360,70,30);
         bioArea=new JTextArea(bioContent.toString());
         bioArea.setFont(regFont);
         bio.setVerticalTextPosition(0);
@@ -177,7 +191,7 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         dateChooser.setMaxSelectableDate(currentDate);
         dateChooser.setMinSelectableDate(minDate);
         dateChooser.setBounds(width/2-250, 610, 170, 35);
-        dateChooser.setFont(new Font("Arial", Font.BOLD, 17));
+        dateChooser.setFont(new Font("David", Font.ITALIC, 21));
         dateChooser.setBackground(new Color(1,23,122));
         dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.green));
         dateChooser.setDateFormatString("dd/MM/yyyy");
@@ -187,11 +201,12 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         birthdayLabel.setBounds(width/2-400, 610, 150, 35);
         /**----------------------------------------------------------------------------------*/
         updateAccount=new JButton("Update account");
-        updateAccount.setFont(new Font("Arial",Font.BOLD,20));
-        updateAccount.setBounds(30,getHeight()-200,200,50);
+        updateAccount.setFont(new Font("David",Font.ITALIC,30));
+        updateAccount.setBounds(30,getHeight()-200,230,50);
         updateAccount.setBackground(new Color(122, 5, 50));
         updateAccount.setForeground(Color.black);
         updateAccount.setFocusPainted(false);
+        updateAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
         /**Set all the data*/
@@ -203,7 +218,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         add(birthdayLabel);
         add(dateChooser);
         add(bio);
- //       add(bioArea);
         add(firstNameLabel);
         add(firstNameField);
         add(passwordField);

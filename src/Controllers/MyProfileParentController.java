@@ -6,11 +6,14 @@ import Views.MyProfileParentView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import static Controllers.RegisterHumanController.checkValidPassword;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 public class MyProfileParentController extends MyProfileHumanController {
@@ -26,7 +29,32 @@ public class MyProfileParentController extends MyProfileHumanController {
             mpcview.addLimitAction(new LimitAction());
         else
             mpcview.addUnLimitAction(new UnLimitAction());
+
+        mpcview.addJobName20Limit(new JobName20Limit());
+        mpcview.addSalary8Limit(new Salary8Limit());
+        mpcview.addEnforcingSalary(new EnforcingSalary());
         /**==========Back to home label===============*/
+    }
+    class JobName20Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (mpcview.jobNameField.getText().length() >= 20) // limit textfield to 8 characters
+                e.consume();
+        }
+    }
+
+    class Salary8Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (mpcview.salaryField.getText().length() >= 8) // limit textfield to 8 characters
+                e.consume();
+        }
+    }
+    class EnforcingSalary extends KeyAdapter {
+        public void keyTyped(KeyEvent e) {
+            if (!Character.isDigit(e.getKeyChar()))
+                e.consume();
+        }
     }
 
 
@@ -46,39 +74,53 @@ public class MyProfileParentController extends MyProfileHumanController {
                     options,
                     options[1]);
             if (n == 0) {
-                InputStream image = null;
-                try {
-                    if (mpcview.imagePath != null)
-                        image = new FileInputStream(new File(mpcview.imagePath));
-                    else
-                        image = null;
-                    /**In case that the user had a profile image before and he didnt change it
-                     * , We'll send another flag(boolean) which is true when we don't need to update the image*/
-                    boolean flag = false;
-                    if (image == null)
-                        if (mpcview.imageContainer.getWidth() == 478)
-                            flag = true;
-                    String newUsername = mpcview.parent.updateAccount(mpcview.usernameField.getText(), mpcview.passwordField.getText(),
-                            mpcview.firstNameField.getText(), mpcview.jobNameField.getText(), new java.sql.Date(mpcview.dateChooser.getDate().getTime()),
-                            mpcview.isMarried.isSelected(),Integer.parseInt(mpcview.salaryField.getText()), image, flag);
-                    System.out.println("Date in calendar" +mpcview.dateChooser.getDate());
-                    System.out.println("Date added: "+new java.sql.Date(mpcview.dateChooser.getDate().getTime()));
-                    if (!newUsername.equals("")) {
-                        /**In case that the user does not change his username, we don't need to delete the old file*/
-                        if (mpcview.parent.username.equals(newUsername))
-                            mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");//saving bio as file
-                        else {
-                            mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");
-                            File f = new File("Biographies\\" + mpcview.parent.username + ".txt");
-                            f.delete();
-                        }
-                        new MyProfileParentController(new MyProfileParentView(newUsername));
-                        /**Now mapping the new bio to a new file*/
+                if (!checkEmptyFields()) {
+                    InputStream image = null;
+                    String statement = checkValidPassword(mpcview.passwordField.getText());
+                    if (statement.equals("")) {
+                        try {
+                            if (mpcview.imagePath != null)
+                                image = new FileInputStream(new File(mpcview.imagePath));
+                            else
+                                image = null;
+                            /**In case that the user had a profile image before and he didnt change it
+                             * , We'll send another flag(boolean) which is true when we don't need to update the image*/
+                            boolean flag = false;
+                            if (image == null)
+                                if (mpcview.imageContainer.getWidth() == 478)
+                                    flag = true;
+                            String newUsername = mpcview.parent.updateAccount(mpcview.usernameField.getText(), mpcview.passwordField.getText(),
+                                    mpcview.firstNameField.getText(), mpcview.jobNameField.getText(), new java.sql.Date(mpcview.dateChooser.getDate().getTime()),
+                                    mpcview.isMarried.isSelected(), Integer.parseInt(mpcview.salaryField.getText()), image, flag);
+                            System.out.println("Date in calendar" + mpcview.dateChooser.getDate());
+                            System.out.println("Date added: " + new java.sql.Date(mpcview.dateChooser.getDate().getTime()));
+                            if (!newUsername.equals("")) {
+                                /**In case that the user does not change his username, we don't need to delete the old file*/
+                                if (mpcview.parent.username.equals(newUsername))
+                                    mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");//saving bio as file
+                                else {
+                                    mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");
+                                    File f = new File("Biographies\\" + mpcview.parent.username + ".txt");
+                                    f.delete();
+                                }
+                                new MyProfileParentController(new MyProfileParentView(newUsername));
+                                /**Now mapping the new bio to a new file*/
 
-                        mpcview.dispose();
+                                mpcview.dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "This username is already taken", "Taken username.", 2);
+                            }
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                        /**Displays a success message*/
+                        JOptionPane.showMessageDialog(null, "Your account has successfully been updated", "Successful updating", 1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, statement, "Invalid password", 2);
                     }
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty fields", 2);
                 }
             }
         }
@@ -124,5 +166,10 @@ public class MyProfileParentController extends MyProfileHumanController {
                 mpcview.dispose();
             }
         }
+    }
+
+    @Override
+    protected boolean checkEmptyFields() {
+        return super.checkEmptyFields()||mpcview.salaryField.getText().equals("");
     }
 }

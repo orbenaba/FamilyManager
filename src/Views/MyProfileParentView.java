@@ -6,6 +6,7 @@ import Models.Parent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 
 
 public class MyProfileParentView extends MyProfileHumanView {
@@ -29,17 +30,17 @@ public class MyProfileParentView extends MyProfileHumanView {
         getContentPane().setBackground(new Color(219, 102, 0));
         /**-----------------------------------------------------------------------------------------------------*/
         /**Now we must add the qualities which characteristic the parent from child*/
-        jobNameLabel = new JLabel("Status:");
-        jobNameLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        jobNameLabel = new JLabel("Job name:");
+        jobNameLabel.setFont(new Font("David", Font.ITALIC, 30));
         jobNameLabel.setForeground(Color.black);
         jobNameLabel.setBounds(width / 2 - 400, 670, 150, 35);
         jobNameField = new JTextField(parent.jobName);
         jobNameField.setBounds(width / 2 - 250, 670, 300, 50);
-        jobNameField.setFont(new Font("Arial", Font.BOLD, 25));
+        jobNameField.setFont(new Font("David", Font.ITALIC, 30));
         jobNameField.setBackground(Color.orange);
         isMarried = new JCheckBox("Married?");
         isMarried.setHorizontalTextPosition(SwingConstants.LEFT);
-        isMarried.setFont(new Font("Arial", Font.BOLD, 25));
+        isMarried.setFont(new Font("David", Font.ITALIC, 30));
         isMarried.setBackground(new Color(219, 102, 0));
         //get rid of the border which is drawn by default around the checkBox
         isMarried.setFocusPainted(false);
@@ -50,12 +51,12 @@ public class MyProfileParentView extends MyProfileHumanView {
 
 
         salaryLabel = new JLabel("Salary:");
-        salaryLabel.setFont(new Font("Arial", Font.BOLD, 25));
+        salaryLabel.setFont(new Font("David", Font.ITALIC, 30));
         salaryLabel.setForeground(Color.black);
         salaryLabel.setBounds(width / 2 - 330, 745, 150, 35);
         salaryField = new JTextField(String.valueOf(parent.salary));
         salaryField.setBounds(width / 2 - 220, 745, 280, 50);
-        salaryField.setFont(new Font("Arial", Font.BOLD, 25));
+        salaryField.setFont(new Font("David", Font.ITALIC, 30));
         salaryField.setBackground(Color.orange);
 
 
@@ -66,22 +67,20 @@ public class MyProfileParentView extends MyProfileHumanView {
             unLimitButton = new JButton("UnLimit my children");
             unLimitButton.setBounds(30, getHeight() - 330, 300, 50);
             unLimitButton.setBackground(new Color(12, 75, 250));
-            unLimitButton.setFont(new Font("Arial", Font.BOLD, 20));
+            unLimitButton.setFont(new Font("David", Font.ITALIC, 25));
             unLimitButton.setForeground(Color.black);
             unLimitButton.setFocusPainted(false);
             add(unLimitButton);
         }
         else {
             limitButton = new JButton("Limit my children");
-            limitButton.setBounds(30, getHeight() - 330, 200, 50);
+            limitButton.setBounds(30, getHeight() - 330, 250, 50);
             limitButton.setBackground(new Color(12, 75, 250));
-            limitButton.setFont(new Font("Arial", Font.BOLD, 20));
+            limitButton.setFont(new Font("David", Font.ITALIC, 25));
             limitButton.setForeground(Color.black);
             limitButton.setFocusPainted(false);
             add(limitButton);
         }
-
-
         add(salaryField);
         add(salaryLabel);
         add(isMarried);
@@ -90,6 +89,17 @@ public class MyProfileParentView extends MyProfileHumanView {
         add(background);
         setVisible(true);
     }
+    public void addSalary8Limit(KeyAdapter mal){
+        salaryField.addKeyListener(mal);
+    }
+    public void addEnforcingSalary(KeyAdapter mal){
+        salaryField.addKeyListener(mal);
+    }
+
+    public void addJobName20Limit(KeyAdapter mal){
+        jobNameField.addKeyListener(mal);
+    }
+
 
     public void addLimitAction(ActionListener mal){
         limitButton.addActionListener(mal);

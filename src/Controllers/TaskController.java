@@ -8,6 +8,8 @@ import Views.TasksListView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.Calendar;
 
@@ -25,6 +27,9 @@ public class TaskController extends BaseForHomeSeqController {
 
         tview.addAddTaskAction(new AddTaskAction());
     }
+
+
+
 
     class AddTaskAction implements ActionListener {
         @Override

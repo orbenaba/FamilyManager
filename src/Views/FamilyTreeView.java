@@ -59,12 +59,12 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         JLabel text;
         if(totalParents>=5){
             /**The width of each button is 145px and the distance between two buttons is 5px--->>(145+5)/2*/
-            int xStartParents=getWidth()/2 - (totalParents*75);
+            int xStartParents=getWidth()/2 - (totalParents*75)-150;
             for(UserData parent: familyTree.parents){
                 text=new JLabel(parent.firstName);
                 text.setForeground(Color.black);
                 text.setFont(font);
-                text.setBounds(xStartParents+i*150+45,170,200,200);
+                text.setBounds(xStartParents+i*190+45,170,200,200);
                 add(text);
 
                 JButton button=new JButton();
@@ -75,7 +75,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
-                button.setBounds(xStartParents+i*150,150,145,200);
+                button.setBounds(xStartParents+i*190,150,190,200);
                 i++;
                 parents.add(new TreeNode(button,parent.uName,parent.firstName));
 

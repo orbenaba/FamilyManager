@@ -7,10 +7,7 @@ import com.company.CircleButton;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 
 
@@ -27,8 +24,34 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
         else
             mpcview.addImageAction(new AddImage_action());
         mpcview.addDeleteAccountAction(new DeleteAccountAction());
+
+        mpcview.addLimit18CharactersPass(new Limit18CharactersPass());
+        mpcview.addLimit18CharactersUName(new Limit18CharactersUName());
+        mpcview.addLimit12CharactersFName(new Limit12CharactersFName());
         /**==========Back to home label===============*/
     }
+    class Limit18CharactersPass extends KeyAdapter {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (mphview.passwordField.getText().length() >= 18) // limit textfield to 18 characters
+                e.consume();
+        }
+    }
+    class Limit18CharactersUName extends KeyAdapter {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (mphview.usernameField.getText().length() >= 18) // limit textfield to 18 characters
+                e.consume();
+        }
+    }
+    class Limit12CharactersFName extends KeyAdapter {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (mphview.firstNameField.getText().length() >= 12) // limit textfield to 18 characters
+                e.consume();
+        }
+    }
+
 
     class RemovePhotoListener extends MouseAdapter {
         @Override
@@ -121,5 +144,10 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
                 mphview.dispose();
             }
         }
+    }
+
+    protected boolean checkEmptyFields(){
+        return mphview.usernameField.getText().trim().equals("")||mphview.firstNameField.getText().trim().equals("")
+                ||mphview.passwordField.getText().equals("");
     }
 }
