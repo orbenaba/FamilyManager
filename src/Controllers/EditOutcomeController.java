@@ -21,6 +21,24 @@ public class EditOutcomeController extends BaseForHomeSeqController {
         if (!eoview.readOnly) {
             eoview.addEditOutcomeAction(new EditOutcomeAction());
             eoview.addEnforcingPrice(new EnforcingPrice());
+            eoview.addPrice8Limit(new Price8Limit());
+            eoview.addTitle30Limit(new Title30Limit());
+        }
+    }
+
+    //Limit the price of the outcome to maximum 8 digits
+    class Price8Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (eoview.price.getText().length() >= 8) // limit textfield to 8 characters
+                e.consume();
+        }
+    }
+    class Title30Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (eoview.titleText.getText().length() >= 30) // limit textfield to 8 characters
+                e.consume();
         }
     }
 

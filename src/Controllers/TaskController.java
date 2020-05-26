@@ -24,10 +24,16 @@ public class TaskController extends BaseForHomeSeqController {
         super(tview);
         this.tview = tview;
 
-
+        tview.addTitle30Limit(new Title30Limit());
         tview.addAddTaskAction(new AddTaskAction());
     }
-
+    class Title30Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (tview.titleText.getText().length() >= 30) // limit textfield to 8 characters
+                e.consume();
+        }
+    }
 
 
 

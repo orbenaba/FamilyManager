@@ -6,6 +6,7 @@ import Models.Task;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
@@ -41,12 +42,9 @@ public class EditTaskView extends BaseForHomeSeqView{
         title.setForeground(new Color(176, 221, 252));
         title.setOpaque(true);
         title.setBackground(new Color(168, 0, 0));
-
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
-
-
         titleLabel = new JLabel("Title:");
         titleLabel.setFont(new Font("David", Font.ITALIC, 36));
         titleLabel.setForeground(new Color(208, 0, 0));
@@ -58,8 +56,6 @@ public class EditTaskView extends BaseForHomeSeqView{
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth() / 2 + 320, 200, 300, 50);
         titleText.setEditable(!readOnly);
-
-
 
         descriptionLabel = new JLabel("Description:");
         descriptionLabel.setFont(new Font("David", Font.ITALIC, 36));
@@ -78,16 +74,12 @@ public class EditTaskView extends BaseForHomeSeqView{
             outcomeContent.append(myScan.nextLine() + '\n');
         }
         myScan.close();
-
-
         description = new JTextArea(outcomeContent.toString());
         description.setBackground(new Color(238, 145, 145));
         description.setForeground(new Color(4, 62, 103));
         description.setFont(new Font("David", Font.ITALIC, 36));
         description.setBounds(getWidth() / 2 - 200, 350, 500, 350);
         description.setEditable(!readOnly);
-
-
         if (!readOnly) {
             editOutcome = new JButton("Apply changes");
             editOutcome.setBackground(new Color(238, 145, 145));
@@ -95,15 +87,11 @@ public class EditTaskView extends BaseForHomeSeqView{
             editOutcome.setFont(new Font("David", Font.ITALIC, 36));
             editOutcome.setBounds(getWidth() / 2 - 100, 740, 250, 50);
         }
-
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         dateLabel = new JLabel("Date executed: " + dateFormat.format(this.task.executedDate));
         dateLabel.setForeground(new Color(208, 0, 0));
         dateLabel.setFont(new Font("David", Font.ITALIC, 36));
         dateLabel.setBounds(100, 400, 400, 30);
-
-
         add(titleLabel);
         add(titleText);
         add(dateLabel);
@@ -116,6 +104,9 @@ public class EditTaskView extends BaseForHomeSeqView{
     }
     public void addEditOutcomeAction(ActionListener mal){
         editOutcome.addActionListener(mal);
+    }
+    public void addTitle30Limit(KeyAdapter mal){
+        titleText.addKeyListener(mal);
     }
 
 }

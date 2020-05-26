@@ -128,6 +128,15 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         add(background);
     }
 
+    public void addPrice8Limit(KeyAdapter mal){
+        price.addKeyListener(mal);
+    }
+
+    public void addTitle30Limit(KeyAdapter mal){
+        titleText.addKeyListener(mal);
+    }
+
+
     public void addEnforcingPrice(KeyAdapter mal) {
         price.addKeyListener(mal);
     }
