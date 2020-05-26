@@ -1,6 +1,5 @@
 package Models;
 
-import com.sun.deploy.security.SelectableSecurityManager;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,4 +50,7 @@ public class User {
         System.out.println("The username Exist? "+exist);
         return exist;
     }
+
+
+    /**C*/
 }

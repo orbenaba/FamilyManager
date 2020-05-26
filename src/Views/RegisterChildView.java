@@ -72,6 +72,10 @@ public class RegisterChildView extends RegisterHumanView {
         status.addMouseListener(mal);
     }
 
+    public void addStatusLimit20(KeyAdapter mal){
+        status.addKeyListener(mal);
+    }
+
     public void addParentViewListener(MouseAdapter mal){
         parentView.addMouseListener(mal);
     }

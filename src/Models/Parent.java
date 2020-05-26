@@ -12,31 +12,6 @@ public class Parent extends Human {
     public int salary;
     public String jobName;
     public boolean isMarried,isLimited;
-    public Parent(String username, String password) {
-        super(username,password);
-    }
-
-    public Parent(String username, String password, int salary, String jobName, boolean isMarried) {
-        super(username, password);
-        this.salary = salary;
-        this.jobName = jobName;
-        this.isMarried = isMarried;
-    }
-
-    public Parent(int salary, String jobName, boolean isMarried) {
-        this.salary = salary;
-        this.jobName = jobName;
-        this.isMarried = isMarried;
-    }
-
-    public Parent(String password, String username, String firstName, byte genderId, String familyUsername,
-                  Date birthday, ImageIcon image, int salary, String jobName, boolean isMarried,boolean isLimited) {
-        super(password, username, firstName, genderId, familyUsername, birthday, image);
-        this.salary = salary;
-        this.jobName = jobName;
-        this.isMarried = isMarried;
-        this.isLimited=isLimited;
-    }
 
     public Parent(String username){
         //No significance to e:false

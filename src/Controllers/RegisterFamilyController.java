@@ -7,15 +7,13 @@ import Views.RegisterFamilyView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static Controllers.RegisterHumanController.checkValidPassword;
 import static Models.User.isUsernameExist;
 
 public class RegisterFamilyController extends JframeController{
@@ -27,7 +25,42 @@ public class RegisterFamilyController extends JframeController{
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
         rfview.addLoginContextListener(new LoginContextListener());
+
+        rfview.addLimit18CharactersConfPass(new Limit18CharactersConfPass());
+        rfview.addLimit18CharactersPass(new Limit18CharactersPass());
+        rfview.addLimit12CharactersLName(new Limit12CharactersLName());
+        rfview.addLimit12CharactersUName(new Limit12CharactersUName());
     }
+    class Limit18CharactersConfPass extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.confirmPassword.getPassword().length >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit18CharactersPass extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.createPassword.getPassword().length >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit12CharactersLName extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.lastname.getText().length() >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit12CharactersUName extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.username.getText().length() >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+
+
     class CreateMouseListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
@@ -63,12 +96,26 @@ public class RegisterFamilyController extends JframeController{
             String createPassword = String.valueOf(rfview.createPassword.getPassword());
             String lastName = rfview.lastname.getText();
             confirmPassword = String.valueOf(rfview.confirmPassword.getPassword());
-            if (verify(lastName, username, createPassword))
-                if (!isUsernameExist(username,false,"")) {
-                    new Family(username, createPassword, String.valueOf(0), lastName, String.valueOf(0));
-                    new AreYouChildOrParentController(new AreYouChildOrParentView(username));
-                    rfview.dispose();
+            if (verify(lastName, username, createPassword)) {
+                if (confirmPassword.equals(createPassword)) {
+                    String statement = checkValidPassword(createPassword);
+                    if (statement.equals("")) {
+                        if (!isUsernameExist(username, false, "")) {
+                            new Family(username, createPassword, String.valueOf(0), lastName, String.valueOf(0));
+                            new AreYouChildOrParentController(new AreYouChildOrParentView(username));
+                            rfview.dispose();
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "This username is already taken", "Taken username.", 2);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, statement, "Invalid password", 2);
+                    }
                 }
+                else{
+                    JOptionPane.showMessageDialog(null, "Passwords not match!", "Passwords not match!", 2);
+                }
+            }
         }
     }
 

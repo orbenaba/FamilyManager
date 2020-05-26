@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 
 import java.io.*;
@@ -69,12 +71,13 @@ public class RegisterHumanView extends Jframe {
         firstNameLabel.setFont(f);
         firstNameLabel.setForeground(fore);
         firstNameLabel.setBounds(130, 350, 150, 35);
-        firstName = new JTextField();
+        firstName = new JTextField(10);
         firstName.setFont(f);
         firstName.setForeground(fore);
         firstName.setBackground(back);
         firstName.setBounds(280, 350, 250, 50);
         firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
+
 
 
         java.util.List<String> gendersArray = getGenders();
@@ -155,6 +158,20 @@ public class RegisterHumanView extends Jframe {
 
 
     //Listeners
+    public void addLimit12CharactersFName(KeyAdapter mal){
+        firstName.addKeyListener(mal);
+    }
+    public void addLimit18CharactersUName(KeyAdapter mal){
+        username.addKeyListener(mal);
+    }
+    public void addLimit18CharactersPass(KeyAdapter mal){
+        password.addKeyListener(mal);
+    }
+    public void addLimit12CharactersConfPass(KeyAdapter mal){
+        confirmPassword.addKeyListener(mal);
+    }
+
+
     public void addUsernamePassword(int x, int y, int iconSize) {
         Color color = new Color(48,48,48);
         username = new JTextField();

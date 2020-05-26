@@ -22,14 +22,6 @@ public class Outcome {
         this.purchasedDate = purchasedDate;
         this.title=title;
     }
-    //Copy ctor
-    public Outcome(Outcome other){
-        this.title= new String(other.title);
-        this.price=other.price;
-        this.id=other.id;
-        this.purchasedDate=new Date(other.purchasedDate.getTime());
-        this.username=new String(other.username);
-    }
     public Outcome(String username,int id,Date purchasedDate) {
         this.username = username;
         this.id = id;

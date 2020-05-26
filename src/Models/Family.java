@@ -32,16 +32,4 @@ public class Family extends User{
             ex.printStackTrace();
         }
     }
-    public Family(String username,String password,String lastName) {
-        super(username,password);
-        this.counter = 0;
-        this.lastName = lastName;
-        this.currentMonthProfit = 0;
-    }
-    public Family() {
-        this.counter = 0;
-        this.lastName = "";
-        this.currentMonthProfit = 0;
-    }
-
 }

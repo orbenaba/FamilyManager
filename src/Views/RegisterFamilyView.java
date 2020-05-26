@@ -5,10 +5,10 @@ import Models.Family;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 
 public class RegisterFamilyView extends Jframe {
-    public Family family;
     JPanel p1,p2;
     JLabel title;
     public JTextField username,lastname;
@@ -33,12 +33,6 @@ public class RegisterFamilyView extends Jframe {
         p2.setBackground(Color.orange);
         p2.setBounds(15,115,getWidth()-30,getHeight()-130);
 
-
-
-
-
-
-
         title=new JLabel("Create a family account!");
         title.setFont(new Font("David",Font.ITALIC,40));
         title.setForeground(Color.white);
@@ -47,12 +41,6 @@ public class RegisterFamilyView extends Jframe {
         title.setBackground(new Color(0,7,204));
         title.setOpaque(true);//The default is the background is transparent
         title.setBounds(150,15,420,80);
-
-
-
-
-
-
 
         lastnameLabel=new JLabel("Last name:");
         usernameLabel=new JLabel("Username:");
@@ -77,7 +65,6 @@ public class RegisterFamilyView extends Jframe {
         loginContext.setBounds(200,515,215,20);
         loginContext.setForeground(Color.BLUE);
 
-
         add(loginContext);
         add(create);
         add(lastnameLabel);
@@ -92,6 +79,19 @@ public class RegisterFamilyView extends Jframe {
         add(p1);
         add(p2);
         setVisible(true);
+    }
+    /**Listeners*/
+    public void addLimit12CharactersLName(KeyAdapter mal){
+        lastname.addKeyListener(mal);
+    }
+    public void addLimit12CharactersUName(KeyAdapter mal){
+        username.addKeyListener(mal);
+    }
+    public void addLimit18CharactersPass(KeyAdapter mal){
+        createPassword.addKeyListener(mal);
+    }
+    public void addLimit18CharactersConfPass(KeyAdapter mal){
+        confirmPassword.addKeyListener(mal);
     }
 
     public void addFields(JTextField lastname,JTextField username,JPasswordField createPassword,JPasswordField confirmPassword,int x,int y){

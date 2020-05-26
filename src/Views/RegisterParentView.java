@@ -4,7 +4,6 @@ package Views;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
@@ -79,6 +78,13 @@ public class RegisterParentView extends RegisterHumanView {
         setVisible(true);
     }
 
+    public void addSalary8Limit(KeyAdapter mal){
+        salary.addKeyListener(mal);
+    }
+
+    public void addJobName20Limit(KeyAdapter mal){
+        salary.addKeyListener(mal);
+    }
 
     public void addJobnameListener(MouseAdapter mal){
         jobName.addMouseListener(mal);

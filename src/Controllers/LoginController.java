@@ -129,7 +129,6 @@ public class LoginController extends JframeController{
                     {
                         new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
-                        rs.close();
                     } else {
                         st2 = con.prepareStatement(familyQuery);
                         st2.setString(1, uname);
@@ -138,7 +137,6 @@ public class LoginController extends JframeController{
 
                         /**The user is actually a family*/
                         if (rs.next()) {
-                            rs.close();
                             /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
                              Using singleton architecture.*/
                             String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
@@ -156,10 +154,13 @@ public class LoginController extends JframeController{
                             }
                         } else//error message
                         {
-                            rs.close();
                             JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
                         }
+                        st2.close();
                     }
+                    rs.close();
+                    con.close();
+                    st1.close();
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
