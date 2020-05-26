@@ -1,11 +1,10 @@
 package Controllers;
 
-import Views.EditOutcomeView;
-import Views.OutcomeView;
-import Views.ShoppingCartView;
-
+import Views.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static java.lang.Thread.sleep;
 
 
 public class ShoppingCartController extends BaseForHomeSeqController{
@@ -21,16 +20,34 @@ public class ShoppingCartController extends BaseForHomeSeqController{
             }
             scview.addTitlesListener(new TitlesListener());
         }
-        if(!scview.readOnly)
+        if (!scview.readOnly) {
             scview.addOutcomeAction(new OutcomeAction());
-    }
+            scview.addIncomeAction(new IncomeAction());
 
+            scview.addIn = new IncomeView(scview.username);
+            scview.addIn.setVisible(false);
+            new IncomeController((IncomeView) scview.addIn,scview);
+        }
+    }
     class OutcomeAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             new OutcomeController(new OutcomeView(scview.username,scview.shoppingCart));
             scview.dispose();
+        }
+    }
+    class IncomeAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(scview.addIn.isVisible()==false) {
+                scview.addIn.setVisible(true);
+            }
+            else
+            {
+                scview.addIn.setVisible(false);
+            }
         }
     }
 
@@ -52,7 +69,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
                 /**Despite we delete the outcome from the shopping cart,
                  * We didn't yet update the view, so in order to create nice Look&Feel,
                  * we'll remove components*/
-                new ShoppingCartController(new ShoppingCartView(clicked.outcome.username));
+                new ShoppingCartController(new ShoppingCartView(clicked.outcome.username,null));
                 scview.dispose();
             }
         }

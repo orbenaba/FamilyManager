@@ -51,7 +51,7 @@ public class HomeController extends JframeController{
     class ShoppingCartAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new ShoppingCartController(new ShoppingCartView(homeView.username));
+            new ShoppingCartController(new ShoppingCartView(homeView.username,null));
             homeView.dispose();
         }
     }

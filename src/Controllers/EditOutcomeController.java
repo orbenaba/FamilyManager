@@ -42,7 +42,7 @@ public class EditOutcomeController extends BaseForHomeSeqController {
                 eoview.outcome.title = eoview.titleText.getText();
                 mappingTextareaIntoFile(eoview.outcome.id, eoview.description, "Outcomes");//saving bio in file
                 eoview.outcome.updateOutcome();
-                new ShoppingCartController(new ShoppingCartView(eoview.username));
+                new ShoppingCartController(new ShoppingCartView(eoview.username,null));
                 eoview.dispose();
             }
          else {

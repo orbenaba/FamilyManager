@@ -20,7 +20,7 @@ public class ShoppingCart {
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
-        String query = "SELECT*FROM outcome WHERE Username=" +
+        String query = "SELECT*FROM outcome WHERE price >0 AND Username=" +
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
 
@@ -45,8 +45,35 @@ public class ShoppingCart {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+    public ShoppingCart(){}
+
+    public int calculateIncomes(String username){
+        int sum=0;
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT*FROM outcome WHERE price <0 AND Username=" +
+                "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
+                "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                sum+=rs.getInt("Price");
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sum;
+    }
+
 
     /**
      * Internal function which calculates the total outcomes which were spent

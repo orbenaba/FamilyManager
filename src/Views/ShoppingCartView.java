@@ -5,6 +5,7 @@ import Models.Outcome;
 import Models.ShoppingCart;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -17,9 +18,10 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public String username;
     public JLabel title;
     public JPanel outcomesPanel;
-    public JButton addOutcome;
+    public JButton addOutcome,addIncome;
     public JLabel totalOutcomes,noOutcomes;
     public boolean readOnly=false;
+    public JFrame addIn;
 
 
     public LinkedList<RowInShoppingCart> outcomeButtons;
@@ -33,7 +35,8 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     }
 
 
-    public ShoppingCartView(String username) {
+    public ShoppingCartView(String username,JFrame addIn) {
+        this.addIn=addIn;
         this.username = username;
         if (!isParent(username))
             if (isLimitChildren(username)) {
@@ -45,7 +48,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
 
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
-        title = new JLabel(readOnly?"View your outcomes":"Manage your outcomes!");
+        title = new JLabel(readOnly?"View your outcomes":"Manage your packet!");
         title.setForeground(new Color(168, 0, 0));
         title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
         title.setFont(new Font("David", Font.ITALIC, 70));
@@ -69,7 +72,14 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             addOutcome.setFont(new Font("David", Font.ITALIC, 36));
             addOutcome.setBackground(new Color(238, 145, 145));
             addOutcome.setForeground(new Color(4, 62, 103));
-            addOutcome.setBounds(200, 120, 250, 100);
+            addOutcome.setBounds(150, 120, 250, 100);
+
+            addIncome = new JButton("New income");
+            addIncome.setFocusPainted(false);
+            addIncome.setFont(new Font("David", Font.ITALIC, 36));
+            addIncome.setBackground(new Color(238, 145, 145));
+            addIncome.setForeground(new Color(4, 62, 103));
+            addIncome.setBounds(430, 120, 250, 100);
         }
         /**Out comes panel*/
         outcomesPanel = new JPanel();
@@ -94,14 +104,21 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         }
 
         add(totalOutcomes);
-        if (!readOnly)
+        if (!readOnly) {
             add(addOutcome);
+            add(addIncome);
+        }
         add(title);
         add(background);
     }
 
     public void addOutcomeAction(ActionListener mal) {
         addOutcome.addActionListener(mal);
+    }
+
+
+    public void addIncomeAction(ActionListener mal) {
+        addIncome.addActionListener(mal);
     }
 
 

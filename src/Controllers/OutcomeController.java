@@ -43,7 +43,7 @@ public class OutcomeController extends BaseForHomeSeqController{
                 Outcome outcome=new Outcome(Integer.parseInt(ocview.price.getText()),new Date(Calendar.getInstance().getTimeInMillis()), ocview.username,ocview.titleText.getText().trim().equals("")?"No title":ocview.titleText.getText());
                 Integer id= ocview.shoppingCart.addOutcome(outcome);
                 mappingTextareaIntoFile(id, ocview.description, "Outcomes");
-                new ShoppingCartController(new ShoppingCartView(ocview.username));
+                new ShoppingCartController(new ShoppingCartView(ocview.username,null));
                 ocview.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "You must insert non-negative number to price");

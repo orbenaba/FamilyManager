@@ -20,7 +20,7 @@ public class HomeView extends Jframe {
     public HomeView(String username){
         super((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         this.username=username;
-        Font font=new Font("Arial",Font.BOLD,40);
+        Font font=new Font("David",Font.BOLD,50);
         /**Adding background*/
         int width=getWidth(),height=getHeight();
 

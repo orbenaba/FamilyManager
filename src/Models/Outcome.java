@@ -30,11 +30,13 @@ public class Outcome {
         this.purchasedDate=new Date(other.purchasedDate.getTime());
         this.username=new String(other.username);
     }
-    public Outcome(String username,int id,Date purchasedDate){
-        this.username=username;
-        this.id=id;
-        this.purchasedDate=purchasedDate;
+    public Outcome(String username,int id,Date purchasedDate) {
+        this.username = username;
+        this.id = id;
+        this.purchasedDate = purchasedDate;
     }
+
+
 
     public boolean updateOutcome()
     {
@@ -57,4 +59,6 @@ public class Outcome {
 
         return false;
     }
+
+
 }
