@@ -5,9 +5,10 @@ import Models.Outcome;
 import Models.ShoppingCart;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedList;
 
 import static Models.Parent.isLimitChildren;
@@ -18,12 +19,12 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public String username;
     public JLabel title;
     public JPanel outcomesPanel;
-    public JButton addOutcome,addIncome;
-    public JLabel totalOutcomes,noOutcomes;
-    public boolean readOnly=false;
+    public JButton addOutcome, addIncome;
+    public JLabel totalOutcomes,totalSalaries,totalIncomes, noOutcomes, percentageComes;
+    public boolean readOnly = false;
     public JFrame addIn;
 
-
+    public JPanel backTo;
     public LinkedList<RowInShoppingCart> outcomeButtons;
     public JLabel background;
 
@@ -35,35 +36,60 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     }
 
 
-    public ShoppingCartView(String username,JFrame addIn) {
-        this.addIn=addIn;
+    public ShoppingCartView(String username, JFrame addIn) {
+        this.addIn = addIn;
         this.username = username;
         if (!isParent(username))
             if (isLimitChildren(username)) {
                 readOnly = true;
             }
-        background=new JLabel();
+        background = new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
-        background.setBounds(0,0,getWidth(),getHeight());
+        background.setBounds(0, 0, getWidth(), getHeight());
 
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
-        title = new JLabel(readOnly?"View your outcomes":"Manage your packet!");
+        title = new JLabel(readOnly ? "View your outcomes" : "Manage your packet!");
         title.setForeground(new Color(168, 0, 0));
-        title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
+        title.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(168, 0, 0)));
         title.setFont(new Font("David", Font.ITALIC, 70));
         title.setBounds(getWidth() / 2 - 350, 20, 700, 70);
 
 
         /**Shopping cart*/
         shoppingCart = new ShoppingCart(username);
-        totalOutcomes = new JLabel("Total outcomes: " + shoppingCart.calculateShoppingCart());
-        totalOutcomes.setOpaque(true);
-        totalOutcomes.setBackground(new Color(168, 0, 0));
-        totalOutcomes.setForeground(Color.white);
-        totalOutcomes.setFont(new Font("David", Font.ITALIC, 36));
-        totalOutcomes.setBounds(800, 120, 450, 40);
+        int outcomes = shoppingCart.calculateShoppingCart();
+        int incomes=shoppingCart.calculateIncomes(username);
+        int salaries=shoppingCart.getSalaries();
 
+        totalOutcomes = new JLabel("Total outcomes: " + outcomes);
+        totalOutcomes.setOpaque(true);
+        totalOutcomes.setBackground(Color.orange.darker());
+        totalOutcomes.setFont(new Font("David", Font.ITALIC, 36));
+        totalOutcomes.setBounds(getWidth()/2-750, 320, 400, 40);
+
+        totalIncomes = new JLabel("Total incomes: " + incomes);
+        totalIncomes.setOpaque(true);
+        totalIncomes.setBackground(Color.orange.darker());
+        totalIncomes.setFont(new Font("David", Font.ITALIC, 36));
+        totalIncomes.setBounds(getWidth()/2-750, 370, 400, 40);
+
+        totalSalaries = new JLabel("Total salaries: " + salaries);
+        totalSalaries.setOpaque(true);
+        totalSalaries.setBackground(Color.orange.darker());
+        totalSalaries.setFont(new Font("David", Font.ITALIC, 36));
+        totalSalaries.setBounds(getWidth()/2-750, 420, 400, 40);
+        /**Showing the outcomes in relate to the incomes*/
+        EncapsulteColorAndText en=calculatePercentage(outcomes,username,incomes+salaries);
+        String statement = en.text;
+        percentageComes=new JLabel(statement);
+        percentageComes.setForeground(Color.black.brighter());
+        percentageComes.setFont(new Font("David",Font.ITALIC,40));
+        percentageComes.setBounds(0,0,0,0);
+        backTo=new JPanel();
+        backTo.setBackground(en.color);
+        backTo.setBounds(680,180,830,55);
+        backTo.add(percentageComes);
 
         /**Add new outcome button*/
         if (!readOnly) {
@@ -72,37 +98,41 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             addOutcome.setFont(new Font("David", Font.ITALIC, 36));
             addOutcome.setBackground(new Color(238, 145, 145));
             addOutcome.setForeground(new Color(4, 62, 103));
-            addOutcome.setBounds(150, 120, 250, 100);
+            addOutcome.setBounds(80, 120, 250, 100);
 
             addIncome = new JButton("New income");
             addIncome.setFocusPainted(false);
             addIncome.setFont(new Font("David", Font.ITALIC, 36));
             addIncome.setBackground(new Color(238, 145, 145));
             addIncome.setForeground(new Color(4, 62, 103));
-            addIncome.setBounds(430, 120, 250, 100);
+            addIncome.setBounds(360, 120, 250, 100);
         }
         /**Out comes panel*/
         outcomesPanel = new JPanel();
-        if(!shoppingCart.isEmpty()) {
+        if (!shoppingCart.isEmpty()) {
             outcomesPanel.setLayout(new GridLayout(0, readOnly ? 1 : 3, 0, 15));
+            outcomesPanel.setBackground(Color.orange.darker());
             convertListToButtons(shoppingCart.getOutcomes());
             outcomeScroller = new JScrollPane(outcomesPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            outcomeScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
+            outcomeScroller.setBounds(getWidth() / 2 - 300, 250, 1000, getHeight() - 250);
             outcomeScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
             /**Increasing the speed of the scrolling as we wish:*/
             outcomeScroller.getVerticalScrollBar().setUnitIncrement(12);
             add(outcomeScroller);
-        }
-        else{
-            outcomesPanel.setBounds(getWidth()/2-500,250,1000,getHeight()-250);
-            outcomesPanel.setBackground(Color.gray.darker());
-            noOutcomes=new JLabel();
+        } else {
+            outcomesPanel.setBounds(getWidth() / 2 - 300, 250, 1000, getHeight() - 250);
+            outcomesPanel.setBackground(Color.orange.darker());
+            noOutcomes = new JLabel();
             noOutcomes.setIcon(new ImageIcon(getClass().getResource("/Icons/X2.jpg")));
             outcomesPanel.add(noOutcomes);
-            noOutcomes.setBounds(0,50,500,500);
+            noOutcomes.setBounds(0, 50, 500, 500);
             add(outcomesPanel);
         }
 
+
+        add(totalSalaries);
+        add(totalIncomes);
+        add(backTo);
         add(totalOutcomes);
         if (!readOnly) {
             add(addOutcome);
@@ -121,13 +151,12 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         addIncome.addActionListener(mal);
     }
 
-
     public void convertListToButtons(LinkedList<Outcome> outcomes) {
         int i = 0;
         outcomeButtons = new LinkedList<RowInShoppingCart>();
-        Font f=new Font("Arial",Font.ITALIC,30);
-        int red=255,green=31,blue=31;
-        if(!readOnly) {
+        Font f = new Font("Arial", Font.ITALIC, 30);
+        int red = 255, green = 31, blue = 31;
+        if (!readOnly) {
             for (Outcome oc : outcomes) {
                 RowInShoppingCart row = new RowInShoppingCart(oc);
                 row.title.setPreferredSize(new Dimension(300, 100));
@@ -147,8 +176,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
                 /**Adding the new row at the created table into a list in order to listen to its buttons later on*/
                 outcomeButtons.add(row);
             }
-        }
-        else{
+        } else {
             for (Outcome oc : outcomes) {
                 RowInShoppingCart row = new RowInShoppingCart(oc);
                 row.title.setPreferredSize(new Dimension(1000, 100));
@@ -165,41 +193,119 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         }
     }
 
-
-    public class RowInShoppingCart{
+    public class RowInShoppingCart {
         public JButton title;
-        public JButton edit,delete;
+        public JButton edit, delete;
         public Outcome outcome;
-        public RowInShoppingCart(JButton title, JButton edit, JButton delete,Outcome outcome) {
+
+        public RowInShoppingCart(JButton title, JButton edit, JButton delete, Outcome outcome) {
             this.title = title;
             this.edit = edit;
             this.delete = delete;
-            this.outcome=outcome;
+            this.outcome = outcome;
         }
+
         public RowInShoppingCart(Outcome outcome) {
-            title=new JButton(outcome.title);
-            edit=new JButton("Edit");
-            delete=new JButton("Delete");
-            this.outcome=outcome;
+            Font f = new Font("David", Font.ITALIC, 40);
+            title = new JButton(outcome.title);
+            edit = new JButton("Edit");
+            delete = new JButton("Delete");
+            title.setFont(f);
+            edit.setFont(f);
+            delete.setFont(f);
+            this.outcome = outcome;
         }
 
     }
-
-
-    /**Adding a listener for each delete button*/
-    public void addDeletesListener(ActionListener mal){
-        for(RowInShoppingCart ob : outcomeButtons)
+    /**
+     * Adding a listener for each delete button
+     */
+    public void addDeletesListener(ActionListener mal) {
+        for (RowInShoppingCart ob : outcomeButtons)
             ob.delete.addActionListener(mal);
     }
-
-    /**Adding a listener for each edit button*/
-    public void addEditsListener(ActionListener mal){
-        for(RowInShoppingCart ob : outcomeButtons)
+    /**
+     * Adding a listener for each edit button
+     */
+    public void addEditsListener(ActionListener mal) {
+        for (RowInShoppingCart ob : outcomeButtons)
             ob.edit.addActionListener(mal);
     }
 
-    public void addTitlesListener(ActionListener mal){
-        for(RowInShoppingCart ob : outcomeButtons)
+    public void addTitlesListener(ActionListener mal) {
+        for (RowInShoppingCart ob : outcomeButtons)
             ob.title.addActionListener(mal);
+    }
+    /**
+     * Returns the  percentage of the incomes in relation to outcomes
+     */
+    public EncapsulteColorAndText calculatePercentage(int loss, String username,int prof) {
+        BigDecimal profit = new BigDecimal(prof);
+        BigDecimal loss2=new BigDecimal(loss);
+        Color foreground;
+        if (loss == 0) {
+            foreground=new Color(135,13,255).darker();
+            return new EncapsulteColorAndText(foreground,"No spending money");
+        }
+        if (profit.equals(0)) {
+            foreground=new Color(255, 5, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"You have no incomes/salaries");
+        }
+        BigDecimal proposition2=loss2.divide(profit,2,RoundingMode.HALF_UP);
+        double proposition=proposition2.doubleValue();
+        if (proposition > 1) {
+            foreground=new Color(255, 5, 5);
+            return new EncapsulteColorAndText(foreground,"You are facing with DEFICIT!");
+        }
+        if (proposition == 1) {
+            foreground=new Color(255, 5, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"Your incomes cover exactly the outcomes");
+        }
+        if (proposition >= 0.9) {
+            foreground=new Color(255, 35, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 90% of your incomes were spent");
+        }
+        if (proposition >= 0.8) {
+            foreground=new Color(255, 65, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 80% of your incomes were spent");
+        }
+        if (proposition >= 0.7) {
+            foreground=new Color(255, 95, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 70% of your incomes were spent");
+        }
+        if (proposition >= 0.6) {
+            foreground=new Color(255, 125, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 60% of your incomes were spent");
+        }
+        if (proposition >= 0.5) {
+            foreground=new Color(255, 165, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 50% of your incomes were spent");
+        }
+        if (proposition >= 0.4) {
+            foreground=new Color(255, 225, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 40% of your incomes were spent");
+        }
+        if (proposition >= 0.3) {
+            foreground=new Color(205, 255, 5).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 30% of your incomes were spent");
+        }
+        if (proposition >= 0.2) {
+            foreground=new Color(150, 255, 15).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 20% of your incomes were spent");
+        }
+        if (proposition >= 0.1) {
+            foreground=new Color(100, 255, 15).brighter();
+            return new EncapsulteColorAndText(foreground,"More then 10% of your incomes were spent");
+        }
+        foreground=new Color(0, 255, 0).brighter();
+        return new EncapsulteColorAndText(foreground,"Good Job! you spent less then 10% of your incomes");
+    }
+    private class EncapsulteColorAndText{
+        Color color;
+        String text;
+        public EncapsulteColorAndText(Color color, String text) {
+            this.color = color;
+            this.text = text;
+        }
     }
 }

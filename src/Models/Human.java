@@ -106,6 +106,5 @@ public abstract class Human extends User {
             e.printStackTrace();
         }
     }
+
 }
-
-

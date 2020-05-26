@@ -13,9 +13,8 @@ public abstract class Jframe extends JFrame {
 
 
     public Jframe(int width){
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         if(width==(int) Toolkit.getDefaultToolkit().getScreenSize().getWidth())//Full screen undependable platform
             setExtendedState(MAXIMIZED_BOTH);
         frameExMin=BorderFactory.createMatteBorder(1,1,1,1, Color.black);
@@ -35,6 +34,7 @@ public abstract class Jframe extends JFrame {
         minimize.setBorder(frameExMin);
         add(exit);
         add(minimize);
+        setLayout(null);
         setVisible(true);
         System.out.println("Adding minimize and exit labels\n\n");
     }

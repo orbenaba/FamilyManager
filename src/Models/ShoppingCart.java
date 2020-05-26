@@ -1,15 +1,11 @@
 package Models;
 
-import Controllers.ShoppingCartController;
-import Views.ShoppingCartView;
 
-import javax.swing.*;
 import java.io.File;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.LinkedList;
 
-import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 public class ShoppingCart {
     public String familyUsername;
@@ -71,7 +67,8 @@ public class ShoppingCart {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return sum;
+        System.out.println("Incomes = "+(-1)*sum);
+        return (-1)*sum;
     }
 
 
@@ -165,4 +162,28 @@ public class ShoppingCart {
         return this.outcomes.isEmpty();
     }
 
+
+
+
+    /**Calculates the sum of the all salaries of this specific Family*/
+    public int getSalaries(){
+        PreparedStatement ps;
+        ResultSet rs;
+        int salaries=0;
+        try {
+            String query="SELECT Salary FROM human WHERE FamilyUsername = ? AND Salary>=0";
+            ps =DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,this.familyUsername);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                salaries+=rs.getInt("Salary");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Salaries = "+salaries);
+        return salaries;
+    }
 }
