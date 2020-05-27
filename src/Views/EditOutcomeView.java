@@ -112,7 +112,10 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         dateLabel = new JLabel("Date purchased: " + dateFormat.format(this.outcome.purchasedDate));
         dateLabel.setForeground(new Color(208, 0, 0));
         dateLabel.setFont(new Font("David", Font.ITALIC, 36));
-        dateLabel.setBounds(100, 400, 400, 30);
+        dateLabel.setBounds(90, 400, 400, 30);
+
+
+
 
 
         add(titleLabel);

@@ -23,6 +23,7 @@ public class IncomeController {
         this.oldView=oldView;
         iview.addSubmitAction(new AmountListener());
         iview.addAmountListener(new SubmitAction());
+        iview.addIncomeLimit8(new Amount8Limit());
     }
 
     class AmountListener implements ActionListener {
@@ -43,6 +44,14 @@ public class IncomeController {
             }
         }
     }
+    class Amount8Limit extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (iview.amount.getText().length() >= 8) // limit textfield to 8 characters
+                e.consume();
+        }
+    }
+
 
     class SubmitAction extends KeyAdapter {
         public void keyTyped(KeyEvent e) {

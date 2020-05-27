@@ -44,6 +44,9 @@ public class IncomeView extends JFrame {
         add(amountLabel);
         setVisible(true);
     }
+    public void addIncomeLimit8(KeyAdapter mal){
+        amount.addKeyListener(mal);
+    }
 
     public void addSubmitAction(ActionListener mal){
         submit.addActionListener(mal);
