@@ -21,7 +21,19 @@ public abstract class Human extends User {
         this.password = password;
     }
 
-    /**Get an existing user account from DB by his name*/
+    /*****************************************************************************************************************
+     * Get an existing user account from DB by his name*/
+    /**Using Factory pattern, Explanation:
+     * 1)We are getting dynamically the username of the user(Still don't know whether is a parent or child).
+     * 2)We are checking the user's salary(we set by default all the users' salaries to -1 and in case we insert into
+     * the DB a parent we initialize its salary into non-negative number).
+     * So if the salary is negative, we are calling the Child's constructor and create one child.
+     * Otherwise, we create a parent by calling its c'tor.
+     *****************************************************************************************************************
+     * The components in this factory pattern:
+     * Creator==>>>> getHumanData(..)
+     * Products==>>> Parent and Child while Human helps as a common base to both classes.
+     ******************************************************************************************************************/
     public static Human getHumanData(String username) {
         Connection con = null;
         PreparedStatement ps;
@@ -59,8 +71,8 @@ public abstract class Human extends User {
     public Human(String username,boolean e){
         this.username=username;
     }
-    public Human(){}
 
+    /***/
     public void deleteAccount() {
         Connection con;
         PreparedStatement ps;
@@ -96,10 +108,10 @@ public abstract class Human extends User {
             ps.setString(1,familyUsername);
             ps.setString(2,familyUsername);
             ps.executeUpdate();
-
+            //close opened connections
             ps.close();
             con.close();
-
+            //delete user's biography
             File f = new File("Biographies\\" + username + ".txt");
             f.delete();
         } catch (SQLException e) {

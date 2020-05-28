@@ -11,12 +11,10 @@ import java.util.HashMap;
 
 
 public class FamilyTreeView extends BaseForHomeSeqView{
- /*   public JLabel exit,minimize;
-    public Border frameExMin;*/
     public String username;
     public Tree familyTree;
-    public ArrayList<TreeNode> parents;
-    public ArrayList<TreeNode>children;
+    public ArrayList<TreeNode> parents;//holds all the parents in the family tree
+    public ArrayList<TreeNode>children;//holds all the children in the family tree
     public JLabel background;
     public boolean isParent=true;
     public JLabel title;
@@ -140,12 +138,15 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text.setForeground(Color.black);
                 text.setBounds(xStartChildren+i*300+60,500,240,200);
                 add(text);
-
                 JButton button = new JButton(child.firstName + '\n' + child.uName);
+                /**We want to use a special color leaf for the current user in the family tree in order to
+                 * distinguish between its profile and other's family profiles*/
                 if(child.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
                 else
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/leaf.png")));
+               /**In order to display only the leaf without the default options that are came with the button,
+                * we'll change some settings*/
                 button.setContentAreaFilled(false);
                 button.setFocusPainted(false);
                 button.setBorderPainted(false);
@@ -155,13 +156,12 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 add(button);
             }
         }
-
-
         add(title);
         add(background);
         setVisible(true);
 
     }
+    /**Holds the first name of a user and his status- parent/child*/
     private static class memberData{
         public boolean isParent;
         public String firstName;
@@ -170,18 +170,19 @@ public class FamilyTreeView extends BaseForHomeSeqView{
             this.firstName = firstName;
         }
     }
+    /**Holds an hash map of the all family members(first name and status), and the family username*/
     private static class FamilyMembers{
         public HashMap<String,memberData>members;
         public String FamilyUsername;
-
         public FamilyMembers() {
             this.members = new HashMap<>();
         }
-
     }
+    /**This class holds two separate lists of children anf parents in the current family*/
     public static class Tree{
         ArrayList<UserData> parents;
         ArrayList<UserData> children;
+        /***/
         public Tree(HashMap<String,memberData> members) {
             parents = new ArrayList<>();
             children = new ArrayList<>();
@@ -196,7 +197,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
     public static class UserData{
         public String firstName;
         public String uName;
-
         public UserData(String firstName, String uName) {
             this.firstName = firstName;
             this.uName = uName;
@@ -206,7 +206,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         public JButton button;
         public String uname;
         public String fname;
-
         public TreeNode(JButton button, String uname, String fname) {
             this.button = button;
             this.uname = uname;

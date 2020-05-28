@@ -1,13 +1,9 @@
 package Models;
 
 
-import Controllers.AreYouChildOrParentController;
-import Views.AreYouChildOrParentView;
 
-import javax.swing.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Family extends User{

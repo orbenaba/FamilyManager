@@ -30,6 +30,7 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
         mpcview.addLimit12CharactersFName(new Limit12CharactersFName());
         /**==========Back to home label===============*/
     }
+    /***Create Key adapters in order to limit the user in inputting a too long input*/
     class Limit18CharactersPass extends KeyAdapter {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -47,7 +48,7 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
     class Limit12CharactersFName extends KeyAdapter {
         @Override
         public void keyTyped(KeyEvent e) {
-            if (mphview.firstNameField.getText().length() >= 12) // limit textfield to 18 characters
+            if (mphview.firstNameField.getText().length() >= 12) // limit textfield to 12characters
                 e.consume();
         }
     }
@@ -58,7 +59,6 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
         public void mouseEntered(MouseEvent e) {
             mphview.removePhotoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
-
         @Override
         public void mouseClicked(MouseEvent e) {
             /**Getting rid of old components*/
@@ -113,6 +113,7 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
                 mphview.removePhotoLabel = new JLabel(mphview.removePhoto);
                 mphview.removePhotoLabel.setBounds(x + width + 20, y, 40, 50);
 
+                /**In order to keep the background after changes, we need to remove it and add it again cause we adding and removing other components*/
                 mphview.getContentPane().remove(mphview.background);
                 mphview.add(mphview.removePhotoLabel);
                 mphview.add(mphview.imageContainer);
@@ -124,10 +125,11 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
         }
     }
 
+    /**Deleting a user account by clicking the specified button*/
     class DeleteAccountAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Custom button text
+            /**Verifies the user at the last time if ge really sure in deleting his account*/
             Object[] options = {"Delete account",
                     "Stay"};
             int n = JOptionPane.showOptionDialog(mphview,
@@ -145,7 +147,7 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
             }
         }
     }
-
+    /**Checking for empty fields*/
     protected boolean checkEmptyFields(){
         return mphview.usernameField.getText().trim().equals("")||mphview.firstNameField.getText().trim().equals("")
                 ||mphview.passwordField.getText().equals("");
