@@ -1,12 +1,12 @@
 package Views;
 
-import Models.Family;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
+
 
 public class RegisterFamilyView extends Jframe {
     JPanel p1,p2;
@@ -16,7 +16,6 @@ public class RegisterFamilyView extends Jframe {
     public JLabel lastnameLabel, usernameLabel,confirmPasswordLabel, createPasswordLabel,loginContext;
     public JButton create;
     Font f;
-
 
     public RegisterFamilyView()
     {

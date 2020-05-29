@@ -2,7 +2,6 @@ package Views;
 
 
 import Models.Outcome;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -13,7 +12,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-
+//This view in intended to both editing and displaying an existing outcome.
+//When we just have a need to show(readOnly) the existing outcome, we'll send
+//in the ctor a boolean value==>> readOnly=true
 public class EditOutcomeView extends BaseForHomeSeqView {
     public Outcome outcome;
     public JTextArea description;
@@ -33,7 +34,6 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         this.username = username;
         this.readOnly=readOnly;
         this.outcome = new Outcome(username, oldOutcome.id, oldOutcome.purchasedDate);
-
         getContentPane().setBackground(new Color(6, 103, 172));
         title = new JLabel(readOnly?"Read - only:Outcome":"Edit outcome");
         title.setBackground(new Color(168, 0, 0));
@@ -41,13 +41,9 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         title.setFont(new Font("David", Font.ITALIC, 60));
         title.setBounds(readOnly?getWidth() / 2 - 270 : getWidth()/2-220, 20, readOnly?540:440, 60);
         title.setForeground(new Color(176, 221, 252));
-
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
-
-
-
         priceLabel = new JLabel("Price:");
         priceLabel.setFont(new Font("David", Font.ITALIC, 36));
         priceLabel.setForeground(new Color(208, 0, 0));
@@ -59,8 +55,6 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         price.setForeground(new Color(4, 62, 103));
         price.setBounds(getWidth() / 2 - 120, 200, 300, 50);
         price.setEditable(!readOnly);
-
-
         titleLabel = new JLabel("Title:");
         titleLabel.setFont(new Font("David", Font.ITALIC, 36));
         titleLabel.setForeground(new Color(208, 0, 0));
@@ -72,8 +66,6 @@ public class EditOutcomeView extends BaseForHomeSeqView {
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth() / 2 + 320, 200, 300, 50);
         titleText.setEditable(!readOnly);
-
-
         descriptionLabel = new JLabel("Description:");
         descriptionLabel.setFont(new Font("David", Font.ITALIC, 36));
         descriptionLabel.setForeground(new Color(208, 0, 0));
@@ -91,15 +83,12 @@ public class EditOutcomeView extends BaseForHomeSeqView {
             outcomeContent.append(myScan.nextLine() + '\n');
         }
         myScan.close();
-
-
         description = new JTextArea(outcomeContent.toString());
         description.setBackground(new Color(238, 145, 145));
         description.setForeground(new Color(4, 62, 103));
         description.setFont(new Font("David", Font.ITALIC, 36));
         description.setBounds(getWidth() / 2 - 200, 350, 500, 350);
         description.setEditable(!readOnly);
-
         if (!readOnly) {
             editOutcome = new JButton("Apply changes");
             editOutcome.setBackground(new Color(238, 145, 145));
@@ -107,17 +96,11 @@ public class EditOutcomeView extends BaseForHomeSeqView {
             editOutcome.setFont(new Font("David", Font.ITALIC, 36));
             editOutcome.setBounds(getWidth() / 2 - 100, 740, 250, 50);
         }
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         dateLabel = new JLabel("Date purchased: " + dateFormat.format(this.outcome.purchasedDate));
         dateLabel.setForeground(new Color(208, 0, 0));
         dateLabel.setFont(new Font("David", Font.ITALIC, 36));
         dateLabel.setBounds(90, 400, 400, 30);
-
-
-
-
-
         add(titleLabel);
         add(titleText);
         add(dateLabel);
@@ -138,7 +121,6 @@ public class EditOutcomeView extends BaseForHomeSeqView {
     public void addTitle30Limit(KeyAdapter mal){
         titleText.addKeyListener(mal);
     }
-
 
     public void addEnforcingPrice(KeyAdapter mal) {
         price.addKeyListener(mal);

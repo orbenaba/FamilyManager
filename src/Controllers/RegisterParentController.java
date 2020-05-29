@@ -2,7 +2,6 @@ package Controllers;
 
 
 import Views.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,9 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.security.Key;
 import java.sql.*;
-
 import static Models.User.isUsernameExist;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
@@ -26,11 +23,9 @@ public class RegisterParentController extends RegisterHumanController {
         rview.addJobnameListener(new JobnameListener());
         rview.addSalaryListener(new SalaryListener());
         rview.addChildViewListener(new ChildViewListener());
-
         rview.addEnforcingSalary(new EnforcingSalary());
         /**Create the account*/
         rview.addCreateActionParent(new CreateActionParent());
-
         rview.addJobName20Limit(new JobName20Limit());
         rview.addSalary8Limit(new Salary8Limit());
     }
@@ -96,7 +91,6 @@ public class RegisterParentController extends RegisterHumanController {
             rview.dispose();
         }
     }
-
     /**
      * Enforcing the user to use only digits in Salary field
      */

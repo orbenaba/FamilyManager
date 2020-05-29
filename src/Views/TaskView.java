@@ -2,7 +2,6 @@ package Views;
 
 
 import Models.TasksList;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -10,7 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 
 public class TaskView extends BaseForHomeSeqView {

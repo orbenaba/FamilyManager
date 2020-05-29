@@ -1,21 +1,16 @@
 package Views;
 
 
-import com.sun.xml.internal.ws.util.HandlerAnnotationInfo;
-
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
 
 public class HomeView extends Jframe {
-
     public JButton settingsButton,familyTreeButton,tasksButton,shoppingCartButton;
     public JLabel background,logOff;
     public String username;
-
 
     public HomeView(String username){
         super((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
@@ -23,12 +18,9 @@ public class HomeView extends Jframe {
         Font font=new Font("David",Font.BOLD,50);
         /**Adding background*/
         int width=getWidth(),height=getHeight();
-
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/homeBack.jpg")));
         background.setBounds(0,0,width,height);
-
-
         /**Private user settings*/
         settingsButton=new JButton("Settings");
         settingsButton.setBackground(Color.blue);
@@ -37,8 +29,6 @@ public class HomeView extends Jframe {
         settingsButton.setBounds(width/2-450,height/2-300,400,250);
         settingsButton.setFocusPainted(false);
         settingsButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
         /**Family tree*/
         familyTreeButton=new JButton("Family Tree");
         familyTreeButton.setBackground(Color.blue);
@@ -47,9 +37,6 @@ public class HomeView extends Jframe {
         familyTreeButton.setBounds(width/2,height/2-300,400,250);
         familyTreeButton.setFocusPainted(false);
         familyTreeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
-
         /**Family's tasks*/
         tasksButton=new JButton("Tasks");
         tasksButton.setBackground(Color.blue);
@@ -58,9 +45,6 @@ public class HomeView extends Jframe {
         tasksButton.setBounds(width/2-450,height/2,400,250);
         tasksButton.setFocusPainted(false);
         tasksButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
-
         /**Family's shopping cart*/
         shoppingCartButton=new JButton("Shopping cart");
         shoppingCartButton.setBackground(Color.blue);
@@ -69,15 +53,11 @@ public class HomeView extends Jframe {
         shoppingCartButton.setBounds(width/2,height/2,400,250);
         shoppingCartButton.setFocusPainted(false);
         shoppingCartButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
         /**Adding an option to log off in homeView*/
         logOff=new JLabel("Log off");
         logOff.setFont(new Font("David",Font.ITALIC,35));
         logOff.setForeground(new Color(0, 30, 255));
         logOff.setBounds(width/2-65,750,130,40);
-
-
 
         add(logOff);
         add(settingsButton);

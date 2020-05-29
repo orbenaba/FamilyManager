@@ -24,6 +24,9 @@ public class Task {
         this.executedDate = executedDate;
     }
 
+    //This function is called after the local task is updated.
+    //After it, we need to update the DB appropriately
+    //returns true in case of success
     public boolean updateTask()
     {
         Connection con;

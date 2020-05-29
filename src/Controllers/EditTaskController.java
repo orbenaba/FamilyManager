@@ -1,16 +1,11 @@
 package Controllers;
 
 import Views.EditTaskView;
-import Views.ShoppingCartView;
 import Views.TasksListView;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 

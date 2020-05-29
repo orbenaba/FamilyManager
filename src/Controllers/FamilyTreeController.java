@@ -1,20 +1,16 @@
 package Controllers;
 
 import Views.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
 import static Views.FamilyTreeView.TreeNode;
 
 
 public class FamilyTreeController extends BaseForHomeSeqController {
     private FamilyTreeView ftview;
-
 
     public FamilyTreeController(FamilyTreeView ftview) {
         super(ftview);
@@ -23,7 +19,7 @@ public class FamilyTreeController extends BaseForHomeSeqController {
         ftview.addLeafAction(new LeafAction());
 
     }
-
+    //For each leaf we set the cursor into HAND type
     class LeavesListener extends MouseAdapter{
         @Override
         public void mouseEntered(MouseEvent e){
@@ -33,16 +29,9 @@ public class FamilyTreeController extends BaseForHomeSeqController {
         }
     }
 
+    //Identifying the clicked leaf and display its match user
     class LeafAction implements ActionListener {
         String usernameProfile, myUsername;
-
-        public LeafAction(String usernameProfile, String myUsername) {
-            this.usernameProfile = usernameProfile;
-            this.myUsername = myUsername;
-        }
-
-        public LeafAction() {
-        }
 
         @Override
         public void actionPerformed(ActionEvent e) {

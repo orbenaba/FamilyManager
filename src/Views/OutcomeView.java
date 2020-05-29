@@ -1,7 +1,6 @@
 package Views;
 
 import Models.ShoppingCart;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -9,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 
 public class OutcomeView extends BaseForHomeSeqView {
     public String username;
@@ -40,7 +40,6 @@ public class OutcomeView extends BaseForHomeSeqView {
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
 
-
         priceLabel=new JLabel("Price:");
         priceLabel.setFont(new Font("David",Font.ITALIC,36));
         priceLabel.setForeground(new Color(208, 0, 0));
@@ -51,11 +50,6 @@ public class OutcomeView extends BaseForHomeSeqView {
         price.setForeground(new Color(4, 62, 103));
         price.setBounds(getWidth()/2-120,200,300,50);
 
-
-
-
-
-
         titleLabel=new JLabel("Title:");
         titleLabel.setFont(new Font("David",Font.ITALIC,36));
         titleLabel.setForeground(new Color(208, 0, 0));
@@ -65,12 +59,6 @@ public class OutcomeView extends BaseForHomeSeqView {
         titleText.setBackground(new Color(238, 145, 145));
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth()/2+320,200,300,50);
-
-
-
-
-
-
 
         descriptionLabel=new JLabel("Description:");
         descriptionLabel.setFont(new Font("David",Font.ITALIC,36));
@@ -85,24 +73,17 @@ public class OutcomeView extends BaseForHomeSeqView {
         pane.setBounds(getWidth()/2-200,350,500,350);
         pane.setPreferredSize(new Dimension(500,350));
 
-
         addOutcome=new JButton("Add");
         addOutcome.setBackground(new Color(238, 145, 145));
         addOutcome.setForeground(new Color(4, 62, 103));
         addOutcome.setFont(new Font("David",Font.ITALIC,36));
         addOutcome.setBounds(getWidth()/2-100,740,200,50);
-
-
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         dateLabel=new JLabel("Today is "+ dateFormat.format(date));
         dateLabel.setForeground(new Color(208, 0, 0));
         dateLabel.setFont(new Font("David",Font.ITALIC,36));
         dateLabel.setBounds(100,400,320,30);
-
-
-
         add(titleLabel);
         add(titleText);
         add(dateLabel);

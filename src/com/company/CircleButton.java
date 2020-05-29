@@ -1,6 +1,5 @@
 package com.company;
 
-import com.sun.org.apache.xalan.internal.res.XSLTErrorResources;
 
 import javax.swing.*;
 import java.awt.Graphics;
@@ -10,6 +9,7 @@ import java.awt.geom.Point2D;
 import java.awt.FontMetrics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 
 public class CircleButton extends JButton{
 

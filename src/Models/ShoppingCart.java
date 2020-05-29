@@ -11,6 +11,9 @@ public class ShoppingCart {
     public String familyUsername;
     public LinkedList<Outcome> outcomes;
 
+    //Constructor:
+    //Retrieving all the existing outcomes from the DB which belongs to the all family of the given username
+    //Note: outcomes are with non-negative price in comparison to incomes.
     public ShoppingCart(String username) {
         outcomes = new LinkedList<>();
         Connection con;
@@ -44,6 +47,7 @@ public class ShoppingCart {
     }
     public ShoppingCart(){}
 
+    //Calculates all the amount of all the incomes
     public int calculateIncomes(String username){
         int sum=0;
         Connection con;
@@ -52,7 +56,6 @@ public class ShoppingCart {
         String query = "SELECT*FROM outcome WHERE price <0 AND Username=" +
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
-
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
             ps = con.prepareStatement(query);
@@ -67,11 +70,8 @@ public class ShoppingCart {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Incomes = "+(-1)*sum);
         return (-1)*sum;
     }
-
-
     /**
      * Internal function which calculates the total outcomes which were spent
      */
@@ -85,8 +85,7 @@ public class ShoppingCart {
     public LinkedList<Outcome> getOutcomes() {
         return outcomes;
     }
-    /**Deleting an outcome by its id form the shoppingCart*/
-    /**
+    /**Deleting an outcome by its id form the shoppingCart
      * Returned true in case the delete was a successful operation
      */
     public boolean deleteOutcome(int id) {
@@ -146,7 +145,7 @@ public class ShoppingCart {
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 File file=new File("Outcomes\\"+rs.getInt("id")+".txt");
-                System.out.println(file.delete());
+                file.delete();
             }
             rs.close();
             ps.close();
@@ -161,9 +160,6 @@ public class ShoppingCart {
     public boolean isEmpty(){
         return this.outcomes.isEmpty();
     }
-
-
-
 
     /**Calculates the sum of the all salaries of this specific Family*/
     public int getSalaries(){
@@ -183,7 +179,6 @@ public class ShoppingCart {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Salaries = "+salaries);
         return salaries;
     }
 }

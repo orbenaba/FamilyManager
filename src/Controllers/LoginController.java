@@ -2,7 +2,6 @@ package Controllers;
 
 
 import Views.*;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -134,7 +133,6 @@ public class LoginController extends JframeController{
                         st2.setString(1, uname);
                         st2.setString(2, pword);
                         rs = st2.executeQuery();
-
                         /**The user is actually a family*/
                         if (rs.next()) {
                             /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown

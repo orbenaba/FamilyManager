@@ -2,7 +2,6 @@ package Views;
 
 
 import Models.Parent;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -49,7 +48,6 @@ public class MyProfileParentView extends MyProfileHumanView {
         isMarried.setSelected(parent.isMarried);
         isMarried.setBounds(width / 2 - 500, 740, 150, 50);
 
-
         salaryLabel = new JLabel("Salary:");
         salaryLabel.setFont(new Font("David", Font.ITALIC, 30));
         salaryLabel.setForeground(Color.black);
@@ -58,9 +56,6 @@ public class MyProfileParentView extends MyProfileHumanView {
         salaryField.setBounds(width / 2 - 220, 745, 280, 50);
         salaryField.setFont(new Font("David", Font.ITALIC, 30));
         salaryField.setBackground(Color.orange);
-
-
-
 
         /**Adding to ability for a parent user to limit his kids in managing the family data*/
         if(parent.isLimitChildren()){
@@ -95,19 +90,14 @@ public class MyProfileParentView extends MyProfileHumanView {
     public void addEnforcingSalary(KeyAdapter mal){
         salaryField.addKeyListener(mal);
     }
-
     public void addJobName20Limit(KeyAdapter mal){
         jobNameField.addKeyListener(mal);
     }
-
-
     public void addLimitAction(ActionListener mal){
         limitButton.addActionListener(mal);
     }
-
     public void addUnLimitAction(ActionListener mal){
         unLimitButton.addActionListener(mal);
     }
-
 
 }

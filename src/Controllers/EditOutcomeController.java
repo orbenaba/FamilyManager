@@ -2,22 +2,21 @@ package Controllers;
 
 import Views.EditOutcomeView;
 import Views.ShoppingCartView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 
 public class EditOutcomeController extends BaseForHomeSeqController {
     private EditOutcomeView eoview;
+
     public EditOutcomeController(EditOutcomeView eoview) {
         super(eoview);
         this.eoview = eoview;
+        //Only unbounded users can use thus privileges
         if (!eoview.readOnly) {
             eoview.addEditOutcomeAction(new EditOutcomeAction());
             eoview.addEnforcingPrice(new EnforcingPrice());
@@ -27,14 +26,15 @@ public class EditOutcomeController extends BaseForHomeSeqController {
     }
 
     //Limit the price of the outcome to maximum 8 digits
-    class Price8Limit extends KeyAdapter{
+    class Price8Limit extends KeyAdapter {
         @Override
         public void keyTyped(KeyEvent e) {
             if (eoview.price.getText().length() >= 8) // limit textfield to 8 characters
                 e.consume();
         }
     }
-    class Title30Limit extends KeyAdapter{
+
+    class Title30Limit extends KeyAdapter {
         @Override
         public void keyTyped(KeyEvent e) {
             if (eoview.titleText.getText().length() >= 30) // limit textfield to 8 characters
@@ -60,20 +60,19 @@ public class EditOutcomeController extends BaseForHomeSeqController {
                 eoview.outcome.title = eoview.titleText.getText();
                 mappingTextareaIntoFile(eoview.outcome.id, eoview.description, "Outcomes");//saving bio in file
                 eoview.outcome.updateOutcome();
-                new ShoppingCartController(new ShoppingCartView(eoview.username,null));
+                new ShoppingCartController(new ShoppingCartView(eoview.username, null));
                 eoview.dispose();
-            }
-         else {
+            } else {
                 JOptionPane.showMessageDialog(null, "You must insert non-negative number to price");
             }
-    }
+        }
 
-
-        /**Helper function which intended to check if price is empty*/
-        public boolean verify(){
+        /**
+         * Helper function which intended to check if price is empty
+         */
+        public boolean verify() {
             return !eoview.price.getText().trim().equals("");
         }
 
     }
-
 }

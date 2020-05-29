@@ -25,15 +25,12 @@ public class FamilyTreeView extends BaseForHomeSeqView{
     public FamilyTreeView(String username){
         this.username=username;
         Font font=new Font("David",Font.ITALIC,40);
-
-        /**=========================================================*/
         /**=========================================================*/
         /**============Adding forest background====================*/
         /**=========================================================*/
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/forestBackground.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
-
        /**Title*/
         title=new JLabel("Family Hierarchy");
         title.setFont(new Font("David",Font.ITALIC,90));
@@ -41,7 +38,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         title.setBackground(new Color(7,0,204));
         title.setOpaque(true);
         title.setBounds(getWidth()/2-340,20,680,80);
-
 
         FamilyMembers familyMembers=getFamilyMembers(username);
         /**Now, we have the whole family data--*/
@@ -55,6 +51,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         int totalParents=familyTree.parents.size();
         int i=0;
         JLabel text;
+        //There are different propositions for more then 5 parents
         if(totalParents>=5){
             /**The width of each button is 145px and the distance between two buttons is 5px--->>(145+5)/2*/
             int xStartParents=getWidth()/2 - (totalParents*75)-150;
@@ -64,7 +61,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text.setFont(font);
                 text.setBounds(xStartParents+i*190+45,170,200,200);
                 add(text);
-
                 JButton button=new JButton();
                 if(parent.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
@@ -76,12 +72,10 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 button.setBounds(xStartParents+i*190,150,190,200);
                 i++;
                 parents.add(new TreeNode(button,parent.uName,parent.firstName));
-
-
                 add(button);
             }
         }
-        else{
+        else{//Less then 5 parents
             int xStartParents=getWidth()/2 - (totalParents*150);
             for(UserData parent: familyTree.parents){
                 text=new JLabel(parent.firstName);
@@ -89,7 +83,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text.setForeground(Color.black);
                 text.setBounds(xStartParents+i*300+45,170,200,200);
                 add(text);
-
                 JButton button=new JButton();
                 if(parent.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
@@ -115,7 +108,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 text.setForeground(Color.black);
                 text.setBounds(xStartChildren+i*190+45,500,200,200);
                 add(text);
-
                 JButton button = new JButton();
                 if(child.uName.equals(username))
                     button.setIcon(new ImageIcon(getClass().getResource("/Icons/myLeaf.png")));
@@ -159,7 +151,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         add(title);
         add(background);
         setVisible(true);
-
     }
     /**Holds the first name of a user and his status- parent/child*/
     private static class memberData{
@@ -213,9 +204,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         }
     }
 
-
-
-
     /**Returns the Members' username and firstName of the specific user
      * Key= Username(String)
      * Data=[First name, isParent?](memberData)*/
@@ -240,13 +228,14 @@ public class FamilyTreeView extends BaseForHomeSeqView{
                 familyMembers.members.put(rs.getString("Username"),
                         new memberData(rs.getString("FirstName"),rs.getInt("Salary")>=0));
             }while(rs.next());
+            rs.close();
+            ps.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return familyMembers;
     }
-
     /**Listeners and actions*/
     public void addLeavesListener(MouseAdapter mal){
         parents.forEach((parentButton)->parentButton.button.addMouseListener(mal));

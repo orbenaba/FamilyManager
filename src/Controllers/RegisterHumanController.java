@@ -2,13 +2,10 @@ package Controllers;
 
 import Views.*;
 import com.company.CircleButton;
-
-
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
-
 import java.io.File;
 
 
@@ -22,16 +19,12 @@ public class RegisterHumanController extends JframeController {
         rview.addFirstNameListener(new FirstNameListener());
         rview.handleComboAction(new Combo());
         rview.addGendersListener(new GendersListener());
-
         rview.addPasswordListener(new PasswordListener());
         rview.addUsernameListener(new UsernameListener());
         rview.addConfirmPasswordListener(new ConfirmPasswordListener());
-
         rview.addCalendarListener(new CalendarListener());
         rview.addCreateListener(new CreateListener());
         rview.addBioListener(new BioListener());
-
-
         rview.addLimit18CharactersPass(new Limit18CharactersPass());
         rview.addLimit18CharactersUName(new Limit18CharactersUName());
         rview.addLimit12CharactersConfPass(new Limit18CharactersConfPass());

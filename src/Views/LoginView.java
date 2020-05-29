@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-
 public class LoginView extends Jframe {
      JPanel p1, p2;
      public JLabel title, passIcon1, userIcon, registerContext;
@@ -25,14 +24,12 @@ public class LoginView extends Jframe {
           setLocationRelativeTo(null);
           p1=new JPanel();
           p2=new JPanel();
-
           getContentPane().setBackground(new Color(0,7,204));
           p1.setBackground(new Color(153, 0, 92));
           p1.setBounds(15,15,getWidth()-30,100);
           p2.setBackground(Color.ORANGE);
           p2.setBounds(15,115,getWidth()-30,getHeight()-130);
           title=new JLabel("Login");
-
           title.setFont(new Font("David",Font.ITALIC,40));
           title.setForeground(Color.white);
           title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -40,13 +37,9 @@ public class LoginView extends Jframe {
           title.setBackground(new Color(0,7,204));
           title.setOpaque(true);//The default is the background is transparent
           title.setBounds(240,15,210,80);
-
-
-
           addSubmitBTN();
           addLoginForm();
           add(login);
-
           add(username);
           add(createPassword);
           add(userIcon);
@@ -55,7 +48,6 @@ public class LoginView extends Jframe {
           add(registerContext);
           add(p1);
           add(p2);
-
           setVisible(true);
      }
      public void addLoginForm(){
@@ -68,18 +60,13 @@ public class LoginView extends Jframe {
           userIcon.setIcon(u);
           username=new JTextField("username");
           createPassword=new JPasswordField("password");
-
-
           username.setFont(f);
           createPassword.setFont(f);
-
           //Border title
           frameTitle=BorderFactory.createMatteBorder(0,4,4,4,Color.ORANGE);
           title.setBorder(frameTitle);
-
           //Borders for each text field
           frameTextfield =BorderFactory.createMatteBorder(1,1,1,1,Color.blue);
-
           userIcon.setBounds(20,120,80,80);
           passIcon1.setBounds(30,230,50,50);
           username.setBounds(150,130,300,50);
@@ -99,9 +86,7 @@ public class LoginView extends Jframe {
           login.setBackground(new Color(0,7,204));
           login.setCursor(new Cursor(Cursor.HAND_CURSOR));
      }
-
-
-     //Add mouse listeners
+     //Add listeners
      public void addUsernameFocus(FocusAdapter mal) {
           username.addFocusListener(mal);
      }

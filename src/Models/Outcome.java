@@ -28,8 +28,9 @@ public class Outcome {
         this.purchasedDate = purchasedDate;
     }
 
-
-
+    //This function is called after the local outcome is updated.
+    //After it, we need to update the DB appropriately
+    //returns true in case of success
     public boolean updateOutcome()
     {
         Connection con;
@@ -48,7 +49,6 @@ public class Outcome {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 

@@ -1,27 +1,17 @@
 package Models;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
+
 public class Child extends Human {
     public String status;
     public boolean isSingle;
-
-    public Child(String username, String password) {
-        super(username, password);
-    }
-
-    public Child(String password, String username, String firstName, byte genderId, String familyUsername,
-                 Date birthday, String status, boolean isSingle, ImageIcon image) {
-        super(password, username, firstName, genderId, familyUsername, birthday, image);
-        this.status = status;
-        this.isSingle = isSingle;
-    }
 
     public Child(String username) {
         super(username, false);
@@ -70,7 +60,6 @@ public class Child extends Human {
         /**First, we need to ensure that there is no other user with this username*/
         if (!isUsernameExist(username, true, this.username)) {
             try {
-                System.out.println("Date is going to be in DB: "+birthday);
                 String query;
                 if (flag == false)
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,Status=?,Birthday=?,IsObligated=?,Image=? WHERE Username=?";
@@ -93,15 +82,6 @@ public class Child extends Human {
                 else
                     ps.setString(7,this.username);
                 ps.executeUpdate();
-
-                /**Temp code*/
-  /*              query="SELECT Birthday FROM human WHERE Username = ?";
-                ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-                ps.setString(1,username);
-                ResultSet rs=ps.executeQuery();
-                rs.next();
-                System.out.println("BD in DB: "+rs.getDate("Birthday"));
-*/
                 ps.close();
                 return username;
             } catch (SQLException e) {

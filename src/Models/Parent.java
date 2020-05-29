@@ -54,7 +54,6 @@ public class Parent extends Human {
         }
     }
 
-
     /**Input: New details of an existing user account*/
     /**
      * Output: Empty string in case that the update failed
@@ -96,7 +95,8 @@ public class Parent extends Human {
         }
         return "";
     }
-
+    //Checking whether a given username is a parent or not, if its salary is negative,
+    //Namely is a child.
     public static boolean isParent(String username) {
         Connection con;
         PreparedStatement ps;
@@ -121,7 +121,7 @@ public class Parent extends Human {
     }
 
 
-    /**Most complicated action, many edge cases*/
+    //Bounding parent's children
     public boolean limitChildren(){
         try {
             //salary can distinct between child and parent
@@ -137,7 +137,7 @@ public class Parent extends Human {
         return false;
     }
 
-    /**Most complicated action, many edge cases*/
+    //Unbound parent's children
     public boolean unLimitChildren(){
         try {
             //salary can distinct between child and parent
@@ -153,6 +153,7 @@ public class Parent extends Human {
         return false;
     }
 
+    //Checking if the children in a given ***FAMILY*** are limited
     public boolean isLimitChildren(){
         boolean ret=false;
         try {
@@ -170,7 +171,7 @@ public class Parent extends Human {
         }
         return ret;
     }
-
+    //Checking if the children in a given ***User in a family*** are limited
     public static boolean isLimitChildren(String username){
         boolean ret=false;
         try {

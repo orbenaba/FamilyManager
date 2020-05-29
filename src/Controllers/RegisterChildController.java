@@ -2,7 +2,6 @@ package Controllers;
 
 
 import Views.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
-
 import static Models.User.isUsernameExist;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
@@ -31,7 +29,7 @@ public class RegisterChildController extends RegisterHumanController {
     class StatusLimit20 extends KeyAdapter{
         @Override
         public void keyTyped(KeyEvent e) {
-            if (rview.status.getText().length() >= 20) // limit textfield to 18 characters
+            if (rview.status.getText().length() >= 20) // limit textfield to 20 characters
                 e.consume();
         }
     }

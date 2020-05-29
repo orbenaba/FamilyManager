@@ -26,10 +26,9 @@ public class User {
         ResultSet rs;
         boolean exist = false;
         String query;
-        if(checker) {
+        if(checker)
             query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=? AND Username NOT IN(SELECT Username FROM human WHERE username= ?));";
-            System.out.println("In isUsernameExist");
-        }else
+        else
             query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?);";
         try {
             st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
@@ -38,19 +37,14 @@ public class User {
             if(checker)
                 st.setString(3,oldUsername);
             rs = st.executeQuery();
-            System.out.println("After executing the isUsernameExist query");
-            if (rs.next()) {
+            if (rs.next())
                 exist = true;
-            }
+            //close opened connections
             rs.close();
             st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("The username Exist? "+exist);
         return exist;
     }
-
-
-    /**C*/
 }

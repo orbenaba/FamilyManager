@@ -4,7 +4,6 @@ package Models;
 import javax.swing.*;
 import java.io.File;
 import java.sql.*;
-
 import static Models.ShoppingCart.deleteShoppingCart;
 import static Models.TasksList.deleteTasksList;
 
@@ -14,8 +13,6 @@ public abstract class Human extends User {
     public byte genderId;
     public java.sql.Date birthday;
     public ImageIcon image;
-
-
     public Human(String username, String password) {
         this.username = username;
         this.password = password;
@@ -72,7 +69,7 @@ public abstract class Human extends User {
         this.username=username;
     }
 
-    /***/
+    /**Regulatory requirement-->>Deleting ALL associated data to this user*/
     public void deleteAccount() {
         Connection con;
         PreparedStatement ps;

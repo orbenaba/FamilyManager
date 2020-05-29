@@ -1,21 +1,17 @@
 package Controllers;
 
 
-
 import Models.Task;
 import Views.TaskView;
 import Views.TasksListView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.Calendar;
-
-
-
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
+
 
 public class TaskController extends BaseForHomeSeqController {
     private TaskView tview;
@@ -34,8 +30,6 @@ public class TaskController extends BaseForHomeSeqController {
                 e.consume();
         }
     }
-
-
 
     class AddTaskAction implements ActionListener {
         @Override

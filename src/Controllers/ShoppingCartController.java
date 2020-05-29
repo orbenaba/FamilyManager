@@ -1,9 +1,9 @@
 package Controllers;
 
+
 import Views.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 
 public class ShoppingCartController extends BaseForHomeSeqController{
@@ -12,6 +12,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
     public ShoppingCartController(ShoppingCartView scview) {
         super(scview);
         this.scview = scview;
+        //if the shopping cart is empty we display a picture of X which symbolize "No outcomes"
         if (!scview.shoppingCart.isEmpty()) {
             if (!scview.readOnly) {
                 scview.addDeletesListener(new DeletesListener());
@@ -19,12 +20,13 @@ public class ShoppingCartController extends BaseForHomeSeqController{
             }
             scview.addTitlesListener(new TitlesListener());
         }
+        //Only unbounded users can manage the outcomes
         if (!scview.readOnly) {
             scview.addOutcomeAction(new OutcomeAction());
             scview.addIncomeAction(new IncomeAction());
-
             scview.addIn = new IncomeView(scview.username);
             scview.addIn.setVisible(false);
+            //By default, the income view isn't displayed(visible=false)
             new IncomeController((IncomeView) scview.addIn,scview);
         }
     }
@@ -37,16 +39,13 @@ public class ShoppingCartController extends BaseForHomeSeqController{
         }
     }
     class IncomeAction implements ActionListener {
-
+        //Playing with the income button, once displaying once disappearing..
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(scview.addIn.isVisible()==false) {
+            if(scview.addIn.isVisible()==false)
                 scview.addIn.setVisible(true);
-            }
             else
-            {
                 scview.addIn.setVisible(false);
-            }
         }
     }
 

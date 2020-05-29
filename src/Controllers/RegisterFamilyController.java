@@ -4,17 +4,12 @@ import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.LoginView;
 import Views.RegisterFamilyView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import static Controllers.RegisterHumanController.checkValidPassword;
 import static Models.User.isUsernameExist;
+
 
 public class RegisterFamilyController extends JframeController{
     private RegisterFamilyView rfview;
@@ -25,7 +20,6 @@ public class RegisterFamilyController extends JframeController{
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
         rfview.addLoginContextListener(new LoginContextListener());
-
         rfview.addLimit18CharactersConfPass(new Limit18CharactersConfPass());
         rfview.addLimit18CharactersPass(new Limit18CharactersPass());
         rfview.addLimit12CharactersLName(new Limit12CharactersLName());

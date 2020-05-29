@@ -6,7 +6,6 @@ import Models.Human;
 import Models.Parent;
 import com.company.CircleButton;
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -16,11 +15,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.Scanner;
-
 import static Models.Parent.isParent;
 
 
-public class MyProfileHumanView extends BaseForHomeSeqView {
+public abstract class MyProfileHumanView extends BaseForHomeSeqView {
     public JLabel removePhotoLabel;
     public String username;
     public Human human;
@@ -36,20 +34,14 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
     public String imagePath=null;
     public JLabel background;
     public JScrollPane pane;
-
-
     /**Birthday calendar */
     public JDateChooser dateChooser;
     public Calendar calendar;
     public int width,height;
-
     @Override
     public String getUsername(){
         return this.username;
     }
-
-
-
 
     public MyProfileHumanView(String username) {
         this.username = username;
@@ -57,17 +49,13 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
             human=new Parent(username);
         else
             human=new Child(username);
-
         Font font = new Font("David", Font.ITALIC, 47);
         Color bordo=new Color(219, 0, 40);
         width=(int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
         height=(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/registerBackground.jpg")));
         background.setBounds(0,0,width,height);
-
-
         /**Loading child's image-if there is*/
         imageContainer=new JLabel();
         if (human.image == null) {
@@ -90,7 +78,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
             add(imageContainer);
         }
         /**-----------------------------------------------------------------------------------------------------*/
-
         //delete personal account button
         deleteAccount=new JButton("Delete account");
         deleteAccount.setFont(new Font("David",Font.ITALIC,30));
@@ -102,12 +89,8 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         /**-----------------------------------------------------------------------------------------------------*/
         addView();
         /**Now we must add the qualities which characteristic the child from parent*/
-
-
         add(deleteAccount);
     }
-
-
     public void addLimit12CharactersFName(KeyAdapter mal){
         firstNameField.addKeyListener(mal);
     }
@@ -117,8 +100,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
     public void addLimit18CharactersPass(KeyAdapter mal){
         passwordField.addKeyListener(mal);
     }
-
-
     public void addView(){
         Font regFont=new Font("David",Font.ITALIC,30);
         usernameLabel=new JLabel("Username:");
@@ -138,8 +119,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         passwordField.setBackground(Color.orange);
         usernameField.setBackground(Color.orange);
         /***/
-        /***/
-        /***/
         firstNameLabel=new JLabel("Name:");
         firstNameLabel.setFont(regFont);
         firstNameLabel.setForeground(Color.black);
@@ -148,8 +127,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         firstNameField.setBounds(width/2-250,540,300,50);
         firstNameField.setFont(regFont);
         firstNameField.setBackground(Color.orange);
-        /***/
-        /***/
         /***/
         bioArea=new JTextArea();
         StringBuilder bioContent=new StringBuilder();
@@ -178,10 +155,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         pane.setBounds(width/2+150,400,500,400);
         pane.setPreferredSize(new Dimension(500,400));
 
-
-
-
-
         calendar = Calendar.getInstance();
         /**Set the date in the calendar to the previous date of birth which the user was insert before*/
         dateChooser = new JDateChooser(human.birthday);
@@ -207,8 +180,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         updateAccount.setForeground(Color.black);
         updateAccount.setFocusPainted(false);
         updateAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-
         /**Set all the data*/
         usernameField.setText(human.username);
         passwordField.setText(human.password);
@@ -225,7 +196,6 @@ public class MyProfileHumanView extends BaseForHomeSeqView {
         add(usernameLabel);
         add(passwordLabel);
     }
-
     public void addRemovePhotoListener(MouseAdapter mal){
         removePhotoLabel.addMouseListener(mal);
     }

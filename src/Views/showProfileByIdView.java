@@ -1,13 +1,11 @@
 package Views;
 
 import Models.Human;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
 import static Models.Gender.getGenderById;
 import static Models.Human.getHumanData;
 
@@ -30,9 +28,7 @@ public class showProfileByIdView extends BaseForHomeSeqView {
     public showProfileByIdView(String myUsername, String watchedUsername,boolean amIParent,boolean isHeParent) {
         this.myUsername = myUsername;
         this.watchedUsername = watchedUsername;
-
         getContentPane().setBackground(new Color(122, 205, 19));
-
         human=getHumanData(watchedUsername);
         imgContainer=new JLabel();
         if(human.image==null){
@@ -50,7 +46,6 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         add(imgContainer);
         setVisible(true);
     }
-
 
     public void addPersonalDataToView(boolean amIParent,boolean isHeParent){
         usernameLabel=new JLabel("Username: "+human.username);
@@ -75,9 +70,6 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         usernameLabel.setForeground(Color.blue);
         relationLabel.setForeground(Color.blue);
 
-        /***/
-        /***/
-        /***/
         StringBuilder bioContent=new StringBuilder();
         File file=new File("Biographies\\"+watchedUsername+".txt");
         Scanner myScan= null;
@@ -106,9 +98,6 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         pane.setBounds(getWidth()/2+50,400,550,400);
         pane.setPreferredSize(new Dimension(550,400));
 
-
-
-
         myScan.close();
         add(bio);
         add(pane);
@@ -118,6 +107,8 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         add(genderLabel);
         add(usernameLabel);
     }
+
+    //Decoding the relation between to family members
     public static String findRelation(boolean amIParent,boolean isHeParent,byte gender){
         return amIParent?(isHeParent?(gender==1?("My wife"):("My husband")):(gender==1?("My daughter"):("My son"))):
                 (isHeParent?(gender==1)?("My mother"):("My father"):(gender==1)?("My sister"):("My brother"));

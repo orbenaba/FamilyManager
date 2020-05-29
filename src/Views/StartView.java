@@ -14,14 +14,12 @@ public class StartView extends Jframe {
         super((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         setExtendedState(MAXIMIZED_BOTH);
         width=getWidth();
-
         setTitle("Start");
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/homeBack.jpg")));
         background.setBounds(0,0,width,getHeight());
         initTitle(width/2-400,50,60);
         init_Login_Register();
-
 
         add(login);
         add(register);

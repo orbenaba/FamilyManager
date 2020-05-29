@@ -2,15 +2,14 @@ package Controllers;
 
 import Views.BaseForHomeSeqView;
 import Views.HomeView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class BaseForHomeSeqController extends JframeController{
-    private BaseForHomeSeqView baseView;
 
+public abstract class BaseForHomeSeqController extends JframeController{
+    private BaseForHomeSeqView baseView;
     public BaseForHomeSeqController(BaseForHomeSeqView baseView){
         super(baseView);
         this.baseView=baseView;

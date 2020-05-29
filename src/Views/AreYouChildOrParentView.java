@@ -18,7 +18,6 @@ public class AreYouChildOrParentView extends Jframe {
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.orange);
         title=new JLabel("Are you considered as");
-
         //Label for "Register" title
         title.setFont(new Font("David",Font.ITALIC,40));
         title.setForeground(Color.white);
@@ -38,10 +37,6 @@ public class AreYouChildOrParentView extends Jframe {
         title2.setBounds(width/2-275,95,500,80);
         title.setBorder(BorderFactory.createMatteBorder(8,8,0,8,new Color(153, 0, 92)));
         title2.setBorder(BorderFactory.createMatteBorder(0,8,8,8,new Color(153, 0, 92)));
-
-
-
-
         child=new JButton("Child");
         parent=new JButton("Parent");
         addButtons(width/2-275,230,550,150);
@@ -64,23 +59,22 @@ public class AreYouChildOrParentView extends Jframe {
         child.setFocusPainted(false);
         child.setBorder(BorderFactory.createMatteBorder(6,6,6,6,new Color(153, 0, 92)));
         parent.setBorder(BorderFactory.createMatteBorder(6,6,6,6,new Color(153, 0, 92)));
-
         child.setBackground(new Color(0,7,204));
         parent.setBackground(new Color(0,7,204));
         child.setForeground(Color.white);
         parent.setForeground(Color.white);
     }
+    //Actions
     public void addActionChild(ActionListener mal){
         child.addActionListener(mal);
     }
     public void addActionParent(ActionListener mal){
         parent.addActionListener(mal);
     }
-
+    //Listeners
     public void addChildListener(MouseAdapter mal){
         child.addMouseListener(mal);
     }
-
     public void addParentListener(MouseAdapter mal){
         parent.addMouseListener(mal);
     }

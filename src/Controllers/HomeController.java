@@ -27,6 +27,7 @@ public class HomeController extends JframeController{
     class SettingsAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            //There are differences between parent and child profiles
             if (isParent(homeView.username))
                 new MyProfileParentController(new MyProfileParentView(homeView.username));
             else
@@ -34,8 +35,6 @@ public class HomeController extends JframeController{
             homeView.dispose();
         }
     }
-
-
 
     class FamilyTreeAction implements ActionListener {
         @Override
@@ -45,7 +44,6 @@ public class HomeController extends JframeController{
         }
     }
 
-
     class ShoppingCartAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -53,7 +51,6 @@ public class HomeController extends JframeController{
             homeView.dispose();
         }
     }
-
 
     class TasksAction implements ActionListener {
         @Override
@@ -63,6 +60,7 @@ public class HomeController extends JframeController{
         }
     }
 
+    //When logging off, we just redisplay the Start view, but just verifies the user desire before it.
     class LogoffListener extends MouseAdapter{
         @Override
         public void mouseEntered(MouseEvent e){

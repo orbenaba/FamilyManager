@@ -2,7 +2,6 @@ package Controllers;
 
 
 import Views.MyProfileParentView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +11,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import static Controllers.RegisterHumanController.checkValidPassword;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
+
 
 public class MyProfileParentController extends MyProfileHumanController {
     private MyProfileParentView mpcview;
@@ -23,17 +22,14 @@ public class MyProfileParentController extends MyProfileHumanController {
     public MyProfileParentController(MyProfileParentView mpcview) {
         super(mpcview);
         this.mpcview = mpcview;
-
         mpcview.addUpdateAccountAction(new UpdateAccountAction());
         if (mpcview.limitButton!=null)
             mpcview.addLimitAction(new LimitAction());
         else
             mpcview.addUnLimitAction(new UnLimitAction());
-
         mpcview.addJobName20Limit(new JobName20Limit());
         mpcview.addSalary8Limit(new Salary8Limit());
         mpcview.addEnforcingSalary(new EnforcingSalary());
-        /**==========Back to home label===============*/
     }
     class JobName20Limit extends KeyAdapter{
         @Override
@@ -42,7 +38,6 @@ public class MyProfileParentController extends MyProfileHumanController {
                 e.consume();
         }
     }
-
     class Salary8Limit extends KeyAdapter{
         @Override
         public void keyTyped(KeyEvent e) {
@@ -56,8 +51,6 @@ public class MyProfileParentController extends MyProfileHumanController {
                 e.consume();
         }
     }
-
-
     class UpdateAccountAction implements ActionListener {
 
         @Override
@@ -105,7 +98,6 @@ public class MyProfileParentController extends MyProfileHumanController {
                                 }
                                 new MyProfileParentController(new MyProfileParentView(newUsername));
                                 /**Now mapping the new bio to a new file*/
-
                                 mpcview.dispose();
                             } else {
                                 JOptionPane.showMessageDialog(null, "This username is already taken", "Taken username.", 2);
@@ -125,7 +117,6 @@ public class MyProfileParentController extends MyProfileHumanController {
             }
         }
     }
-
     class LimitAction implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {

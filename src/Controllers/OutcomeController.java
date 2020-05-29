@@ -3,7 +3,6 @@ package Controllers;
 import Models.Outcome;
 import Views.OutcomeView;
 import Views.ShoppingCartView;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.Calendar;
-
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
+
 
 public class OutcomeController extends BaseForHomeSeqController{
     private OutcomeView ocview;
@@ -20,8 +19,6 @@ public class OutcomeController extends BaseForHomeSeqController{
     public OutcomeController(OutcomeView ocview) {
         super(ocview);
         this.ocview=ocview;
-
-
         ocview.addEnforcingPrice(new EnforcingPrice());
         ocview.addAddOutcomeAction(new AddOutcomeAction());
         ocview.addPrice8Limit(new Price8Limit());
@@ -39,7 +36,7 @@ public class OutcomeController extends BaseForHomeSeqController{
     class Title30Limit extends KeyAdapter{
         @Override
         public void keyTyped(KeyEvent e) {
-            if (ocview.titleText.getText().length() >= 30) // limit textfield to 8 characters
+            if (ocview.titleText.getText().length() >= 30) // limit textfield to 30 characters
                 e.consume();
         }
     }

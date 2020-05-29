@@ -1,17 +1,17 @@
 package Views;
 
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-
 import static java.awt.Font.BOLD;
+
 
 public abstract class Jframe extends JFrame {
     public JLabel exit,minimize;
     public Border frameExMin;
-
-
+    
     public Jframe(int width){
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +36,6 @@ public abstract class Jframe extends JFrame {
         add(minimize);
         setLayout(null);
         setVisible(true);
-        System.out.println("Adding minimize and exit labels\n\n");
     }
     final public void addMinimizeAction(MouseAdapter mal) {
         minimize.addMouseListener(mal);

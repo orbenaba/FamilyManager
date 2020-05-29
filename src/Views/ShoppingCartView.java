@@ -3,16 +3,15 @@ package Views;
 
 import Models.Outcome;
 import Models.ShoppingCart;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.LinkedList;
-
 import static Models.Parent.isLimitChildren;
 import static Models.Parent.isParent;
+
 
 public class ShoppingCartView extends BaseForHomeSeqView {
     public ShoppingCart shoppingCart;
@@ -23,18 +22,15 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public JLabel totalOutcomes,totalSalaries,totalIncomes, noOutcomes, percentageComes;
     public boolean readOnly = false;
     public JFrame addIn;
-
     public JPanel backTo;
     public LinkedList<RowInShoppingCart> outcomeButtons;
     public JLabel background;
-
     public JScrollPane outcomeScroller;
 
     @Override
     public String getUsername() {
         return this.username;
     }
-
 
     public ShoppingCartView(String username, JFrame addIn) {
         this.addIn = addIn;
@@ -54,33 +50,28 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         title.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(168, 0, 0)));
         title.setFont(new Font("David", Font.ITALIC, 70));
         title.setBounds(getWidth() / 2 - 350, 20, 700, 70);
-
-
         /**Shopping cart*/
         shoppingCart = new ShoppingCart(username);
         int outcomes = shoppingCart.calculateShoppingCart();
         int incomes=shoppingCart.calculateIncomes(username);
         int salaries=shoppingCart.getSalaries();
-
         totalOutcomes = new JLabel("Total outcomes: " + outcomes);
         totalOutcomes.setOpaque(true);
         totalOutcomes.setBackground(Color.orange.darker());
         totalOutcomes.setFont(new Font("David", Font.ITALIC, 36));
         totalOutcomes.setBounds(getWidth()/2-750, 320, 400, 40);
-
         totalIncomes = new JLabel("Total incomes: " + incomes);
         totalIncomes.setOpaque(true);
         totalIncomes.setBackground(Color.orange.darker());
         totalIncomes.setFont(new Font("David", Font.ITALIC, 36));
         totalIncomes.setBounds(getWidth()/2-750, 370, 400, 40);
-
         totalSalaries = new JLabel("Total salaries: " + salaries);
         totalSalaries.setOpaque(true);
         totalSalaries.setBackground(Color.orange.darker());
         totalSalaries.setFont(new Font("David", Font.ITALIC, 36));
         totalSalaries.setBounds(getWidth()/2-750, 420, 400, 40);
         /**Showing the outcomes in relate to the incomes*/
-        EncapsulteColorAndText en=calculatePercentage(outcomes,username,incomes+salaries);
+        EncapsulteColorAndText en=calculatePercentage(outcomes,incomes+salaries);
         String statement = en.text;
         percentageComes=new JLabel(statement);
         percentageComes.setForeground(Color.black.brighter());
@@ -90,7 +81,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         backTo.setBackground(en.color);
         backTo.setBounds(680,180,830,55);
         backTo.add(percentageComes);
-
         /**Add new outcome button*/
         if (!readOnly) {
             addOutcome = new JButton("New outcome");
@@ -99,7 +89,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             addOutcome.setBackground(new Color(238, 145, 145));
             addOutcome.setForeground(new Color(4, 62, 103));
             addOutcome.setBounds(80, 120, 250, 100);
-
             addIncome = new JButton("New income");
             addIncome.setFocusPainted(false);
             addIncome.setFont(new Font("David", Font.ITALIC, 36));
@@ -128,8 +117,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             noOutcomes.setBounds(0, 50, 500, 500);
             add(outcomesPanel);
         }
-
-
         add(totalSalaries);
         add(totalIncomes);
         add(backTo);
@@ -145,7 +132,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public void addOutcomeAction(ActionListener mal) {
         addOutcome.addActionListener(mal);
     }
-
 
     public void addIncomeAction(ActionListener mal) {
         addIncome.addActionListener(mal);
@@ -198,13 +184,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         public JButton edit, delete;
         public Outcome outcome;
 
-        public RowInShoppingCart(JButton title, JButton edit, JButton delete, Outcome outcome) {
-            this.title = title;
-            this.edit = edit;
-            this.delete = delete;
-            this.outcome = outcome;
-        }
-
         public RowInShoppingCart(Outcome outcome) {
             Font f = new Font("David", Font.ITALIC, 40);
             title = new JButton(outcome.title);
@@ -215,7 +194,6 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             delete.setFont(f);
             this.outcome = outcome;
         }
-
     }
     /**
      * Adding a listener for each delete button
@@ -239,7 +217,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     /**
      * Returns the  percentage of the incomes in relation to outcomes
      */
-    public EncapsulteColorAndText calculatePercentage(int loss, String username,int prof) {
+    public EncapsulteColorAndText calculatePercentage(int loss,int prof) {
         BigDecimal profit = new BigDecimal(prof);
         BigDecimal loss2=new BigDecimal(loss);
         Color foreground;

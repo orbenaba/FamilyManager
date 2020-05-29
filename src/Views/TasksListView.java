@@ -3,14 +3,13 @@ package Views;
 
 import Models.Task;
 import Models.TasksList;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-
 import static Models.Parent.isLimitChildren;
 import static Models.Parent.isParent;
+
 
 public class TasksListView extends BaseForHomeSeqView {
     public TasksList tasksList;
@@ -21,7 +20,6 @@ public class TasksListView extends BaseForHomeSeqView {
     public LinkedList<RowInTasksList> taskButtons;
     public boolean readOnly=false;
     public JLabel background,noTasks;
-
 
     public JScrollPane tasksScroller;
     @Override
@@ -38,15 +36,10 @@ public class TasksListView extends BaseForHomeSeqView {
         title = new JLabel(readOnly?"View your tasks!":"Manage your tasks!");
         title.setForeground(new Color(168, 0, 0));
         title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
-
         title.setFont(new Font("David", Font.ITALIC, 70));
         title.setBounds(getWidth() / 2 - 290, 20, 580, 60);
-
-
         /**Shopping cart*/
         tasksList = new TasksList(username);
-
-
         /**Add new outcome button*/
         if (!readOnly) {
             addTask = new JButton("New task");
@@ -56,13 +49,9 @@ public class TasksListView extends BaseForHomeSeqView {
             addTask.setForeground(new Color(4, 62, 103));
             addTask.setBounds(200, 120, 250, 100);
         }
-
-
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
-
-
         /**Tasks list panel*/
         tasksPanel = new JPanel();
         if(!tasksList.isEmpty()) {
@@ -84,7 +73,6 @@ public class TasksListView extends BaseForHomeSeqView {
             noTasks.setBounds(0,50,500,500);
             add(tasksPanel);
         }
-
         if (!readOnly)
             add(addTask);
         add(title);
@@ -101,15 +89,12 @@ public class TasksListView extends BaseForHomeSeqView {
                 RowInTasksList row = new RowInTasksList(oc,false);
                 row.title.setPreferredSize(new Dimension(300, 100));
                 Color currentRowColor = new Color(((red += 15) % 100) + 100, ((green += 25) % 100) + 100, 48);
-
                 row.title.setFont(f);
                 row.edit.setFont(f);
                 row.delete.setFont(f);
-
                 row.title.setBackground(currentRowColor);
                 row.delete.setBackground(currentRowColor);
                 row.edit.setBackground(currentRowColor);
-
                 tasksPanel.add(row.title, BorderLayout.CENTER);
                 tasksPanel.add(row.delete, BorderLayout.CENTER);
                 tasksPanel.add(row.edit, BorderLayout.CENTER);
@@ -134,17 +119,10 @@ public class TasksListView extends BaseForHomeSeqView {
         addTask.addActionListener(mal);
     }
 
-
     public class RowInTasksList{
         public JButton title;
         public JButton edit,delete;
         public Task task;
-        public RowInTasksList(JButton title, JButton edit, JButton delete,Task task) {
-            this.title = title;
-            this.edit = edit;
-            this.delete = delete;
-            this.task=task;
-        }
         public RowInTasksList(Task task,boolean readOnly) {
             title=new JButton(task.title);
             if(!readOnly) {
@@ -160,7 +138,6 @@ public class TasksListView extends BaseForHomeSeqView {
         for(RowInTasksList ob : taskButtons)
             ob.delete.addActionListener(mal);
     }
-
     /**Adding a listener for each edit button*/
     public void addEditsListener(ActionListener mal){
         for(RowInTasksList ob : taskButtons)

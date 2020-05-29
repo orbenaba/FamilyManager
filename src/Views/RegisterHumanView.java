@@ -1,7 +1,6 @@
 package Views;
 
 
-
 import com.company.CircleButton;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
@@ -9,40 +8,32 @@ import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
-
 import java.io.*;
 import java.util.Calendar;
-
 import static Models.Gender.getGenders;
 
 
 public class RegisterHumanView extends Jframe {
-    public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel,bioLabel;
-    public JLabel usernameLabel, passwordLabel, confirmPasswordLabel;
-
-    public JTextField firstName;
+    public JLabel imageContainer, firstNameLabel, birthdayLabel,removePhotoLabel,bioLabel,usernameLabel, passwordLabel, confirmPasswordLabel;;
+    public JTextField firstName,username;
     public ImageIcon image,removePhoto;
     public CircleButton addImage;
-
-    public JTextField username;
     public JPasswordField password, confirmPassword;
     public JComboBox genders;
     //Birthday
     public JDateChooser dateChooser;
     public Calendar calendar;
-    //Bio
-    public JTextArea bio;
     public JScrollPane pane;
     //Submit
     public JButton create;
+    //bio
+    public JTextArea bio;
     //image path
     public String imagePath=null;
     public JLabel background;
     public Color fore,back;
     public Font f;
-
 
 
     public RegisterHumanView() {
@@ -59,13 +50,11 @@ public class RegisterHumanView extends Jframe {
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/registerBackground.jpg")));
         background.setBounds(0,0,width,height);
-
         image = new ImageIcon(getClass().getResource("/Icons/profile3.png"));
         imageContainer = new JLabel(image);
         imageContainer.setBounds(getWidth()/2-239, 20, 478, 300);
         addImage = new CircleButton("",Color.ORANGE);
         addImage.setBounds(width/2-38, 190, 78, 78);//Covers the plus that belongs to the image
-
 
         firstNameLabel = new JLabel("First name:");
         firstNameLabel.setFont(f);
@@ -78,11 +67,8 @@ public class RegisterHumanView extends Jframe {
         firstName.setBounds(280, 350, 250, 50);
         firstName.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
 
-
-
         java.util.List<String> gendersArray = getGenders();
         gendersArray.add("Select gender");
-
         genders = new JComboBox(gendersArray.toArray());
         genders.setBounds(580, 350, 240, 35);
         genders.setFont(f);
@@ -90,7 +76,6 @@ public class RegisterHumanView extends Jframe {
         genders.setBackground(back);
         genders.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
         genders.setSelectedItem(("Select gender"));
-
 
         addUsernamePassword(130, 440, 55);
 
@@ -110,15 +95,12 @@ public class RegisterHumanView extends Jframe {
         pane.setBounds(900, 400, 450, 300);
         pane.setPreferredSize(new Dimension(250,300));
 
-
-
         create=new JButton("Create");
         create.setBounds(1200,750,200,50);
         create.setBackground(back);
         create.setForeground(fore);
         create.setFont(f);
         create.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
 
         add(dateChooser);
         add(create);
@@ -190,16 +172,10 @@ public class RegisterHumanView extends Jframe {
         confirmPasswordLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/passIcon2.png")));
         usernameLabel.setIcon(new ImageIcon(getClass().getResource("/Icons/userIcon.png")));
         usernameLabel.setBounds(x-20, y, iconSize, iconSize);
-
-
-
-
-
         birthdayLabel = new JLabel("Date of birth:");
         birthdayLabel.setBounds(x+300, y+5, 180, 35);
         birthdayLabel.setForeground(fore);
         birthdayLabel.setFont(f);
-
         calendar = Calendar.getInstance();
         dateChooser = new JDateChooser(calendar.getTime());
         //enforcing the user to choose a valid date. I range [NOW,NOW-120]
@@ -212,20 +188,14 @@ public class RegisterHumanView extends Jframe {
         dateChooser.setBackground(back);
         dateChooser.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, fore));
         dateChooser.setDateFormatString("dd/MM/yyyy");
-
-
-
         passwordLabel.setBounds(x, y + iconSize + 40, iconSize, iconSize);
         confirmPasswordLabel.setBounds(x + 360, y + iconSize + 40, iconSize, iconSize);
-
         password.setBackground(back);
         confirmPassword.setBackground(back);
         username.setBackground(back);
-
         password.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
         confirmPassword.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
         username.setBorder(BorderFactory.createMatteBorder(1,1,1,1,fore));
-
         password.setBounds(x + iconSize + 10, y + iconSize + 40, 200, iconSize - 10);
         confirmPassword.setBounds(x + iconSize + 370, y + iconSize + 40, 200, iconSize - 10);
         username.setBounds(x + iconSize + 10, y, 200, iconSize - 10);
@@ -253,7 +223,6 @@ public class RegisterHumanView extends Jframe {
     }
 
     public void addBioListener(MouseAdapter mal){bio.addMouseListener(mal);}
-
     //Functionality
     //Returns the name of the text file
     public static String mappingTextareaIntoFile(Object username,JTextArea bio,String directory) {
@@ -267,17 +236,6 @@ public class RegisterHumanView extends Jframe {
         }
         return username + ".txt";
     }
-
-    public boolean verifyMustNotEmpty(){
-        if(firstName.getText().trim().equals("")||username.getText().trim().equals("")
-                ||String.valueOf(password.getPassword()).equals("")||String.valueOf(confirmPassword.getPassword()).equals(""))
-            return false;
-        return true;
-    }
-    public boolean verifyGender(){
-        return genders.getSelectedItem().equals("Select gender");
-    }
-
     public void addRemovePhotoListener(MouseAdapter mal){
         removePhotoLabel.addMouseListener(mal);
     }

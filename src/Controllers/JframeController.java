@@ -1,12 +1,12 @@
 package Controllers;
 
 import Views.Jframe;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 
 public class JframeController  {
     private Jframe jframe;
@@ -16,6 +16,7 @@ public class JframeController  {
         jframe.addMinimizeAction(new MinimizeListeners());
         jframe.addExitAction(new ExitListeners());
     }
+
     class MinimizeListeners extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -28,7 +29,6 @@ public class JframeController  {
             jframe.minimize.setForeground(Color.white);
             jframe.minimize.setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
-
         @Override
         public void mouseExited(MouseEvent e) {
             Border blackMinimizeB = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black);

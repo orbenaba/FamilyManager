@@ -1,21 +1,15 @@
 package Controllers;
 
 import Views.MyProfileChildView;
-import Views.StartView;
-import com.company.CircleButton;
-
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import static Controllers.RegisterHumanController.checkValidPassword;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
@@ -23,16 +17,11 @@ import static Views.RegisterHumanView.mappingTextareaIntoFile;
 public class MyProfileChildController extends MyProfileHumanController {
     private MyProfileChildView mpcview;
 
-
     public MyProfileChildController(MyProfileChildView mpcview) {
         super(mpcview);
         this.mpcview = mpcview;
-
         mpcview.addUpdateAccountAction(new UpdateAccountAction());
-
         mpcview.addLimit20CharactersStatus(new Limit20CharactersStatus());
-
-        /**==========Back to home label===============*/
     }
 
     class Limit20CharactersStatus extends KeyAdapter{
@@ -44,10 +33,9 @@ public class MyProfileChildController extends MyProfileHumanController {
     }
 
     class UpdateAccountAction implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Custom button text
+            //Verifies user's desire
             Object[] options = {"Save changes",
                     "Cancel"};
             int n = JOptionPane.showOptionDialog(mpcview,
@@ -107,7 +95,6 @@ public class MyProfileChildController extends MyProfileHumanController {
             }
         }
     }
-
 
     @Override
     protected boolean checkEmptyFields(){

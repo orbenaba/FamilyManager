@@ -10,25 +10,22 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-
-public class MyProfileHumanController extends BaseForHomeSeqController {
+//Creating a base class to both MyProfileChildController and MyProfileParentController
+public abstract class MyProfileHumanController extends BaseForHomeSeqController {
     private MyProfileHumanView mphview;
-
 
     public MyProfileHumanController(MyProfileHumanView mpcview) {
         super(mpcview);
         this.mphview = mpcview;
-
+        //Differentiate between users with image and users without
         if (mpcview.human.image != null)
             mpcview.addRemovePhotoListener(new RemovePhotoListener());
         else
             mpcview.addImageAction(new AddImage_action());
         mpcview.addDeleteAccountAction(new DeleteAccountAction());
-
         mpcview.addLimit18CharactersPass(new Limit18CharactersPass());
         mpcview.addLimit18CharactersUName(new Limit18CharactersUName());
         mpcview.addLimit12CharactersFName(new Limit12CharactersFName());
-        /**==========Back to home label===============*/
     }
     /***Create Key adapters in order to limit the user in inputting a too long input*/
     class Limit18CharactersPass extends KeyAdapter {
@@ -53,7 +50,6 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
         }
     }
 
-
     class RemovePhotoListener extends MouseAdapter {
         @Override
         public void mouseEntered(MouseEvent e) {
@@ -71,6 +67,7 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
             mphview.addImage = new CircleButton("", Color.ORANGE);
             mphview.addImage.setBounds(mphview.width / 2 - 40, 190, 78, 78);//Covers the plus that belongs to the image            add(imageContainer);
             mphview.imagePath = null;
+            //In order to keep the background we remove old image the add it again
             mphview.getContentPane().remove(mphview.background);
             mphview.add(mphview.imageContainer);
             mphview.add(mphview.addImage);
@@ -81,7 +78,6 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
     }
 
     class AddImage_action implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser chooser = new JFileChooser();
@@ -103,7 +99,6 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
                 //Add again the picture, but this time the selected image
                 mphview.imageContainer = new JLabel(mphview.human.image);
                 mphview.imageContainer.setBounds(mphview.getWidth() / 2 - 239, 20, 478, 300);
-
                 //Fitting the picture
                 mphview.imageContainer.setIcon(new ImageIcon(
                         new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(mphview.imageContainer.getWidth(),
@@ -112,7 +107,6 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
                 mphview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
                 mphview.removePhotoLabel = new JLabel(mphview.removePhoto);
                 mphview.removePhotoLabel.setBounds(x + width + 20, y, 40, 50);
-
                 /**In order to keep the background after changes, we need to remove it and add it again cause we adding and removing other components*/
                 mphview.getContentPane().remove(mphview.background);
                 mphview.add(mphview.removePhotoLabel);
@@ -124,12 +118,11 @@ public class MyProfileHumanController extends BaseForHomeSeqController {
             }
         }
     }
-
     /**Deleting a user account by clicking the specified button*/
     class DeleteAccountAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            /**Verifies the user at the last time if ge really sure in deleting his account*/
+            /**Verifies the user at the last time if he really sure in deleting his account*/
             Object[] options = {"Delete account",
                     "Stay"};
             int n = JOptionPane.showOptionDialog(mphview,

@@ -2,7 +2,6 @@ package Views;
 
 
 import Models.Task;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -13,7 +12,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-
+//This view in intended to both editing and displaying an existing task.
+//When we just have a need to show(readOnly) the existing task, we'll send
+//in the ctor a boolean value==>> readOnly=true
 public class EditTaskView extends BaseForHomeSeqView{
     public Task task;
     public JTextArea description;
@@ -56,7 +57,6 @@ public class EditTaskView extends BaseForHomeSeqView{
         titleText.setForeground(new Color(4, 62, 103));
         titleText.setBounds(getWidth() / 2 + 320, 200, 300, 50);
         titleText.setEditable(!readOnly);
-
         descriptionLabel = new JLabel("Description:");
         descriptionLabel.setFont(new Font("David", Font.ITALIC, 36));
         descriptionLabel.setForeground(new Color(208, 0, 0));
@@ -108,5 +108,4 @@ public class EditTaskView extends BaseForHomeSeqView{
     public void addTitle30Limit(KeyAdapter mal){
         titleText.addKeyListener(mal);
     }
-
 }
