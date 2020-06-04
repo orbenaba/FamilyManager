@@ -128,7 +128,7 @@ public class LoginController extends JframeController{
                     {
                         new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
-                    } else {
+                     } else {
                         st2 = con.prepareStatement(familyQuery);
                         st2.setString(1, uname);
                         st2.setString(2, pword);

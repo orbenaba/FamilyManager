@@ -38,7 +38,7 @@ public class IncomeController {
                 oldView.getContentPane().remove(iview);
                 iview.dispose();
                 oldView.dispose();
-                new ShoppingCartController(new ShoppingCartView(iview.username,null));
+                new ShoppingCartController(new ShoppingCartView(iview.username,null,((ShoppingCartView)oldView).minDate));
             }
         }
     }

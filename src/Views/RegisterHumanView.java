@@ -35,7 +35,6 @@ public class RegisterHumanView extends Jframe {
     public Color fore,back;
     public Font f;
 
-
     public RegisterHumanView() {
         super(((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()));
         //Changing the caret in the entire text fields
@@ -138,7 +137,6 @@ public class RegisterHumanView extends Jframe {
         genders.addActionListener(mal);
     }
 
-
     //Listeners
     public void addLimit12CharactersFName(KeyAdapter mal){
         firstName.addKeyListener(mal);
@@ -152,8 +150,6 @@ public class RegisterHumanView extends Jframe {
     public void addLimit12CharactersConfPass(KeyAdapter mal){
         confirmPassword.addKeyListener(mal);
     }
-
-
     public void addUsernamePassword(int x, int y, int iconSize) {
         Color color = new Color(48,48,48);
         username = new JTextField();

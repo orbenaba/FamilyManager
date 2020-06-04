@@ -29,7 +29,20 @@ public class ShoppingCartController extends BaseForHomeSeqController{
             //By default, the income view isn't displayed(visible=false)
             new IncomeController((IncomeView) scview.addIn,scview);
         }
+        scview.addSelectDateAction(new SelectDateAction());
     }
+    class SelectDateAction implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            /**It's a pity to refresh the whole view when the user even doesn't change the dateChooser*/
+            if(!scview.dateChooser.getDate().equals(scview.minDate)) {
+                java.util.Date minDate = scview.dateChooser.getDate();
+                new ShoppingCartController(new ShoppingCartView(scview.username, null, minDate));
+                scview.dispose();
+            }
+        }
+    }
+
     class OutcomeAction implements ActionListener {
 
         @Override
@@ -67,7 +80,7 @@ public class ShoppingCartController extends BaseForHomeSeqController{
                 /**Despite we delete the outcome from the shopping cart,
                  * We didn't yet update the view, so in order to create nice Look&Feel,
                  * we'll remove components*/
-                new ShoppingCartController(new ShoppingCartView(clicked.outcome.username,null));
+                new ShoppingCartController(new ShoppingCartView(clicked.outcome.username,null,scview.minDate));
                 scview.dispose();
             }
         }

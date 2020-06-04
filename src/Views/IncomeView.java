@@ -11,11 +11,12 @@ public class IncomeView extends JFrame {
     public JLabel amountLabel;
     public JTextField amount;
     public JButton submit;
+
     public IncomeView(String username) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
-        setBounds(680, 220, 400, 150);
+        setBounds(610, 220, 400, 150);
         getContentPane().setBackground(new Color(234, 168, 118));
         this.username = username;
         amount = new JTextField();

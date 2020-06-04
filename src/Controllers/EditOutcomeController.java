@@ -60,7 +60,10 @@ public class EditOutcomeController extends BaseForHomeSeqController {
                 eoview.outcome.title = eoview.titleText.getText();
                 mappingTextareaIntoFile(eoview.outcome.id, eoview.description, "Outcomes");//saving bio in file
                 eoview.outcome.updateOutcome();
-                new ShoppingCartController(new ShoppingCartView(eoview.username, null));
+                java.util.Date minDate=new java.util.Date();
+                //Displaying all the outcomes in the last year by default
+                minDate.setMonth(minDate.getMonth()-1);
+                new ShoppingCartController(new ShoppingCartView(eoview.username, null,minDate));
                 eoview.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "You must insert non-negative number to price");

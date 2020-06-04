@@ -47,7 +47,10 @@ public class HomeController extends JframeController{
     class ShoppingCartAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new ShoppingCartController(new ShoppingCartView(homeView.username,null));
+            java.util.Date minDate=new java.util.Date();
+            //Displaying all the outcomes in the last year by default
+            minDate.setMonth(minDate.getMonth()-1);
+            new ShoppingCartController(new ShoppingCartView(homeView.username,null,minDate));
             homeView.dispose();
         }
     }

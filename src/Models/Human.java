@@ -13,10 +13,6 @@ public abstract class Human extends User {
     public byte genderId;
     public java.sql.Date birthday;
     public ImageIcon image;
-    public Human(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     /*****************************************************************************************************************
      * Get an existing user account from DB by his name*/
@@ -27,7 +23,7 @@ public abstract class Human extends User {
      * So if the salary is negative, we are calling the Child's constructor and create one child.
      * Otherwise, we create a parent by calling its c'tor.
      *****************************************************************************************************************
-     * The components in this factory pattern:
+     * The components in this factory pattern are:
      * Creator==>>>> getHumanData(..)
      * Products==>>> Parent and Child while Human helps as a common base to both classes.
      ******************************************************************************************************************/
@@ -35,7 +31,6 @@ public abstract class Human extends User {
         Connection con = null;
         PreparedStatement ps;
         ResultSet rs;
-        Human human;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
             String query = "SELECT*FROM human WHERE Username=?";
@@ -55,15 +50,6 @@ public abstract class Human extends User {
         return null;
     }
 
-    public Human(String password, String username, String firstName, byte genderId, String familyUsername,
-                 java.sql.Date birthday, ImageIcon image) {
-        super(password, username);
-        this.firstName = firstName;
-        this.genderId = genderId;
-        this.familyUsername = familyUsername;
-        this.birthday = birthday;
-        this.image = image;
-    }
     //e it's just a dummy parameter which intended to distinguish between this c'tor to an other one
     public Human(String username,boolean e){
         this.username=username;

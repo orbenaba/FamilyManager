@@ -34,8 +34,8 @@ public class TasksListView extends BaseForHomeSeqView {
       //  getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel(readOnly?"View your tasks!":"Manage your tasks!");
-        title.setForeground(new Color(168, 0, 0));
-        title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(168, 0, 0)));
+        title.setForeground(Color.orange.brighter());
+        title.setBorder(BorderFactory.createMatteBorder(0,0,3,0,Color.orange.brighter()));
         title.setFont(new Font("David", Font.ITALIC, 70));
         title.setBounds(getWidth() / 2 - 290, 20, 580, 60);
         /**Shopping cart*/
@@ -50,7 +50,7 @@ public class TasksListView extends BaseForHomeSeqView {
             addTask.setBounds(200, 120, 250, 100);
         }
         background=new JLabel();
-        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/woodBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
         /**Tasks list panel*/
         tasksPanel = new JPanel();

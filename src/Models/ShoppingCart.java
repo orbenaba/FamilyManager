@@ -13,20 +13,22 @@ public class ShoppingCart {
 
     //Constructor:
     //Retrieving all the existing outcomes from the DB which belongs to the all family of the given username
+    //We using a specific range of dates
     //Note: outcomes are with non-negative price in comparison to incomes.
-    public ShoppingCart(String username) {
+    public ShoppingCart(String username,Date date) {
         outcomes = new LinkedList<>();
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
-        String query = "SELECT*FROM outcome WHERE price >0 AND Username=" +
+        String query = "SELECT*FROM outcome WHERE PurchasedDate>=? AND price >0 AND Username=" +
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
-
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
             ps = con.prepareStatement(query);
-            ps.setString(1, username);
+            //Displaying only relevant outcomes
+            ps.setDate(1,date);
+            ps.setString(2, username);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Outcome outcome = new Outcome(rs.getInt("id"), rs.getInt("Price"), rs.getDate("PurchasedDate"), rs.getString("Username"), rs.getString("Title"));
@@ -48,18 +50,19 @@ public class ShoppingCart {
     public ShoppingCart(){}
 
     //Calculates all the amount of all the incomes
-    public int calculateIncomes(String username){
+    public int calculateIncomes(String username,Date date){
         int sum=0;
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
-        String query = "SELECT*FROM outcome WHERE price <0 AND Username=" +
+        String query = "SELECT*FROM outcome WHERE PurchasedDate>=? AND price <0 AND Username=" +
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
             ps = con.prepareStatement(query);
-            ps.setString(1, username);
+            ps.setDate(1,date);
+            ps.setString(2, username);
             rs = ps.executeQuery();
             while (rs.next()) {
                 sum+=rs.getInt("Price");

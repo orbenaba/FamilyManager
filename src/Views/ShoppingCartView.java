@@ -3,11 +3,15 @@ package Views;
 
 import Models.Outcome;
 import Models.ShoppingCart;
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import static Models.Parent.isLimitChildren;
 import static Models.Parent.isParent;
@@ -18,21 +22,24 @@ public class ShoppingCartView extends BaseForHomeSeqView {
     public String username;
     public JLabel title;
     public JPanel outcomesPanel;
-    public JButton addOutcome, addIncome;
-    public JLabel totalOutcomes,totalSalaries,totalIncomes, noOutcomes, percentageComes;
+    public JButton addOutcome, addIncome,selectDate;
+    public JLabel totalOutcomes,totalSalaries,totalIncomes, noOutcomes, percentageComes, datesRangeLabel;
     public boolean readOnly = false;
     public JFrame addIn;
     public JPanel backTo;
     public LinkedList<RowInShoppingCart> outcomeButtons;
     public JLabel background;
     public JScrollPane outcomeScroller;
+    public JDateChooser dateChooser;
+    public Date minDate;
 
     @Override
     public String getUsername() {
         return this.username;
     }
 
-    public ShoppingCartView(String username, JFrame addIn) {
+    public ShoppingCartView(String username, JFrame addIn,Date minDate) {
+        this.minDate=minDate;
         this.addIn = addIn;
         this.username = username;
         if (!isParent(username))
@@ -40,36 +47,68 @@ public class ShoppingCartView extends BaseForHomeSeqView {
                 readOnly = true;
             }
         background = new JLabel();
-        background.setIcon(new ImageIcon(getClass().getResource("/Icons/manageBack.jpg")));
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/woodBack.jpg")));
         background.setBounds(0, 0, getWidth(), getHeight());
 
         getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel(readOnly ? "View your outcomes" : "Manage your packet!");
-        title.setForeground(new Color(168, 0, 0));
-        title.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, new Color(168, 0, 0)));
+        title.setForeground(Color.orange.brighter());
+        title.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.orange.brighter()));
         title.setFont(new Font("David", Font.ITALIC, 70));
-        title.setBounds(getWidth() / 2 - 350, 20, 700, 70);
+        title.setBounds(getWidth() / 2 - 350, 20, 620, 70);
+
+        /**By default, we want to display only the outcomes which were bought in the last month!*/
+       // Date date = new Date();
+      //  date.setMonth(date.getMonth()-1);//CurrentMonth--
+        java.sql.Date sqlDate = new java.sql.Date(minDate.getTime());
+        java.sql.Date curDateSql=new java.sql.Date((new Date()).getTime());
+        //A label that helps the user to better understanding the displayed outcomes
+        datesRangeLabel=new JLabel(sqlDate.toString()+"<-->"+curDateSql);
+        datesRangeLabel.setFont(new Font("David", Font.ITALIC, 36));
+        datesRangeLabel.setOpaque(true);
+        datesRangeLabel.setBackground(Color.orange.brighter());
+        datesRangeLabel.setBounds(getWidth()/2-750,300,385,60);
+
+        /**Permitting the user to choose his own date*/
+        dateChooser = new JDateChooser(minDate);
+        //enforcing the user to choose a valid date. I range [NOW,NOW-120]
+        java.util.Date currentDate= new java.util.Date();
+        java.util.Date minDate2=new java.util.Date(currentDate.getYear()-120,currentDate.getMonth(),currentDate.getDay());
+        dateChooser.setMaxSelectableDate(currentDate);
+        dateChooser.setMinSelectableDate(minDate2);
+        dateChooser.setBounds(getWidth()/2-747, 370, 160, 30);
+        dateChooser.setFont(new Font("David",Font.ITALIC,25));
+        dateChooser.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.orange.brighter()));
+        dateChooser.setDateFormatString("dd/MM/yyyy");
+        selectDate=new JButton("Select date");
+        selectDate.setFocusPainted(false);
+        selectDate.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        selectDate.setBackground(Color.orange.brighter());
+        selectDate.setFont(new Font("David",Font.ITALIC,30));
+        selectDate.setBounds(getWidth()/2-580,370,200,35);
+
+
         /**Shopping cart*/
-        shoppingCart = new ShoppingCart(username);
+        shoppingCart = new ShoppingCart(username,new java.sql.Date(minDate.getTime()));
         int outcomes = shoppingCart.calculateShoppingCart();
-        int incomes=shoppingCart.calculateIncomes(username);
+        int incomes=shoppingCart.calculateIncomes(username,sqlDate);
         int salaries=shoppingCart.getSalaries();
         totalOutcomes = new JLabel("Total outcomes: " + outcomes);
         totalOutcomes.setOpaque(true);
         totalOutcomes.setBackground(Color.orange.darker());
         totalOutcomes.setFont(new Font("David", Font.ITALIC, 36));
-        totalOutcomes.setBounds(getWidth()/2-750, 320, 400, 40);
+        totalOutcomes.setBounds(getWidth()/2-750, 520, 400, 40);
         totalIncomes = new JLabel("Total incomes: " + incomes);
         totalIncomes.setOpaque(true);
         totalIncomes.setBackground(Color.orange.darker());
         totalIncomes.setFont(new Font("David", Font.ITALIC, 36));
-        totalIncomes.setBounds(getWidth()/2-750, 370, 400, 40);
+        totalIncomes.setBounds(getWidth()/2-750, 570, 400, 40);
         totalSalaries = new JLabel("Total salaries: " + salaries);
         totalSalaries.setOpaque(true);
         totalSalaries.setBackground(Color.orange.darker());
         totalSalaries.setFont(new Font("David", Font.ITALIC, 36));
-        totalSalaries.setBounds(getWidth()/2-750, 420, 400, 40);
+        totalSalaries.setBounds(getWidth()/2-750, 620, 400, 40);
         /**Showing the outcomes in relate to the incomes*/
         EncapsulteColorAndText en=calculatePercentage(outcomes,incomes+salaries);
         String statement = en.text;
@@ -96,7 +135,7 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             addIncome.setForeground(new Color(4, 62, 103));
             addIncome.setBounds(360, 120, 250, 100);
         }
-        /**Out comes panel*/
+        /**Outcomes panel*/
         outcomesPanel = new JPanel();
         if (!shoppingCart.isEmpty()) {
             outcomesPanel.setLayout(new GridLayout(0, readOnly ? 1 : 3, 0, 15));
@@ -117,6 +156,9 @@ public class ShoppingCartView extends BaseForHomeSeqView {
             noOutcomes.setBounds(0, 50, 500, 500);
             add(outcomesPanel);
         }
+        add(selectDate);
+        add(dateChooser);
+        add(datesRangeLabel);
         add(totalSalaries);
         add(totalIncomes);
         add(backTo);
@@ -127,6 +169,9 @@ public class ShoppingCartView extends BaseForHomeSeqView {
         }
         add(title);
         add(background);
+    }
+    public void addSelectDateAction(ActionListener mal){
+        selectDate.addActionListener(mal);
     }
 
     public void addOutcomeAction(ActionListener mal) {
