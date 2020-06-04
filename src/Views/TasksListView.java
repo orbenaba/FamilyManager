@@ -19,7 +19,8 @@ public class TasksListView extends BaseForHomeSeqView {
     public JButton addTask;
     public LinkedList<RowInTasksList> taskButtons;
     public boolean readOnly=false;
-    public JLabel background,noTasks;
+    public JLabel background,titleActivists2,titleActivists1,noTasks;
+    public JLabel[]activists;
 
     public JScrollPane tasksScroller;
     @Override
@@ -31,7 +32,6 @@ public class TasksListView extends BaseForHomeSeqView {
             if (isLimitChildren(username))
                 readOnly = true;
         this.username = username;
-      //  getContentPane().setBackground(new Color(6, 103, 172));
         /**Title*/
         title = new JLabel(readOnly?"View your tasks!":"Manage your tasks!");
         title.setForeground(Color.orange.brighter());
@@ -52,20 +52,48 @@ public class TasksListView extends BaseForHomeSeqView {
         background=new JLabel();
         background.setIcon(new ImageIcon(getClass().getResource("/Icons/woodBack.jpg")));
         background.setBounds(0,0,getWidth(),getHeight());
+
+        if(!tasksList.isEmpty()) {
+            String[] activistsStatistics = tasksList.getActivistData();
+            int size = activistsStatistics.length, x = 60, y = 400;
+            /**Activists labels*/
+            titleActivists1 = new JLabel("Who complete the most");
+            titleActivists2 = new JLabel("tasks in the last month?");
+            titleActivists1.setFont(new Font("David", Font.ITALIC, 40));
+            titleActivists2.setFont(new Font("David", Font.ITALIC, 40));
+            titleActivists1.setBackground(Color.orange.brighter());
+            titleActivists2.setBackground(Color.orange.brighter());
+            titleActivists1.setOpaque(true);
+            titleActivists2.setOpaque(true);
+            titleActivists1.setBounds(x, y - 150, 410, 50);
+            titleActivists2.setBounds(x, y - 100, 410, 50);
+            add(titleActivists1);
+            add(titleActivists2);
+            activists = new JLabel[size];
+            for (int i = 0; i < size; i++) {
+                activists[i] = new JLabel(((i + 1) + ") " + activistsStatistics[i]));
+                activists[i].setFont(new Font("David", Font.ITALIC, 30));
+                activists[i].setOpaque(true);
+                activists[i].setBackground(Color.orange.brighter());
+                activists[i].setBounds(x, y + i * 50, 250, 40);
+                add(activists[i]);
+            }
+        }
+
         /**Tasks list panel*/
         tasksPanel = new JPanel();
         if(!tasksList.isEmpty()) {
             tasksPanel.setLayout(new GridLayout(0, readOnly ? 1 : 3, 0, 15));
             convertListToButtons(tasksList.getTasks());
             tasksScroller = new JScrollPane(tasksPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-            tasksScroller.setBounds(getWidth() / 2 - 500, 250, 1000, getHeight() - 250);
+            tasksScroller.setBounds(getWidth() / 2 - 300, 250, 1000, getHeight() - 250);
             tasksScroller.setPreferredSize(new Dimension(1000, getHeight() - 250));
             /**Increasing the speed of the scrolling:*/
             tasksScroller.getVerticalScrollBar().setUnitIncrement(12);
             add(tasksScroller);
         }
         else{
-            tasksPanel.setBounds(getWidth()/2-500,250,1000,getHeight()-250);
+            tasksPanel.setBounds(getWidth()/2-300,250,1000,getHeight()-250);
             tasksPanel.setBackground(Color.gray.darker());
             noTasks=new JLabel();
             noTasks.setIcon(new ImageIcon(getClass().getResource("/Icons/X2.jpg")));
