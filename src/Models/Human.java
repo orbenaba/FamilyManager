@@ -101,5 +101,50 @@ public abstract class Human extends User {
             e.printStackTrace();
         }
     }
+    //using for testings
+    public static Human getFirstHuman(boolean par)
+    {
+        Human human=null;
+        String username="";
+        try {
+            //selecting first child's username
+            String query="";
+            if(par)
+                 query="SELECT Username FROM human WHERE Salary>=0 LIMIT 0,1;";
+            else
+                query="SELECT Username FROM human WHERE Salary<0 LIMIT 0,1;";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ResultSet rs=ps.executeQuery();
+            rs.next();
+            username=rs.getString(1);
+            if(par)
+                human = new Parent(username);
+            else
+                human = new Child(username);
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return human;
+    }
 
+    //return first username from family
+    public static String getFirstHuman(String familyUsername){
+        String username="";
+        try {
+            //selecting first child's username
+            String query="SELECT Username FROM Human WHERE FamilyUsername = ? LIMIT 0,1;";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1,familyUsername);
+            ResultSet rs=ps.executeQuery();
+            rs.next();
+            username=rs.getString(1);
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return username;
+    }
 }

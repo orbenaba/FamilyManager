@@ -14,10 +14,12 @@ public class User {
     {
         password=username="";
     }
-    public User(String username,String password){
-        this.password=password;
-        this.username=username;
+
+    public User(String password, String username) {
+        this.password = password;
+        this.username = username;
     }
+
     /** Checking if the given username exists neither in family nor in human Tables:*/
     public static boolean isUsernameExist(String username,boolean checker,String oldUsername){
         /**Checker stands for update the username that already exist*/

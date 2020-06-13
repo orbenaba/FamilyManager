@@ -66,6 +66,13 @@ public class Child extends Human {
                 else
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,Status=?,Birthday=?,IsObligated=? WHERE Username=?";
                 PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+
+                this.username=username;
+                this.password=password;
+                this.firstName=firstName;
+                this.status=status;
+                this.birthday=birthday;
+                this.isSingle=isSingle;
                 ps.setString(1, username);
                 ps.setString(2, password);
                 ps.setString(3, firstName);

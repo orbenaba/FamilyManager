@@ -77,11 +77,20 @@ public class Parent extends Human {
                 ps.setDate(5, birthday);
                 ps.setBoolean(6, isMarried);
                 ps.setInt(7, Salary);
+                this.username=username;
+                this.password=password;
+                this.firstName=firstName;
+                this.jobName=jobName;
+                this.birthday=birthday;
+                this.isMarried=isMarried;
+                this.salary=Salary;
                 if (flag == false) {
                     if (image != null)
                         ps.setBlob(8, image);
-                    else
+                    else {
                         ps.setNull(8, Types.NULL);
+                        this.image=null;
+                    }
                     ps.setString(9, this.username);
                 }
                 else

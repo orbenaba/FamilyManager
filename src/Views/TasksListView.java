@@ -27,6 +27,7 @@ public class TasksListView extends BaseForHomeSeqView {
     public String getUsername() {
         return this.username;
     }
+
     public TasksListView(String username) {
         if (!isParent(username))
             if (isLimitChildren(username))

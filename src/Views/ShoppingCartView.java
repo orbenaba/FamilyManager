@@ -264,64 +264,71 @@ public class ShoppingCartView extends BaseForHomeSeqView {
      */
     public EncapsulteColorAndText calculatePercentage(int loss,int prof) {
         BigDecimal profit = new BigDecimal(prof);
-        BigDecimal loss2=new BigDecimal(loss);
+        BigDecimal loss2 = new BigDecimal(loss);
         Color foreground;
         if (loss == 0) {
-            foreground=new Color(135,13,255).darker();
-            return new EncapsulteColorAndText(foreground,"No spending money");
+            foreground = new Color(135, 13, 255).darker();
+            return new EncapsulteColorAndText(foreground, "No spending money");
         }
         if (profit.equals(0)) {
-            foreground=new Color(255, 5, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"You have no incomes/salaries");
+            foreground = new Color(255, 5, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "You have no incomes/salaries");
         }
-        BigDecimal proposition2=loss2.divide(profit,2,RoundingMode.HALF_UP);
-        double proposition=proposition2.doubleValue();
+        BigDecimal proposition2=null;
+        if (profit.intValue()!=0) {
+            proposition2 = loss2.divide(profit, 2, RoundingMode.HALF_UP);
+        }
+        else{
+            foreground = new Color(135, 13, 255).darker();
+            return new EncapsulteColorAndText(foreground, "No available incomes");
+        }
+        double proposition = proposition2.doubleValue();
         if (proposition > 1) {
-            foreground=new Color(255, 5, 5);
-            return new EncapsulteColorAndText(foreground,"You are facing with DEFICIT!");
+            foreground = new Color(255, 5, 5);
+            return new EncapsulteColorAndText(foreground, "You are facing with DEFICIT!");
         }
         if (proposition == 1) {
-            foreground=new Color(255, 5, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"Your incomes cover exactly the outcomes");
+            foreground = new Color(255, 5, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "Your incomes cover exactly the outcomes");
         }
         if (proposition >= 0.9) {
-            foreground=new Color(255, 35, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 90% of your incomes were spent");
+            foreground = new Color(255, 35, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 90% of your incomes were spent");
         }
         if (proposition >= 0.8) {
-            foreground=new Color(255, 65, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 80% of your incomes were spent");
+            foreground = new Color(255, 65, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 80% of your incomes were spent");
         }
         if (proposition >= 0.7) {
-            foreground=new Color(255, 95, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 70% of your incomes were spent");
+            foreground = new Color(255, 95, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 70% of your incomes were spent");
         }
         if (proposition >= 0.6) {
-            foreground=new Color(255, 125, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 60% of your incomes were spent");
+            foreground = new Color(255, 125, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 60% of your incomes were spent");
         }
         if (proposition >= 0.5) {
-            foreground=new Color(255, 165, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 50% of your incomes were spent");
+            foreground = new Color(255, 165, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 50% of your incomes were spent");
         }
         if (proposition >= 0.4) {
-            foreground=new Color(255, 225, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 40% of your incomes were spent");
+            foreground = new Color(255, 225, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 40% of your incomes were spent");
         }
         if (proposition >= 0.3) {
-            foreground=new Color(205, 255, 5).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 30% of your incomes were spent");
+            foreground = new Color(205, 255, 5).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 30% of your incomes were spent");
         }
         if (proposition >= 0.2) {
-            foreground=new Color(150, 255, 15).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 20% of your incomes were spent");
+            foreground = new Color(150, 255, 15).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 20% of your incomes were spent");
         }
         if (proposition >= 0.1) {
-            foreground=new Color(100, 255, 15).brighter();
-            return new EncapsulteColorAndText(foreground,"More then 10% of your incomes were spent");
+            foreground = new Color(100, 255, 15).brighter();
+            return new EncapsulteColorAndText(foreground, "More then 10% of your incomes were spent");
         }
-        foreground=new Color(0, 255, 0).brighter();
-        return new EncapsulteColorAndText(foreground,"Good Job! you spent less then 10% of your incomes");
+        foreground = new Color(0, 255, 0).brighter();
+        return new EncapsulteColorAndText(foreground, "Good Job! you spent less then 10% of your incomes");
     }
     private class EncapsulteColorAndText{
         Color color;

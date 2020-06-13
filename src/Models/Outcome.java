@@ -1,6 +1,9 @@
 package Models;
 
 
+import com.sun.deploy.security.SelectableSecurityManager;
+
+import javax.print.attribute.standard.MediaSize;
 import java.sql.*;
 
 public class Outcome {
@@ -51,6 +54,43 @@ public class Outcome {
         }
         return false;
     }
+    //using for testings
+    public static Outcome getFirstOutcome() {
+        Outcome out;
+        try {
+            //selecting first child's username
+            String query = "SELECT id,Price,PurchasedDate,Title,Username FROM outcome LIMIT 0,1";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            out = new Outcome(rs.getInt(1), rs.getInt(2),
+                    rs.getDate(3), rs.getString(5),
+                    rs.getString(4));
+            rs.close();
+            ps.close();
+            return out;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    //Returns true if a given id exists in the outcome Table
+    public static Outcome outcomeExists(int id) {
+        String query = "SELECT id,Price,PurchasedDate,Title,Username FROM outcome WHERE id = ?";
+        try {
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return new Outcome(rs.getInt(1), rs.getInt(2), rs.getDate(3),
+                        rs.getString(5), rs.getString(4));
+            else
+                return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

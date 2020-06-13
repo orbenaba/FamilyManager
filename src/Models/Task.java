@@ -48,4 +48,42 @@ public class Task {
         }
         return false;
     }
+
+    //using for testings
+    public static Task getFirstTask() {
+        Task out;
+        try {
+            //selecting first child's username
+            String query = "SELECT id,ExecutedDate,Title,Username FROM Task LIMIT 0,1";
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            out = new Task(rs.getInt(1),
+                    rs.getDate(2), rs.getString(4),
+                    rs.getString(3));
+            rs.close();
+            ps.close();
+            return out;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    //Returns true if a given id exists in the outcome Table
+    public static Task taskExists(int id) {
+        String query = "SELECT id,ExecutedDate,Title,Username FROM task WHERE id = ?";
+        try {
+            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return new Task(rs.getInt(1), rs.getDate(2),
+                        rs.getString(4), rs.getString(3));
+            else
+                return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

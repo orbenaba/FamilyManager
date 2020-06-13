@@ -13,7 +13,7 @@ public class ShoppingCart {
 
     //Constructor:
     //Retrieving all the existing outcomes from the DB which belongs to the all family of the given username
-    //We using a specific range of dates
+    //We are using a specific range of dates
     //Note: outcomes are with non-negative price in comparison to incomes.
     public ShoppingCart(String username,Date date) {
         outcomes = new LinkedList<>();
@@ -128,6 +128,7 @@ public class ShoppingCart {
             ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
             ps.setString(4, added.title);
             ps.executeUpdate();
+            //retrieving the new generated key which incremented plus one
             rs = ps.getGeneratedKeys();
             rs.next();
             id = rs.getInt(1);
@@ -140,7 +141,8 @@ public class ShoppingCart {
     }
 
     //Deletes all the files of the deleted human
-    public static boolean deleteShoppingCart(String username){
+    public static Object deleteShoppingCart(String username){
+        int countDeleted=0;
         try {
             String query="SELECT id FROM outcome WHERE Username = ?;";
             PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
@@ -149,10 +151,11 @@ public class ShoppingCart {
             while(rs.next()){
                 File file=new File("Outcomes\\"+rs.getInt("id")+".txt");
                 file.delete();
+                countDeleted++;
             }
             rs.close();
             ps.close();
-            return true;
+            return countDeleted;
         } catch (SQLException e) {
             e.printStackTrace();
         }
