@@ -12,6 +12,9 @@ public class Family extends User {
     public String lastName;
     public int currentMonthProfit;
 
+    public Family() {
+    }
+
     public Family(String username, String password, String counter, String lastName, String currentMonthProfit) {
         PreparedStatement ps;
         String registerFamilyQuery = "INSERT INTO family(Username,Counter,CurrentMonthProfit,LastName,Password) VALUES(?,?,?,?,?)";

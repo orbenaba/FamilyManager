@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.sql.*;
 import java.util.Random;
 import static Models.Human.getFirstHuman;
@@ -16,34 +17,39 @@ import static Models.Human.getFirstHuman;
 
 class ChildTest {
  //   @Mock
-    private static Child child;
+    private static Child child=null;
 
     //tests child's ctor
     @BeforeAll
-    public static void setChild()
-    {
+    public static void setChild() {
         Human human = getFirstHuman(false);
-        child=new Child(human.username);
-        Assertions.assertNotNull(child);
+        if (human != null) {
+            child = new Child(human.username);
+            Assertions.assertNotNull(child);
+        }
     }
 
     @Test
     public void updateAccount() throws FileNotFoundException {
-        Random rnd=new Random();
-        int day=rnd.nextInt(29);
-        int month=rnd.nextInt(11);
-        int year=rnd.nextInt(90);
-        year+=1930;
-        String username="John",password="John1234",firstName="John",status="Teacher";
-        Date birthday = new java.sql.Date(year,month,day);
-        InputStream image = new FileInputStream(new File("src\\Testings\\TestingsModel\\X2.jpg"));
-        boolean isSingle=false;
-        child.updateAccount(username,password,firstName,status,birthday,isSingle,image,false);
-        Assertions.assertEquals(child.username,"John");
-        Assertions.assertEquals(child.password,"John1234");
-        Assertions.assertEquals(child.firstName,"John");
-        Assertions.assertEquals(child.status,"Teacher");
-        Assertions.assertNotNull(child.image);
-        Assertions.assertEquals(child.isSingle,isSingle);
+        if(child!=null) {
+            Random rnd = new Random();
+            int day = rnd.nextInt(29);
+            int month = rnd.nextInt(11);
+            //randomize general title
+            byte[] array = new byte[7]; // length is bounded by 7
+            new Random().nextBytes(array);
+            String string = new String(array, Charset.forName("UTF-8"));
+            int year = rnd.nextInt(90);
+            Date birthday = new java.sql.Date(year, month, day);
+            InputStream image = new FileInputStream(new File("src\\Testings\\TestingsModel\\X2.jpg"));
+            boolean isSingle = false;
+            child.updateAccount(string + year, string, string, string, birthday, isSingle, null, false);
+            Assertions.assertEquals(child.username, string + year);
+            Assertions.assertEquals(child.password, string);
+            Assertions.assertEquals(child.firstName, string);
+            Assertions.assertEquals(child.status, string);
+            Assertions.assertNull(child.image);
+            Assertions.assertEquals(child.isSingle, isSingle);
+        }
     }
 }

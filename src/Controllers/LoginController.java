@@ -1,6 +1,8 @@
 package Controllers;
 
 
+import Models.Family;
+import Models.User;
 import Views.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -8,8 +10,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
+import static Models.User.loginFunction;
+
 public class LoginController extends JframeController{
-    private LoginView lview;
+    public LoginView lview;
 
     public LoginController(LoginView lview) {
         super(lview);
@@ -102,67 +106,35 @@ public class LoginController extends JframeController{
     class LoginExecutable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Connection con;
-            PreparedStatement st1, st2;
-            ResultSet rs;
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
                 //get the username and password
                 String uname = lview.username.getText();
                 String pword = String.valueOf(lview.createPassword.getPassword());
-                //create a select query to check if the username and the password exist in the DB
                 //show a message if the username or the password fields are empty
                 if (uname.trim().equals("username")) {
                     JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
                 } else if (pword.trim().equals("password")) {
                     JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
                 } else {
-                    String humanQuery = "SELECT * FROM human WHERE username= ? AND password = ?";
-                    String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
-                    st1 = con.prepareStatement(humanQuery);
-                    st1.setString(1, uname);
-                    st1.setString(2, pword);
-                    rs = st1.executeQuery();
-                    /**The user is actually a parent/child*/
-                    if (rs.next())//username and password are correct
+                    Object res = loginFunction(uname, pword);
+                    /**The user is actually a family*/
+                    if (res instanceof Family)//username and password are correct
                     {
-                        new HomeController(new HomeView(lview.username.getText()));
+                        new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
                         lview.dispose();
-                     } else {
-                        st2 = con.prepareStatement(familyQuery);
-                        st2.setString(1, uname);
-                        st2.setString(2, pword);
-                        rs = st2.executeQuery();
-                        /**The user is actually a family*/
-                        if (rs.next()) {
-                            /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
-                             Using singleton architecture.*/
-                            String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
-                            st1 = con.prepareStatement(singleton10people);
-                            st1.setString(1, uname);
-                            rs = st1.executeQuery();
-                            /**Counts exactly the rows in human table */
-                            rs.next();
-                            if (rs.getInt(1) >= 10) {
-                                JOptionPane.showMessageDialog(null, "Sorry, but one family can only contain at most 10 people", "10 people error", 1);
-                            }
-                            else {
-                                new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
-                                lview.dispose();
-                            }
-                        } else//error message
-                        {
+                    }
+                    else {/**The user is actually a parent/child*/
+                        if (res instanceof User) {
+                            new HomeController(new HomeView(lview.username.getText()));
+                            lview.dispose();
+                        } else if (res instanceof Integer) {
+                            JOptionPane.showMessageDialog(null, "Cannot create a new account cause one family=10 people at the most", "Overflow", 2);
+                        } else {
                             JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
                         }
-                        st2.close();
                     }
-                    rs.close();
-                    con.close();
-                    st1.close();
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }

@@ -51,16 +51,16 @@ public class Task {
 
     //using for testings
     public static Task getFirstTask() {
-        Task out;
+        Task out = null;
         try {
             //selecting first child's username
             String query = "SELECT id,ExecutedDate,Title,Username FROM Task LIMIT 0,1";
             PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            out = new Task(rs.getInt(1),
-                    rs.getDate(2), rs.getString(4),
-                    rs.getString(3));
+            if (rs.next())
+                out = new Task(rs.getInt(1),
+                        rs.getDate(2), rs.getString(4),
+                        rs.getString(3));
             rs.close();
             ps.close();
             return out;

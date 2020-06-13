@@ -15,21 +15,21 @@ class OutcomeTest {
     @BeforeEach
     public void setOutcome(){
         outcome=getFirstOutcome();
-        assertNotNull(outcome);
     }
     @Test
-    public void updateOutcome(){
-        Random random=new Random();
-        int price=random.nextInt(10000);
-        //randomize general title
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String title = new String(array, Charset.forName("UTF-8"));
-        outcome.title=title;
-        outcome.price=price;
-        outcome.updateOutcome();
-        Outcome updatedOutcome=getFirstOutcome();
-        assertNotEquals(updatedOutcome,outcome);
+    public void updateOutcome() {
+        if (outcome != null) {
+            Random random = new Random();
+            int price = random.nextInt(10000);
+            //randomize general title
+            byte[] array = new byte[7]; // length is bounded by 7
+            new Random().nextBytes(array);
+            String title = new String(array, Charset.forName("UTF-8"));
+            outcome.title = title;
+            outcome.price = price;
+            outcome.updateOutcome();
+            Outcome updatedOutcome = getFirstOutcome();
+            assertNotEquals(updatedOutcome, outcome);
+        }
     }
-
 }

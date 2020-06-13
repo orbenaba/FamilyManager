@@ -18,16 +18,17 @@ class TaskTest {
     @BeforeEach
     public void setOutcome(){
         task=Task.getFirstTask();
-        assertNotNull(task);
     }
     @Test
-    public void updateTask(){
-        byte[] array = new byte[7]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String title = new String(array, Charset.forName("UTF-8"));
-        task.title=title;
-        task.updateTask();
-        Outcome updatedOutcome=getFirstOutcome();
-        assertNotEquals(updatedOutcome.title,task.title);
+    public void updateTask() {
+        if (task != null) {
+            byte[] array = new byte[7]; // length is bounded by 7
+            new Random().nextBytes(array);
+            String title = new String(array, Charset.forName("UTF-8"));
+            task.title = title;
+            task.updateTask();
+            Outcome updatedOutcome = getFirstOutcome();
+            assertNotEquals(updatedOutcome.title, task.title);
+        }
     }
 }

@@ -82,8 +82,10 @@ public class Child extends Human {
                 if (flag == false) {
                     if (image != null)
                         ps.setBlob(7, image);
-                    else
+                    else {
                         ps.setNull(7, Types.NULL);
+                        this.image=null;
+                    }
                     ps.setString(8, this.username);
                 }
                 else

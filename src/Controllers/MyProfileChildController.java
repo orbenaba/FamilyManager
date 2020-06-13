@@ -70,12 +70,12 @@ public class MyProfileChildController extends MyProfileHumanController {
                                 if (mpcview.child.username.equals(newUsername))
                                     mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");//saving bio as file
                                 else {
+                                    /**Now mapping the new bio to a new file*/
                                     mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");
                                     File f = new File("Biographies\\" + mpcview.child.username + ".txt");
                                     f.delete();
                                 }
                                 new MyProfileChildController(new MyProfileChildView(newUsername));
-                                /**Now mapping the new bio to a new file*/
                                 mpcview.dispose();
                                 /**Displays a success message*/
                                 JOptionPane.showMessageDialog(null, "Your account has successfully been updated", "Successful updating", 1);

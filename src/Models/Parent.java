@@ -171,8 +171,8 @@ public class Parent extends Human {
             PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             ps.setString(1,this.familyUsername);
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            ret=rs.getBoolean("isLimited");
+            if(rs.next())
+                ret=rs.getBoolean("isLimited");
             rs.close();
             ps.close();
         } catch (SQLException e) {

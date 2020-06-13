@@ -115,12 +115,13 @@ public abstract class Human extends User {
                 query="SELECT Username FROM human WHERE Salary<0 LIMIT 0,1;";
             PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             ResultSet rs=ps.executeQuery();
-            rs.next();
-            username=rs.getString(1);
-            if(par)
-                human = new Parent(username);
-            else
-                human = new Child(username);
+            if(rs.next()) {
+                username = rs.getString(1);
+                if (par)
+                    human = new Parent(username);
+                else
+                    human = new Child(username);
+            }
             rs.close();
             ps.close();
         } catch (SQLException e) {

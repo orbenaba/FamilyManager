@@ -21,15 +21,16 @@ class UserTest {
         user2 = getFirstHuman(false);
         user3 = getFirstHuman(true);
         user4 = new User("", "");
-        if (!user1.equals(""))
-            assertTrue(isUsernameExist(user1, false, user1));
-        if (!user2.equals(""))
-            assertTrue(isUsernameExist(user2.username, false, user2.username));
-        if (!user3.equals(""))
-            assertTrue(isUsernameExist(user3.username, false, user3.username));
+        if(user1!=null&&user2!=null&&user3!=null) {
+            if (!user1.equals(""))
+                assertTrue(isUsernameExist(user1, false, user1));
+            if (!user2.equals(""))
+                assertTrue(isUsernameExist(user2.username, false, user2.username));
+            if (!user3.equals(""))
+                assertTrue(isUsernameExist(user3.username, false, user3.username));
+        }
         if (!user4.equals(""))
             assertFalse(isUsernameExist(user4.username, false, user4.username));
-
     }
 
 }
