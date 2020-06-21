@@ -23,7 +23,7 @@ public class User {
     public static boolean isUsernameExist(String username, boolean checker, String oldUsername) {
         /**Checker stands for update the username that already exist*/
         /**oldUsername stands for validate the case that the user doesn't change his username but it still found at the DB*/
-        PreparedStatement st;
+        PreparedStatement ps;
         ResultSet rs;
         boolean exist = false;
         String query;
@@ -32,17 +32,17 @@ public class User {
         else
             query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?);";
         try {
-            st = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            st.setString(1, username);
-            st.setString(2, username);
+            ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, username);
             if (checker)
-                st.setString(3, oldUsername);
-            rs = st.executeQuery();
+                ps.setString(3, oldUsername);
+            rs = ps.executeQuery();
             if (rs.next())
                 exist = true;
             //close opened connections
             rs.close();
-            st.close();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

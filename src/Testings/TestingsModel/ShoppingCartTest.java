@@ -62,11 +62,13 @@ class ShoppingCartTest {
     public void deleteShoppingCart() {
         if (human != null) {
             int countOutcomes = 0;
-            for (Outcome c : shoppingCart.outcomes) {
-                if (c.username.equals(human.username))
-                    countOutcomes++;
+            if (!shoppingCart.outcomes.isEmpty()) {
+                for (Outcome c : shoppingCart.outcomes) {
+                    if (c.username.equals(human.username))
+                        countOutcomes++;
+                }
+                assertTrue(ShoppingCart.deleteShoppingCart(human.username).equals(countOutcomes));
             }
-            assertEquals(countOutcomes, ShoppingCart.deleteShoppingCart(human.username));
         }
     }
 }

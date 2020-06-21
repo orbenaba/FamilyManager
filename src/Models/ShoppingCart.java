@@ -148,6 +148,7 @@ public class ShoppingCart {
             PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             ps.setString(1,username);
             ResultSet rs=ps.executeQuery();
+            rs.next();
             while(rs.next()){
                 File file=new File("Outcomes\\"+rs.getInt("id")+".txt");
                 file.delete();

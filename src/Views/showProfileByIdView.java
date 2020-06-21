@@ -72,14 +72,17 @@ public class showProfileByIdView extends BaseForHomeSeqView {
 
         StringBuilder bioContent=new StringBuilder();
         File file=new File("Biographies\\"+watchedUsername+".txt");
-        Scanner myScan= null;
-        try {
-            myScan = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        while(myScan.hasNextLine()) {
-            bioContent.append(myScan.nextLine()+'\n');
+        if(file!=null) {
+            Scanner myScan = null;
+            try {
+                myScan = new Scanner(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            while (myScan.hasNextLine()) {
+                bioContent.append(myScan.nextLine() + '\n');
+            }
+            myScan.close();
         }
         JLabel bio=new JLabel("Bio:");
         bio.setFont(f);
@@ -98,7 +101,6 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         pane.setBounds(getWidth()/2+50,400,550,400);
         pane.setPreferredSize(new Dimension(550,400));
 
-        myScan.close();
         add(bio);
         add(pane);
         add(relationLabel);
