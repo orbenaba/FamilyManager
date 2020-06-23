@@ -50,13 +50,9 @@ class FamilyTest {
                     "Johnny" + i, i % 2 == 0 ? -1 : 10000, false, i % 2 == 0 ? "Football player" : "");
             members[i]=getHumanData(family.username+(i));
         }
-        try {
-            //Now, when trying to login as a family account again, we need to get error
-            //note: Integer is returned from loginFunction in case of failure
-            assertTrue(loginFunction(family.username, family.password) instanceof Integer);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //Now, when trying to login as a family account again, we need to get error
+        //note: Integer is returned from loginFunction in case of failure
+        assertTrue(loginFunction(family.username, family.password) instanceof Integer);
     }
 
     @Test

@@ -1,8 +1,12 @@
-package Models;
+package Testings.TestingsModel;
 
+import Models.Family;
+import Models.Human;
+import Models.Parent;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Random;
@@ -10,6 +14,7 @@ import java.util.Random;
 import static Models.Human.createAccount;
 import static Models.Human.getHumanData;
 import static Models.Parent.isLimitChildren;
+import static Models.User.isUsernameExist;
 import static Models.User.loginFunction;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,13 +43,9 @@ class OnlyParentsFamilyTest {
                     "Johnny" + i,10000, false,"");
             members[i]=getHumanData(family.username+(i));
         }
-        try {
-            //Now, when trying to login as a family account again, we need to get error
-            //note: Integer is returned from loginFunction in case of failure
-            assertTrue(loginFunction(family.username, family.password) instanceof Integer);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //Now, when trying to login as a family account again, we need to get error
+        //note: Integer is returned from loginFunction in case of failure
+        assertTrue(loginFunction(family.username, family.password) instanceof Integer);
     }
     //This part checks if after deleting all the parents from the family,
     // the isLimit field which bounds the children in the family, is UPDATED
@@ -62,5 +63,13 @@ class OnlyParentsFamilyTest {
             (members[j]).deleteAccount();
         assertFalse(isLimitChildren(members[0].username));
         assertFalse(((Parent)members[0]).isLimitChildren());
+        //check the regulatory requirement - deleting all the info about an ex-user
+        for(int i=0;i<10;i++){
+            File file = new File("Biographies\\"+members[i].username+".txt");
+            assertFalse(file.exists());
+        }
+        //Checking whether the family username was deleted
+        assertFalse(isUsernameExist(family.username,false,""));
     }
+
 }

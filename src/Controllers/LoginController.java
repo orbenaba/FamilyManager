@@ -106,36 +106,32 @@ public class LoginController extends JframeController{
     class LoginExecutable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                //get the username and password
-                String uname = lview.username.getText();
-                String pword = String.valueOf(lview.createPassword.getPassword());
-                //show a message if the username or the password fields are empty
-                if (uname.trim().equals("username")) {
-                    JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
-                } else if (pword.trim().equals("password")) {
-                    JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
-                } else {
-                    Object res = loginFunction(uname, pword);
-                    /**The user is actually a family*/
-                    if (res instanceof Family)//username and password are correct
-                    {
-                        new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
+            //get the username and password
+            String uname = lview.username.getText();
+            String pword = String.valueOf(lview.createPassword.getPassword());
+            //show a message if the username or the password fields are empty
+            if (uname.trim().equals("username")) {
+                JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
+            } else if (pword.trim().equals("password")) {
+                JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
+            } else {
+                Object res = loginFunction(uname, pword);
+                /**The user is actually a family*/
+                if (res instanceof Family)//username and password are correct
+                {
+                    new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
+                    lview.dispose();
+                }
+                else {/**The user is actually a parent/child*/
+                    if (res instanceof User) {
+                        new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
-                    }
-                    else {/**The user is actually a parent/child*/
-                        if (res instanceof User) {
-                            new HomeController(new HomeView(lview.username.getText()));
-                            lview.dispose();
-                        } else if (res instanceof Integer) {
-                            JOptionPane.showMessageDialog(null, "Cannot create a new account cause one family=10 people at the most", "Overflow", 2);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
-                        }
+                    } else if (res instanceof Integer) {
+                        JOptionPane.showMessageDialog(null, "Cannot create a new account cause one family=10 people at the most", "Overflow", 2);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
                     }
                 }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
         }
     }

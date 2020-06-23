@@ -35,7 +35,7 @@ public class TaskController extends BaseForHomeSeqController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Task task=new Task(new Date(Calendar.getInstance().getTimeInMillis()), tview.username,tview.titleText.getText().trim().equals("")?"No title":tview.titleText.getText());
-            Integer id = tview.tasksList.addTask(task);
+            Integer id = (Integer)tview.tasksList.addTask(task);
             mappingTextareaIntoFile(id, tview.description, "Tasks");
             new TasksListController(new TasksListView(tview.username));
             tview.dispose();

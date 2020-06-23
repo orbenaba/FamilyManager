@@ -55,6 +55,7 @@ public class Child extends Human {
      * Output: Empty string in case that the update failed
      * New Username in case that the update succeed
      */
+    //h2.username, h1.password, h1.firstName, ((Child) h1).status, h1.birthday, ((Child) h1).isSingle, null, false
     public String updateAccount(String username, String password, String firstName, String status, java.sql.Date birthday,
                                 boolean isSingle, InputStream image, boolean flag) {
         /**First, we need to ensure that there is no other user with this username*/
@@ -66,13 +67,6 @@ public class Child extends Human {
                 else
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,Status=?,Birthday=?,IsObligated=? WHERE Username=?";
                 PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-
-                this.username=username;
-                this.password=password;
-                this.firstName=firstName;
-                this.status=status;
-                this.birthday=birthday;
-                this.isSingle=isSingle;
                 ps.setString(1, username);
                 ps.setString(2, password);
                 ps.setString(3, firstName);
@@ -92,6 +86,12 @@ public class Child extends Human {
                     ps.setString(7,this.username);
                 ps.executeUpdate();
                 ps.close();
+                this.username=username;
+                this.password=password;
+                this.firstName=firstName;
+                this.status=status;
+                this.birthday=birthday;
+                this.isSingle=isSingle;
                 return username;
             } catch (SQLException e) {
                 e.printStackTrace();

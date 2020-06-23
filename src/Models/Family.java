@@ -15,6 +15,10 @@ public class Family extends User {
     public Family() {
     }
 
+    public Family(String username){
+        this.username=username;
+    }
+
     public Family(String username, String password, String counter, String lastName, String currentMonthProfit) {
         PreparedStatement ps;
         String registerFamilyQuery = "INSERT INTO family(Username,Counter,CurrentMonthProfit,LastName,Password) VALUES(?,?,?,?,?)";
@@ -37,7 +41,7 @@ public class Family extends User {
         }
     }
 
-    public static String getFirstFamily() {
+    public static Family getFirstFamily() {
         String username = "";
         try {
             //selecting first child's username
@@ -52,6 +56,6 @@ public class Family extends User {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return username;
+        return new Family(username);
     }
 }

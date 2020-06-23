@@ -2,9 +2,12 @@ package Models;
 
 
 import java.io.File;
-import java.sql.*;
+import java.sql.*;;
 import java.util.Calendar;
 import java.util.LinkedList;
+
+import static Models.Parent.isLimitChildren;
+import static Models.Parent.isParent;
 
 
 public class ShoppingCart {
@@ -113,31 +116,39 @@ public class ShoppingCart {
     }
 
     /**Function returns the new id of the added outcome*/
-    public Integer addOutcome(Outcome added) {
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        String query;
-        Integer id = null;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            query = "INSERT INTO outcome(Username,Price,PurchasedDate,Title) VALUES(?,?,?,?)";
-            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, added.username);
-            ps.setInt(2, added.price);
-            ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
-            ps.setString(4, added.title);
-            ps.executeUpdate();
-            //retrieving the new generated key which incremented plus one
-            rs = ps.getGeneratedKeys();
-            rs.next();
-            id = rs.getInt(1);
-            ps.close();
-            con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+    //Checking if the user id limited from adding outcomes
+    //returned null in case that the user isLimited
+    public Object addOutcome(Outcome added) {
+        if(!isLimitChildren(added.username)||isParent(added.username)) {
+            Connection con;
+            PreparedStatement ps;
+            ResultSet rs;
+            String query;
+            Integer id = new Integer(1);
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                query = "INSERT INTO outcome(Username,Price,PurchasedDate,Title) VALUES(?,?,?,?)";
+                ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, added.username);
+                ps.setInt(2, added.price);
+                ps.setDate(3, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+                ps.setString(4, added.title);
+                ps.executeUpdate();
+                //retrieving the new generated key which incremented plus one
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                this.outcomes.add(added);
+                //Update the id value of the outcome
+                added.id = id;
+                ps.close();
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return id;
         }
-        return id;
+        return null;
     }
 
     //Deletes all the files of the deleted human
@@ -148,7 +159,7 @@ public class ShoppingCart {
             PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
             ps.setString(1,username);
             ResultSet rs=ps.executeQuery();
-            rs.next();
+            //rs.next();
             while(rs.next()){
                 File file=new File("Outcomes\\"+rs.getInt("id")+".txt");
                 file.delete();

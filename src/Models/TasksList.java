@@ -5,6 +5,9 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static Models.Parent.isLimitChildren;
+import static Models.Parent.isParent;
+
 public class TasksList {
     public String familyUsername;
     public LinkedList<Task> tasks;
@@ -53,31 +56,38 @@ public class TasksList {
 
     //Add a new Task into the tasksList
     //return->>Id of new task
-    public Integer addTask(Task task) {
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        String query;
-        Integer id = null;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            query = "INSERT INTO task(Username,executedDate,Title) VALUES(?,?,?)";
-            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, task.username);
-            ps.setDate(2, task.executedDate);
-            ps.setString(3, task.title);
-            ps.executeUpdate();
-            //Getting the auto-generate key of the task which is given automatically by the DB
-            //we need this id in order to create a file with this name later on.
-            rs = ps.getGeneratedKeys();
-            rs.next();
-            id = rs.getInt(1);
-            ps.close();
-            con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+    //Checking if the user id limited from adding tasks
+    //returned null in case that the user isLimited
+    public Object addTask(Task task) {
+        if(!isLimitChildren(task.username)||isParent(task.username)) {
+            Connection con;
+            PreparedStatement ps;
+            ResultSet rs;
+            String query;
+            Integer id = null;
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                query = "INSERT INTO task(Username,executedDate,Title) VALUES(?,?,?)";
+                ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, task.username);
+                ps.setDate(2, task.executedDate);
+                ps.setString(3, task.title);
+                ps.executeUpdate();
+                //Getting the auto-generate key of the task which is given automatically by the DB
+                //we need this id in order to create a file with this name later on.
+                rs = ps.getGeneratedKeys();
+                rs.next();
+                id = rs.getInt(1);
+                ps.close();
+                con.close();
+                tasks.add(task);
+                task.id = id;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return id;
         }
-        return id;
+        return null;
     }
     //Deleting a task by its id, this function is used when the user clicked on "Delete" option in the TasksListView
     //return true=>>Successful delete
@@ -106,9 +116,15 @@ public class TasksList {
     //cleaning redundant resources
     public static boolean deleteTasksList(String username){
         try {
-            String query="SELECT id FROM task WHERE Username = ?;";
-            PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            String query1="SELECT id FROM task WHERE Username = ?;";//use for the files
+            String query2="DELETE FROM task AS t1 WHERE t1.id =ANY(SELECT t2.id FROM (SELECT* FROM task as t3) AS t2 WHERE t2.username = ?)";//use for the DB
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            PreparedStatement ps= con.prepareStatement(query1);
+            PreparedStatement ps2=con.prepareStatement(query2);
             ps.setString(1,username);
+            ps2.setString(1,username);
+            ps2.execute();
+            ps2.close();
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 File file=new File("Tasks\\"+rs.getInt(1)+".txt");
@@ -116,6 +132,8 @@ public class TasksList {
             }
             rs.close();
             ps.close();
+            con.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -145,9 +163,6 @@ public class TasksList {
             arr[i] = counters.entrySet().stream().max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
             counters.remove(arr[i]);
         }
-        //temp code
-        for (int i = 0; i < size; i++)
-            System.out.println(arr[i]);
         return arr;
     }
 

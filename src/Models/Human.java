@@ -1,19 +1,12 @@
 package Models;
 
 
-import Controllers.HomeController;
-import Views.HomeView;
-import com.mysql.cj.log.NullLogger;
-
 import javax.swing.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
 import static Models.ShoppingCart.deleteShoppingCart;
 import static Models.TasksList.deleteTasksList;
-import static Views.RegisterHumanView.mappingTextareaIntoFile;
 import static java.sql.Types.NULL;
 
 
@@ -25,13 +18,14 @@ public abstract class Human extends User {
 
     /*****************************************************************************************************************
      * Get an existing user account from DB by his name*/
-    /**Using Factory pattern, Explanation:
+    /**
+     * Using Factory pattern, Explanation:
      * 1)We are getting dynamically the username of the user(Still don't know whether is a parent or child).
      * 2)We are checking the user's salary(we set by default all the users' salaries to -1 and in case we insert into
      * the DB a parent we initialize its salary into non-negative number).
      * So if the salary is negative, we are calling the Child's constructor and create one child.
      * Otherwise, we create a parent by calling its c'tor.
-     *****************************************************************************************************************
+     * ****************************************************************************************************************
      * The components in this factory pattern are:
      * Creator==>>>> getHumanData(..)
      * Products==>>> Parent and Child while Human helps as a common base to both classes.
@@ -60,13 +54,13 @@ public abstract class Human extends User {
     }
 
     //e it's just a dummy parameter which intended to distinguish between this c'tor to another one
-    public Human(String username,boolean e){
-        this.username=username;
+    public Human(String username, boolean e) {
+        this.username = username;
     }
 
 
-    public static String createAccount(String username,java.sql.Date birthday,String familyUsername,String firstName,byte genderId, InputStream image,
-                              boolean isObligated, String jobName, String password, int salary, boolean isLimited,String status) {
+    public static String createAccount(String username, java.sql.Date birthday, String familyUsername, String firstName, byte genderId, InputStream image,
+                                       boolean isObligated, String jobName, String password, int salary, boolean isLimited, String status) {
         if (isUsernameExist(username, false, ""))
             return "This username is already taken";
 
@@ -84,22 +78,22 @@ public abstract class Human extends User {
             ps.setString(4, firstName);
             ps.setByte(5, genderId);
             //save the image profile as a blob in DB
-            if(image!=null)
+            if (image != null)
                 ps.setBlob(6, image);
             else
                 ps.setNull(6, NULL);
 
             ps.setBoolean(7, isObligated);
-            if(jobName.equals(""))
+            if (jobName.equals(""))
                 ps.setNull(8, NULL);
             else
-                ps.setString(8,jobName);
+                ps.setString(8, jobName);
             ps.setString(9, password);
             ps.setInt(10, salary);
-            if(status.equals(""))
+            if (status.equals(""))
                 ps.setNull(11, NULL);
             else
-                ps.setString(11,status);
+                ps.setString(11, status);
             ps.setBoolean(12, isLimited);//isLimited
             if (ps.executeUpdate() != 0) {
                 /**Needs to update the counter*/
@@ -117,11 +111,13 @@ public abstract class Human extends User {
         return "";
     }
 
-    /**Regulatory requirement-->>Deleting ALL associated data to this user*/
+    /**
+     * Regulatory requirement-->>Deleting ALL associated data to this user
+     */
     public void deleteAccount() {
         Connection con;
         PreparedStatement ps;
-        if(isUsernameExist(username,false,"")) {
+        if (isUsernameExist(username, false, "")) {
             try {
                 /**Delete the bio file*/
                 /**Deleting all the X user outcome files*/
@@ -164,54 +160,5 @@ public abstract class Human extends User {
                 e.printStackTrace();
             }
         }
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////~~~~~~~~~~PAY ATTENTION - THIS METHODS DESTINED TO EASE TESTINGS PART~~~~~~~~~~///////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static Human getFirstHuman(boolean par)
-    {
-        Human human=null;
-        String username="";
-        try {
-            //selecting first child's username
-            String query="";
-            if(par)
-                 query="SELECT Username FROM human WHERE Salary>=0 LIMIT 0,1;";
-            else
-                query="SELECT Username FROM human WHERE Salary<0 LIMIT 0,1;";
-            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()) {
-                username = rs.getString(1);
-                if (par)
-                    human = new Parent(username);
-                else
-                    human = new Child(username);
-            }
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return human;
-    }
-
-    //return first username from family
-    public static String getFirstHuman(String familyUsername){
-        String username="";
-        try {
-            //selecting first child's username
-            String query="SELECT Username FROM Human WHERE FamilyUsername = ? LIMIT 0,1;";
-            PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            ps.setString(1,familyUsername);
-            ResultSet rs=ps.executeQuery();
-            rs.next();
-            username=rs.getString(1);
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return username;
     }
 }

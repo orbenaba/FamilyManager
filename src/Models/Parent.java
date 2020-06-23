@@ -77,13 +77,6 @@ public class Parent extends Human {
                 ps.setDate(5, birthday);
                 ps.setBoolean(6, isMarried);
                 ps.setInt(7, Salary);
-                this.username=username;
-                this.password=password;
-                this.firstName=firstName;
-                this.jobName=jobName;
-                this.birthday=birthday;
-                this.isMarried=isMarried;
-                this.salary=Salary;
                 if (flag == false) {
                     if (image != null)
                         ps.setBlob(8, image);
@@ -97,6 +90,13 @@ public class Parent extends Human {
                     ps.setString(8,this.username);
                 ps.executeUpdate();
                 ps.close();
+                this.username=username;
+                this.password=password;
+                this.firstName=firstName;
+                this.jobName=jobName;
+                this.birthday=birthday;
+                this.isMarried=isMarried;
+                this.salary=Salary;
                 return username;
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,8 +1,6 @@
 package Models;
 
 
-import com.sun.deploy.security.SelectableSecurityManager;
-
 import java.sql.*;
 
 public class User {
@@ -49,55 +47,60 @@ public class User {
         return exist;
     }
 
-    public static Object loginFunction(String username, String password) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+    public static Object loginFunction(String username, String password) {
+        Connection con;
         String humanQuery = "SELECT * FROM human WHERE username= ? AND password = ?";
         String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
-
-        PreparedStatement ps1 = con.prepareStatement(humanQuery);
-        ps1.setString(1, username);
-        ps1.setString(2, password);
-        ResultSet rs = ps1.executeQuery();
-        /**The user is actually a parent/child*/
-        if (rs.next()) {
-            con.close();
-            ps1.close();
-            rs.close();
-            return new User();
-        }
-        PreparedStatement ps2 = con.prepareStatement(familyQuery);
-        ps2.setString(1, username);
-        ps2.setString(2, password);
-        rs = ps2.executeQuery();
-        /**The user is actually a family*/
-        if (rs.next()) {
-            /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
-             Using singleton architecture.*/
-            String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
-            ps1 = con.prepareStatement(singleton10people);
+        PreparedStatement ps1 = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            ps1 = con.prepareStatement(humanQuery);
             ps1.setString(1, username);
-            rs = ps1.executeQuery();
-            /**Counts exactly the rows in human table */
-            rs.next();
-            if (rs.getInt(1) >= 10) {
+            ps1.setString(2, password);
+            ResultSet rs = ps1.executeQuery();
+            /**The user is actually a parent/child*/
+            if (rs.next()) {
                 con.close();
                 ps1.close();
-                ps2.close();
                 rs.close();
-                return new Integer(0);
-            } else {
-                con.close();
-                ps1.close();
-                ps2.close();
-                rs.close();
-                return new Family();
+                return new User();
             }
+            PreparedStatement ps2 = con.prepareStatement(familyQuery);
+            ps2.setString(1, username);
+            ps2.setString(2, password);
+            rs = ps2.executeQuery();
+            /**The user is actually a family*/
+            if (rs.next()) {
+                /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
+                 Using singleton architecture.*/
+                String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
+                ps1 = con.prepareStatement(singleton10people);
+                ps1.setString(1, username);
+                rs = ps1.executeQuery();
+                /**Counts exactly the rows in human table */
+                rs.next();
+                if (rs.getInt(1) >= 10) {
+                    con.close();
+                    ps1.close();
+                    ps2.close();
+                    rs.close();
+                    return -1;
+                } else {
+                    con.close();
+                    ps1.close();
+                    ps2.close();
+                    rs.close();
+                    return new Family();
+                }
+            }
+            /**404~User not found*/
+            con.close();
+            ps2.close();
+            rs.close();
         }
-        /**404~User not found*/
-        con.close();
-        ps2.close();
-        rs.close();
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
-
     }
 }
