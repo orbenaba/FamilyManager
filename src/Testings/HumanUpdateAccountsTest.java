@@ -1,4 +1,4 @@
-package Testings.TestingsModel;
+package Testings;
 
 import Models.*;
 import org.junit.jupiter.api.AfterAll;
@@ -11,7 +11,8 @@ import java.util.Random;
 import static Models.Human.createAccount;
 import static Models.Human.getHumanData;
 import static Models.User.loginFunction;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HumanUpdateAccountsTest {
     /**

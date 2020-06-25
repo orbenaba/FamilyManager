@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.*;
+
 import static Models.ShoppingCart.deleteShoppingCart;
 import static Models.TasksList.deleteTasksList;
 import static java.sql.Types.NULL;
@@ -35,7 +36,7 @@ public abstract class Human extends User {
         PreparedStatement ps;
         ResultSet rs;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con = DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             String query = "SELECT*FROM human WHERE Username=?";
             ps = con.prepareStatement(query);
             ps.setString(1, username);
@@ -70,7 +71,7 @@ public abstract class Human extends User {
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection con;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con = DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(registerQuery);
             ps.setString(1, username);
             ps.setDate(2, birthday);
@@ -102,9 +103,12 @@ public abstract class Human extends User {
                 ps.setString(1, familyUsername);
                 ps.executeUpdate();
             } else {
+                ps.close();
+                con.close();
                 return "Error!!!";
             }
-
+            ps.close();
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -123,7 +127,7 @@ public abstract class Human extends User {
                 /**Deleting all the X user outcome files*/
                 deleteShoppingCart(this.username);
                 deleteTasksList(this.username);
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                con = DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
                 /**First of all we need to ensure that there are no other family members
                  * if there are - no problem
                  * if there are no members- we need to delete the family account*/
@@ -160,5 +164,10 @@ public abstract class Human extends User {
                 e.printStackTrace();
             }
         }
+    }
+    //Decoding the relation between to family members
+    public static String findRelation(boolean amIParent,boolean isHeParent,byte gender){
+        return amIParent?(isHeParent?(gender==1?("My wife"):("My husband")):(gender==1?("My daughter"):("My son"))):
+                (isHeParent?(gender==1)?("My mother"):("My father"):(gender==1)?("My sister"):("My brother"));
     }
 }

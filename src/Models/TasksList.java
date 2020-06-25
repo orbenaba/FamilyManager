@@ -22,7 +22,7 @@ public class TasksList {
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(query);
             /**Automatically showing all the tasks to the users only the last 30 days from the current date*/
             java.util.Date curDate=new java.util.Date();
@@ -47,7 +47,6 @@ public class TasksList {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public LinkedList<Task> getTasks() {
@@ -66,7 +65,7 @@ public class TasksList {
             String query;
             Integer id = null;
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
                 query = "INSERT INTO task(Username,executedDate,Title) VALUES(?,?,?)";
                 ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, task.username);
@@ -97,7 +96,7 @@ public class TasksList {
         PreparedStatement ps;
         String query = "DELETE FROM task WHERE id = ?;";
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -118,7 +117,7 @@ public class TasksList {
         try {
             String query1="SELECT id FROM task WHERE Username = ?;";//use for the files
             String query2="DELETE FROM task AS t1 WHERE t1.id =ANY(SELECT t2.id FROM (SELECT* FROM task as t3) AS t2 WHERE t2.username = ?)";//use for the DB
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             PreparedStatement ps= con.prepareStatement(query1);
             PreparedStatement ps2=con.prepareStatement(query2);
             ps.setString(1,username);

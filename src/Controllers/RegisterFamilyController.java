@@ -4,9 +4,11 @@ import Models.Family;
 import Views.AreYouChildOrParentView;
 import Views.LoginView;
 import Views.RegisterFamilyView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 import static Controllers.RegisterHumanController.checkValidPassword;
 import static Models.User.isUsernameExist;
 

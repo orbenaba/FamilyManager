@@ -1,7 +1,10 @@
 package Controllers;
 
 
-import Views.*;
+import Views.EditTaskView;
+import Views.TaskView;
+import Views.TasksListView;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

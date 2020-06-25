@@ -2,12 +2,14 @@ package Models;
 
 
 import java.io.File;
-import java.sql.*;;
+import java.sql.*;
 import java.util.Calendar;
 import java.util.LinkedList;
 
 import static Models.Parent.isLimitChildren;
 import static Models.Parent.isParent;
+
+;
 
 
 public class ShoppingCart {
@@ -27,7 +29,7 @@ public class ShoppingCart {
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(query);
             //Displaying only relevant outcomes
             ps.setDate(1,date);
@@ -62,7 +64,7 @@ public class ShoppingCart {
                 "ANY(SELECT Username FROM human WHERE FamilyUsername=" +
                 "ANY(SELECT FamilyUsername FROM human WHERE Username= ?));";
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(query);
             ps.setDate(1,date);
             ps.setString(2, username);
@@ -99,7 +101,7 @@ public class ShoppingCart {
         PreparedStatement ps;
         String query = "DELETE FROM outcome WHERE id = ?;";
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -126,7 +128,7 @@ public class ShoppingCart {
             String query;
             Integer id = new Integer(1);
             try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+                con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
                 query = "INSERT INTO outcome(Username,Price,PurchasedDate,Title) VALUES(?,?,?,?)";
                 ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, added.username);
@@ -156,7 +158,8 @@ public class ShoppingCart {
         int countDeleted=0;
         try {
             String query="SELECT id FROM outcome WHERE Username = ?;";
-            PreparedStatement ps= DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
+            PreparedStatement ps= con.prepareStatement(query);
             ps.setString(1,username);
             ResultSet rs=ps.executeQuery();
             //rs.next();
@@ -167,6 +170,7 @@ public class ShoppingCart {
             }
             rs.close();
             ps.close();
+            con.close();
             return countDeleted;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -186,7 +190,8 @@ public class ShoppingCart {
         int salaries=0;
         try {
             String query="SELECT Salary FROM human WHERE FamilyUsername = ? AND Salary>=0";
-            ps =DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
+            ps =con.prepareStatement(query);
             ps.setString(1,this.familyUsername);
             rs=ps.executeQuery();
             while(rs.next()){
@@ -194,6 +199,7 @@ public class ShoppingCart {
             }
             rs.close();
             ps.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

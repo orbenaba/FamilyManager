@@ -1,12 +1,15 @@
 package Views;
 
 import Models.Human;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 import static Models.Gender.getGenderById;
+import static Models.Human.findRelation;
 import static Models.Human.getHumanData;
 
 
@@ -94,7 +97,6 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         bio.setHorizontalTextPosition(0);
         bioArea.setBackground(new Color(122, 5, 69));
         bioArea.setForeground(Color.blue);
-      //  bioArea.setBounds(getWidth()/2+100,400,400,400);
         bioArea.setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.blue));
         bioArea.setEditable(false);
         pane = new JScrollPane(bioArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -108,12 +110,5 @@ public class showProfileByIdView extends BaseForHomeSeqView {
         add(birthdayLabel);
         add(genderLabel);
         add(usernameLabel);
-    }
-
-    //Decoding the relation between to family members
-    public static String findRelation(boolean amIParent,boolean isHeParent,byte gender){
-        return amIParent?(isHeParent?(gender==1?("My wife"):("My husband")):(gender==1?("My daughter"):("My son"))):
-                (isHeParent?(gender==1)?("My mother"):("My father"):(gender==1)?("My sister"):("My brother"));
-
     }
 }

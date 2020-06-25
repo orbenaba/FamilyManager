@@ -1,4 +1,4 @@
-package Testings.TestingsModel;
+package Testings;
 
 import Models.Family;
 import Models.Human;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.Random;
 
 import static Models.Human.createAccount;
@@ -16,7 +15,8 @@ import static Models.Human.getHumanData;
 import static Models.Parent.isLimitChildren;
 import static Models.User.isUsernameExist;
 import static Models.User.loginFunction;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 //Testing the family without any children

@@ -2,13 +2,10 @@ package com.company;
 
 
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
-import java.awt.FontMetrics;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 
 
 public class CircleButton extends JButton{

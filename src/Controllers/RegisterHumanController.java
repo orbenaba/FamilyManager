@@ -1,7 +1,8 @@
 package Controllers;
 
-import Views.*;
+import Views.RegisterHumanView;
 import com.company.CircleButton;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package Testings.TestingsModel;
+package Testings;
 
 import Models.*;
 import org.junit.jupiter.api.AfterAll;
@@ -9,7 +9,8 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.Random;
 
-import static Models.Human.*;
+import static Models.Human.createAccount;
+import static Models.Human.getHumanData;
 import static Models.User.isUsernameExist;
 import static Models.User.loginFunction;
 import static org.junit.jupiter.api.Assertions.*;

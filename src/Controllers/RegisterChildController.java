@@ -1,18 +1,18 @@
 package Controllers;
 
 
-import Views.*;
+import Views.HomeView;
+import Views.RegisterChildView;
+import Views.RegisterParentView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.sql.*;
 
 import static Models.Human.createAccount;
-import static Models.User.isUsernameExist;
 import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 

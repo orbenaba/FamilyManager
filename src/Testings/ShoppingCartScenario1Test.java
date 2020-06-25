@@ -1,4 +1,4 @@
-package Testings.TestingsModel;
+package Testings;
 
 import Models.*;
 import org.junit.jupiter.api.AfterAll;

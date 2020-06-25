@@ -1,9 +1,6 @@
 package Models;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +16,13 @@ public class Gender {
         List<String> lst = new ArrayList<>();
         String query = "SELECT*FROM gender";
         try {
-            PreparedStatement con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
-            ResultSet rs = con. executeQuery();
+            Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps. executeQuery();
             while (rs.next())
                 lst.add(rs.getString(2));
             rs.close();
+            ps.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();

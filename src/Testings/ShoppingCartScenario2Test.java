@@ -1,4 +1,4 @@
-package Testings.TestingsModel;
+package Testings;
 
 import Models.Family;
 import Models.Human;
@@ -15,7 +15,8 @@ import java.util.Random;
 import static Models.Human.createAccount;
 import static Models.Human.getHumanData;
 import static Models.Outcome.outcomeExists;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 /**Exam the state of an existing shopping cart with a family and update each item in the shopping cart*/
 class ShoppingCartScenario2Test {
     private static ShoppingCart shoppingCart;

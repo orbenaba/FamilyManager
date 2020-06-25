@@ -1,11 +1,16 @@
 package Controllers;
 
-import Views.*;
+import Views.FamilyTreeView;
+import Views.MyProfileChildView;
+import Views.MyProfileParentView;
+import Views.showProfileByIdView;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import static Views.FamilyTreeView.TreeNode;
 
 

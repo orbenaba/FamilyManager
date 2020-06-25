@@ -30,7 +30,8 @@ public class User {
         else
             query = "(SELECT Username FROM family WHERE username= ?)UNION(SELECT Username FROM human WHERE username=?);";
         try {
-            ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+            Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
+            ps = con.prepareStatement(query);
             ps.setString(1, username);
             ps.setString(2, username);
             if (checker)
@@ -41,6 +42,7 @@ public class User {
             //close opened connections
             rs.close();
             ps.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +55,7 @@ public class User {
         String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
         PreparedStatement ps1 = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             ps1 = con.prepareStatement(humanQuery);
             ps1.setString(1, username);
             ps1.setString(2, password);

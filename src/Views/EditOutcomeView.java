@@ -2,6 +2,7 @@ package Views;
 
 
 import Models.Outcome;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

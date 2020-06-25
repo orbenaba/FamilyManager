@@ -1,8 +1,9 @@
 package Controllers;
 
+import Views.LoginView;
 import Views.RegisterFamilyView;
 import Views.StartView;
-import Views.LoginView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

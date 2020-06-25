@@ -3,12 +3,15 @@ package Controllers;
 
 import Models.Family;
 import Models.User;
-import Views.*;
+import Views.AreYouChildOrParentView;
+import Views.HomeView;
+import Views.LoginView;
+import Views.RegisterFamilyView;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 
 import static Models.User.loginFunction;
 

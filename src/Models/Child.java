@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
-
 public class Child extends Human {
     public String status;
     public boolean isSingle;
@@ -21,7 +20,7 @@ public class Child extends Human {
         String query;
         /**Child's details*/
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
+            con = DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
             query = "SELECT Birthday,FamilyUsername,FirstName,GenderId,Image,Password,Status,IsObligated FROM human WHERE Username=?";
             ps = con.prepareStatement(query);
             ps.setString(1, username);
@@ -66,7 +65,8 @@ public class Child extends Human {
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,Status=?,Birthday=?,IsObligated=?,Image=? WHERE Username=?";
                 else
                     query = "UPDATE human SET Username=?,Password=?,FirstName=?,Status=?,Birthday=?,IsObligated=? WHERE Username=?";
-                PreparedStatement ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(query);
+                Connection con=DriverManager.getConnection(MagicStrings.url, MagicStrings.user,MagicStrings.password);
+                PreparedStatement ps = con.prepareStatement(query);
                 ps.setString(1, username);
                 ps.setString(2, password);
                 ps.setString(3, firstName);
@@ -86,6 +86,7 @@ public class Child extends Human {
                     ps.setString(7,this.username);
                 ps.executeUpdate();
                 ps.close();
+                con.close();
                 this.username=username;
                 this.password=password;
                 this.firstName=firstName;

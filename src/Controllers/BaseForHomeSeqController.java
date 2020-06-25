@@ -2,6 +2,7 @@ package Controllers;
 
 import Views.BaseForHomeSeqView;
 import Views.HomeView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

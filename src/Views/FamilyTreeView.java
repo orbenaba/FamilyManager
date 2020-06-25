@@ -1,13 +1,16 @@
 package Views;
 
 
+import Models.Family;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static Models.Family.getFamilyMembers;
 
 
 public class FamilyTreeView extends BaseForHomeSeqView{
@@ -39,7 +42,7 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         title.setOpaque(true);
         title.setBounds(getWidth()/2-340,20,680,80);
 
-        FamilyMembers familyMembers=getFamilyMembers(username);
+        Family.FamilyMembers familyMembers=getFamilyMembers(username);
         /**Now, we have the whole family data--*/
         //Identify the user-parent or child?
         familyTree=new Tree(familyMembers.members);
@@ -152,29 +155,13 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         add(background);
         setVisible(true);
     }
-    /**Holds the first name of a user and his status- parent/child*/
-    private static class memberData{
-        public boolean isParent;
-        public String firstName;
-        public memberData(String firstName,boolean isParent) {
-            this.isParent = isParent;
-            this.firstName = firstName;
-        }
-    }
-    /**Holds an hash map of the all family members(first name and status), and the family username*/
-    private static class FamilyMembers{
-        public HashMap<String,memberData>members;
-        public String FamilyUsername;
-        public FamilyMembers() {
-            this.members = new HashMap<>();
-        }
-    }
+
     /**This class holds two separate lists of children anf parents in the current family*/
     public static class Tree{
         ArrayList<UserData> parents;
         ArrayList<UserData> children;
         /***/
-        public Tree(HashMap<String,memberData> members) {
+        public Tree(HashMap<String, Family.memberData> members) {
             parents = new ArrayList<>();
             children = new ArrayList<>();
             members.forEach((user,data)->{
@@ -204,38 +191,6 @@ public class FamilyTreeView extends BaseForHomeSeqView{
         }
     }
 
-    /**Returns the Members' username and firstName of the specific user
-     * Key= Username(String)
-     * Data=[First name, isParent?](memberData)*/
-    public static FamilyMembers getFamilyMembers(String username){
-        FamilyMembers familyMembers=new FamilyMembers();
-        Connection con;
-        ResultSet rs;
-        PreparedStatement ps;
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-            String getMembersQuery="SELECT FirstName,Username,Salary,FamilyUsername " +
-                                   "FROM human WHERE FamilyUsername=ANY(" +
-                                   "SELECT FamilyUsername FROM human WHERE Username = ?)";
-            ps=con.prepareStatement(getMembersQuery);
-            ps.setString(1,username);
-            rs=ps.executeQuery();
-            //Absorbing all the family members
-            rs.next();
-            familyMembers.FamilyUsername=rs.getString("FamilyUsername");
-            do{
-                /**If salary is lower then zero so the user is child*/
-                familyMembers.members.put(rs.getString("Username"),
-                        new memberData(rs.getString("FirstName"),rs.getInt("Salary")>=0));
-            }while(rs.next());
-            rs.close();
-            ps.close();
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return familyMembers;
-    }
     /**Listeners and actions*/
     public void addLeavesListener(MouseAdapter mal){
         parents.forEach((parentButton)->parentButton.button.addMouseListener(mal));
