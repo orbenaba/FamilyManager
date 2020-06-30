@@ -52,7 +52,7 @@ public class ShoppingCart {
             e.printStackTrace();
         }
     }
-    public ShoppingCart(){}
+    public ShoppingCart(){this.outcomes=new LinkedList<>();}
 
     //Calculates all the amount of all the incomes
     public int calculateIncomes(String username,Date date){

@@ -1,8 +1,6 @@
 package Models;
 
 
-import Views.FamilyTreeView;
-
 import java.sql.*;
 import java.util.HashMap;
 
