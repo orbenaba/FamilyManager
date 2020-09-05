@@ -2,121 +2,75 @@ package Views;
 
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
-
-import static java.awt.Font.BOLD;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class StartView extends Jframe {
-    JPanel [][]matrixPanels;//cubes matrix background
-    public JLabel exit,minimize;
-    public Border frameExMin;
-    public JLabel title;//this intended to separate between all the characters in the title
-    public JLabel login,register;
-    @Override
-    public JLabel getMinimize(){
-        return this.minimize;
-    }
-    @Override
-    public JLabel getExit(){
-        return this.exit;
-    }
+    public JLabel title,background;//this intended to separate between all the characters in the title
+    public JLabel login,register,link;
+    public URI linkToYoutube;
+    private int width;
 
     public StartView(){
-        setSize(800,800);
+        super((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        setExtendedState(MAXIMIZED_BOTH);
+        width=getWidth();
         setTitle("Start");
-        setLocationRelativeTo(null);//Center of screen's user
-        setLayout(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//kill current process
-        setUndecorated(true);//get rid of the ugly frame
-        initMatrix(0,0,getWidth()/8,getHeight()/8);
-        //add exit and minimize labels
-        exit=new JLabel("X");
-        minimize=new JLabel("-");
-        frameExMin=BorderFactory.createMatteBorder(1,1,1,1,Color.black);
-        init_Exit_Minimize(getWidth()-70,0,35,exit,minimize,frameExMin,true);//prevent code replication
-        initTitle(20,50,55);
+        background=new JLabel();
+        background.setIcon(new ImageIcon(getClass().getResource("/Icons/woodBack.jpg")));
+        background.setBounds(0,0,width,getHeight());
+        initTitle(width/2-400,50,60);
         init_Login_Register();
 
-
+        link=new JLabel("For video instructions click here!");
+        link.setBounds(width/2-400,600,470,50);
+        link.setFont(new Font("Arial", Font.ITALIC,30));
+        link.setForeground(new Color(0,0,250).brighter());
+        link.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        try {
+            linkToYoutube = new URI("https://youtu.be/4aJNEQN7ezM");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        add(link);
         add(login);
         add(register);
         add(title);
-        add(exit);
-        add(minimize);
-        addMatrixPanels();
+        add(background);
         setVisible(true);
     }
 
-    //set a beautiful background with matrix cube
-    public void initMatrix(int x,int y,int width,int height){
-        this.matrixPanels=new JPanel[8][8];
-        int j;
-        for(int i=0;i<8;i++)
-            for(j=0;j<8;j++) {
-                matrixPanels[i][j] = new JPanel();
-                matrixPanels[i][j].setBounds(x+i*width,y+j*height,width,height);
-                if((i%2==0&&j%2==0)||(i*j)%2==1)
-                    matrixPanels[i][j].setBackground(new Color(96, 104, 55));
-                else
-                    matrixPanels[i][j].setBackground(new Color(149, 181, 130));
-            }
-    }
-    //add the jlabel matrix to the main panel
-    public void addMatrixPanels(){
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++)
-                add(matrixPanels[i][j]);
-    }
-    //initialize exit and minimize
-    //prevent code duplication by declaring the func as a static func.
-    public static void init_Exit_Minimize(int x,int y,int size,JLabel exit,JLabel minimize,Border frameExMin,boolean flag)
-    {
-        minimize.setBounds(x,y,size,size);
-        exit.setBounds(x+size,y,size,size);
-        exit.setFont(new Font("Arial", BOLD,size));
-        minimize.setFont(new Font("Arial", BOLD,size));
-        exit.setForeground(flag==true?Color.black:Color.green);
-        minimize.setForeground(flag==true?Color.black:Color.green);
-        exit.setHorizontalAlignment(SwingConstants.CENTER);
-        minimize.setHorizontalAlignment(SwingConstants.CENTER);
-        exit.setBorder(frameExMin);
-        minimize.setBorder(frameExMin);
-    }
-    //initialize title
+
     public void initTitle(int x,int y,int size){
         title=new JLabel("Welcome to family manager");
-        title.setFont(new Font("Arial", Font.BOLD,size));
-        title.setForeground(Color.black);
-        title.setBounds(x,y,800,size);
+        title.setFont(new Font("Arial", Font.ITALIC,size));
+        title.setForeground(Color.yellow);
+        title.setBounds(x,y,800,size+10);
     }
-    //initialize login and register buttons
     public void init_Login_Register(){
         register=new JLabel("Create a new family account!");
         login=new JLabel("Already have an account..");
         register.setForeground(Color.yellow);
         login.setForeground(Color.yellow);
         Font basic=new Font("Arial",Font.ITALIC,40);
-        register.setBounds(50,500, 800,50);
+        register.setBounds(width/2-400,350, 800,50);
         register.setFont(basic);
-        login.setBounds(50,600,800,50);
+        login.setBounds(width/2-400,450,800,50);
         login.setFont(basic);
-    }
-
-    //Add listener to minimize and exit labels via Start Controller
-    public void addMinimizeAction(MouseAdapter mal) {
-        minimize.addMouseListener(mal);
-    }
-    public void addExitAction(MouseAdapter mal){
-        exit.addMouseListener(mal);
     }
     public void addRegisterAction(MouseAdapter mal){
         register.addMouseListener(mal);
     }
     public void addLoginAction(MouseAdapter mal){
         login.addMouseListener(mal);
+    }
+    public void addLinkAction(MouseAdapter mal){
+        link.addMouseListener(mal);
+    }
+    public void addTitleListener(MouseAdapter mal){
+        title.addMouseListener(mal);
     }
 }

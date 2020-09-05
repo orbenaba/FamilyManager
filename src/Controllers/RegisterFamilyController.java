@@ -7,34 +7,60 @@ import Views.RegisterFamilyView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.event.*;
 
-import static Controllers.RegisterController.isUsernameExist;
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
+import static Controllers.RegisterHumanController.checkValidPassword;
+import static Models.User.isUsernameExist;
 
-public class RegisterFamilyController {
+
+public class RegisterFamilyController extends JframeController{
     private RegisterFamilyView rfview;
 
     public RegisterFamilyController(RegisterFamilyView rfview) {
+        super(rfview);
         this.rfview = rfview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(rfview,true), rfview.minimize);
-        addExitAction(new RegisterController.ExitListeners(rfview,true), rfview.exit);
         rfview.addCreateMouse(new CreateMouseListener());
         rfview.addCreateAction(new CreateMouseAction());
         rfview.addLoginContextListener(new LoginContextListener());
+        rfview.addLimit18CharactersConfPass(new Limit18CharactersConfPass());
+        rfview.addLimit18CharactersPass(new Limit18CharactersPass());
+        rfview.addLimit12CharactersLName(new Limit12CharactersLName());
+        rfview.addLimit12CharactersUName(new Limit12CharactersUName());
     }
+    class Limit18CharactersConfPass extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.confirmPassword.getPassword().length >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit18CharactersPass extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.createPassword.getPassword().length >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit12CharactersLName extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.lastname.getText().length() >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+    class Limit12CharactersUName extends KeyAdapter{
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (rfview.username.getText().length() >= 18) // limit textfield to 12 characters
+                e.consume();
+        }
+    }
+
+
     class CreateMouseListener extends MouseAdapter {
         @Override
         public void mouseExited(MouseEvent e) {
-            rfview.create.setBackground(new Color(0, 84, 104));
+            rfview.create.setBackground(new Color(0,7,204));
         }
 
         @Override
@@ -46,7 +72,8 @@ public class RegisterFamilyController {
 
     class CreateMouseAction implements ActionListener {
         private String confirmPassword;
-        public boolean verify(String lastName,String username,String createPassword) {
+
+        public boolean verify(String lastName, String username, String createPassword) {
             if (lastName.trim().equals("") || username.trim().equals("") ||
                     createPassword.trim().equals("")) {
                 JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty Fields", 2);
@@ -61,33 +88,30 @@ public class RegisterFamilyController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String username=rfview.username.getText();
-            String createPassword= String.valueOf(rfview.createPassword.getPassword());
-            String lastName=rfview.lastname.getText();
+            String username = rfview.username.getText();
+            String createPassword = String.valueOf(rfview.createPassword.getPassword());
+            String lastName = rfview.lastname.getText();
             confirmPassword = String.valueOf(rfview.confirmPassword.getPassword());
-            if (verify(lastName,username,createPassword))
-                if (!isUsernameExist(username)) {
-                    PreparedStatement ps;
-                    ResultSet rs;
-                    String registerFamilyQuery = "INSERT INTO family(Username,Counter,CurrentMonthProfit,LastName,Password) VALUES(?,?,?,?,?)";
-                    try {
-                        ps = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root").prepareStatement(registerFamilyQuery);
-                        ps.setString(1, username);
-                        ps.setString(2, String.valueOf(0));
-                        ps.setString(3, String.valueOf(0));
-                        ps.setString(4, lastName);
-                        ps.setString(5, createPassword);
-                        if (ps.executeUpdate() != 0) {
+            if (verify(lastName, username, createPassword)) {
+                if (confirmPassword.equals(createPassword)) {
+                    String statement = checkValidPassword(createPassword);
+                    if (statement.equals("")) {
+                        if (!isUsernameExist(username, false, "")) {
+                            new Family(username, createPassword, String.valueOf(0), lastName, String.valueOf(0));
                             new AreYouChildOrParentController(new AreYouChildOrParentView(username));
                             rfview.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Failed in creating your account");
                         }
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
+                        else{
+                            JOptionPane.showMessageDialog(null, "This username is already taken", "Taken username.", 2);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, statement, "Invalid password", 2);
                     }
-
                 }
+                else{
+                    JOptionPane.showMessageDialog(null, "Passwords not match!", "Passwords not match!", 2);
+                }
+            }
         }
     }
 

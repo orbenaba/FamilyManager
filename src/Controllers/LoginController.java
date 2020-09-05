@@ -1,31 +1,33 @@
 package Controllers;
 
-import Models.Parent;
-import Views.*;
+
+import Models.Family;
+import Models.User;
+import Views.AreYouChildOrParentView;
+import Views.HomeView;
+import Views.LoginView;
+import Views.RegisterFamilyView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
-import static com.sun.deploy.uitoolkit.ToolkitStore.dispose;
+import static Models.User.loginFunction;
 
-public class LoginController {
-    private LoginView lview;
+public class LoginController extends JframeController{
+    public LoginView lview;
 
     public LoginController(LoginView lview) {
+        super(lview);
         this.lview = lview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(lview, true), lview.minimize);
-        addExitAction(new RegisterController.ExitListeners(lview, true), lview.exit);
         lview.addUsernameFocus(new FocusUsernameListener());
         lview.addPasswordFocus(new FocusPasswordListener());
         lview.addRegisterContextAction(new RegisterContextAction());
         lview.addLoginListener(new LoginExecutable());
         lview.addLoginMouse(new LoginMouseListener());
     }
+
 
     class FocusUsernameListener extends FocusAdapter {
         //clear the text field-username if it is "username"
@@ -37,9 +39,6 @@ public class LoginController {
                 //set a border to text field-username
                 lview.username.setBorder(lview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
-            lview.userIcon.setBorder(frameYellow);
         }
 
         //if the text is equal to username or to an empty string
@@ -67,9 +66,6 @@ public class LoginController {
                 //set a border to text password field
                 lview.createPassword.setBorder(lview.frameTextfield);
             }
-            //set a yellow border to the username icon
-            Border frameYellow = BorderFactory.createMatteBorder(2, 2, 2, 2, Color.yellow);
-            lview.passIcon1.setBorder(frameYellow);
         }
 
         //if the text is equal to username or to an empty string
@@ -113,68 +109,32 @@ public class LoginController {
     class LoginExecutable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Connection con;
-            PreparedStatement st1, st2;
-            ResultSet rs;
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softwareproject", "root", "root");
-                //get the username and password
-                String uname = lview.username.getText();
-                String pword = String.valueOf(lview.createPassword.getPassword());
-                //create a select query to check if the username and the password exist in the DB
-                //show a message if the username or the password fields are empty
-                if (uname.trim().equals("username")) {
-                    JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
-                } else if (pword.trim().equals("password")) {
-                    JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
-                } else {
-                    String humanQuery = "SELECT * FROM human WHERE username= ? AND password = ?";
-                    String familyQuery = "SELECT * FROM family WHERE username= ? AND password = ?";
-                    st1 = con.prepareStatement(humanQuery);
-                    st1.setString(1, uname);
-                    st1.setString(2, pword);
-                    rs = st1.executeQuery();
-                    /**The user is actually a parent/child*/
-                    if (rs.next())//username and password are correct
-                    {
-                        rs.close();
+            //get the username and password
+            String uname = lview.username.getText();
+            String pword = String.valueOf(lview.createPassword.getPassword());
+            //show a message if the username or the password fields are empty
+            if (uname.trim().equals("username")) {
+                JOptionPane.showMessageDialog(null, "Enter your username", "Empty username", 2);
+            } else if (pword.trim().equals("password")) {
+                JOptionPane.showMessageDialog(null, "Enter your password", "Empty password", 2);
+            } else {
+                Object res = loginFunction(uname, pword);
+                /**The user is actually a family*/
+                if (res instanceof Family)//username and password are correct
+                {
+                    new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
+                    lview.dispose();
+                }
+                else {/**The user is actually a parent/child*/
+                    if (res instanceof User) {
                         new HomeController(new HomeView(lview.username.getText()));
                         lview.dispose();
+                    } else if (res instanceof Integer) {
+                        JOptionPane.showMessageDialog(null, "Cannot create a new account cause one family=10 people at the most", "Overflow", 2);
                     } else {
-                        st2 = con.prepareStatement(familyQuery);
-                        st2.setString(1, uname);
-                        st2.setString(2, pword);
-                        rs = st2.executeQuery();
-
-                        /**The user is actually a family*/
-                        if (rs.next()) {
-                            rs.close();
-                            /**Verifies that the current family does not contain 10 people. If is is, then an error will be thrown
-                             Using singleton architecture.*/
-                            String singleton10people = "SELECT COUNT(*) AS rowsCount FROM human WHERE FamilyUsername = ?";
-                            st1 = con.prepareStatement(singleton10people);
-                            st1.setString(1, uname);
-                            rs = st1.executeQuery();
-                            /**Counts exactly the rows in human table */
-                            rs.next();
-                            if (rs.getInt(1) >= 2) {
-                                JOptionPane.showMessageDialog(null, "Sorry, but one family can only contain at most 10 people", "10 people error", 1);
-                            }
-                            else {
-                                new AreYouChildOrParentController(new AreYouChildOrParentView(uname));
-                                lview.dispose();
-                            }
-                        } else//error message
-                        {
-                            rs.close();
-                            JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
-                        }
+                        JOptionPane.showMessageDialog(null, "Invalid username/password", "Login Error", 2);
                     }
                 }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } catch (Exception ex) {
-                ex.printStackTrace();
             }
         }
     }
@@ -182,7 +142,7 @@ public class LoginController {
     class LoginMouseListener extends MouseAdapter{
         @Override
         public void mouseExited(MouseEvent e) {
-            lview.login.setBackground(new Color(0,84,104));
+            lview.login.setBackground(new Color(0,7,204));
         }
         @Override
         public void mouseEntered(MouseEvent e){

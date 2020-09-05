@@ -1,94 +1,105 @@
 package Controllers;
 
 import Views.MyProfileChildView;
-import com.company.CircleButton;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
-import static Views.RegisterView.addExitAction;
-import static Views.RegisterView.addMinimizeAction;
+import static Controllers.RegisterHumanController.checkValidPassword;
+import static Views.RegisterHumanView.mappingTextareaIntoFile;
 
 
-public class MyProfileChildController {
+public class MyProfileChildController extends MyProfileHumanController {
     private MyProfileChildView mpcview;
 
-
     public MyProfileChildController(MyProfileChildView mpcview) {
-        this.mpcview=mpcview;
-        addMinimizeAction(new RegisterController.MinimizeListeners(mpcview, true), mpcview.minimize);
-        addExitAction(new RegisterController.ExitListeners(mpcview, true), mpcview.exit);
-        mpcview.addRemovePhotoListener(new RemovePhotoListener());
-
+        super(mpcview);
+        this.mpcview = mpcview;
+        mpcview.addUpdateAccountAction(new UpdateAccountAction());
+        mpcview.addLimit20CharactersStatus(new Limit20CharactersStatus());
     }
 
-    class RemovePhotoListener extends MouseAdapter {
+    class Limit20CharactersStatus extends KeyAdapter{
         @Override
-        public void mouseEntered(MouseEvent e){
-            mpcview.removePhotoLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        }
-        @Override
-        public void mouseClicked(MouseEvent e){
-            /**Getting rid of old components*/
-            mpcview.getContentPane().remove(mpcview.imageContainer);
-            mpcview.getContentPane().remove(mpcview.removePhotoLabel);
-            /**Adding new components*/
-            ImageIcon image=new ImageIcon(getClass().getResource("/Icons/profile2.png"));
-            mpcview.imageContainer=new JLabel(image);
-            mpcview.imageContainer.setBounds(300,10,250,250);
-            mpcview.addImage=new CircleButton("");
-            mpcview.addImage.setBounds(385, 150, 78, 78);//Covers the plus that belongs to the image
-            mpcview.add(mpcview.imageContainer);
-            mpcview.add(mpcview.addImage);
-            mpcview.addImageAction(new AddImage_action());
-            mpcview.repaint();
+        public void keyTyped(KeyEvent e) {
+            if (mpcview.statusField.getText().length() >= 20) // limit textfield to 18 characters
+                e.consume();
         }
     }
-    class AddImage_action implements ActionListener {
 
+    class UpdateAccountAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            //file extension
-            FileNameExtensionFilter extension = new FileNameExtensionFilter("*Images", ".jpg", ".png", ".jpeg");
-            chooser.addChoosableFileFilter(extension);
-            int fileState = chooser.showSaveDialog(null);
-            //check if the user select an image
-            if (fileState == JFileChooser.APPROVE_OPTION) {
-                String imagePath;
-                imagePath=chooser.getSelectedFile().getAbsolutePath();
-                int width = mpcview.imageContainer.getWidth(), height = mpcview.imageContainer.getHeight();
-                int x=mpcview.imageContainer.getX(),y=mpcview.imageContainer.getY();
-                //Remove old components- profile image and circle button
-                mpcview.getContentPane().remove(mpcview.imageContainer);
-                mpcview.getContentPane().remove(mpcview.addImage);
-                //Identify the selected image file which was chosen by the user
-                File selectedImage = chooser.getSelectedFile();
-                //Add again the picture, but this time the selected image
-                mpcview.imageContainer = new JLabel(mpcview.child.image);
-                mpcview.imageContainer.setBounds(x-30, y, width+60, height);
-                //Fitting the picture
-                mpcview.imageContainer.setIcon(new ImageIcon(
-                        new ImageIcon(selectedImage.getAbsolutePath()).getImage().getScaledInstance(mpcview.imageContainer.getWidth(),
-                                mpcview.imageContainer.getHeight(), Image.SCALE_DEFAULT)));
-                //Adding the bin trash near the selected picture
-                mpcview.removePhoto = new ImageIcon(getClass().getResource("/Icons/removePhoto.png"));
-                mpcview.removePhotoLabel=new JLabel(mpcview.removePhoto);
-                mpcview.removePhotoLabel.setBounds(x+width+50,y,40,50);
-                mpcview.add(mpcview.removePhotoLabel);
-                mpcview.add(mpcview.imageContainer);
-                mpcview.addRemovePhotoListener(new RemovePhotoListener());
-                //Refresh view
-                mpcview.repaint();
+            //Verifies user's desire
+            Object[] options = {"Save changes",
+                    "Cancel"};
+            int n = JOptionPane.showOptionDialog(mpcview,
+                    "Are you sure you want to update your account?",
+                    "Update account",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+            if (n == 0) {
+                if(!checkEmptyFields()) {
+                    InputStream image = null;
+                    String statement = checkValidPassword(mpcview.passwordField.getText());
+                    if (statement.equals("")) {
+                        try {
+                            if (mpcview.imagePath != null)
+                                image = new FileInputStream(new File(mpcview.imagePath));
+                            else
+                                image = null;
+                            /**In case that the user had a profile image before and he didnt change it
+                             * , We'll send another flag(boolean) which is true when we don't need to update the image*/
+                            boolean flag = false;
+                            if (image == null)
+                                if (mpcview.imageContainer.getWidth() == 478)
+                                    flag = true;
+                            String newUsername = mpcview.child.updateAccount(mpcview.usernameField.getText(), mpcview.passwordField.getText(),
+                                    mpcview.firstNameField.getText(), mpcview.statusField.getText(), new java.sql.Date(mpcview.dateChooser.getDate().getTime()),
+                                    mpcview.isSingle.isSelected(), image, flag);
+                            if (!newUsername.equals("")) {
+                                /**In case that the user does not change his username, we don't need to delete the old file*/
+                                if (mpcview.child.username.equals(newUsername))
+                                    mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");//saving bio as file
+                                else {
+                                    /**Now mapping the new bio to a new file*/
+                                    mappingTextareaIntoFile(newUsername, mpcview.bioArea, "Biographies");
+                                    File f = new File("Biographies\\" + mpcview.child.username + ".txt");
+                                    f.delete();
+                                }
+                                new MyProfileChildController(new MyProfileChildView(newUsername));
+                                mpcview.dispose();
+                                /**Displays a success message*/
+                                JOptionPane.showMessageDialog(null, "Your account has successfully been updated", "Successful updating", 1);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "This username is already taken", "Taken username.", 2);
+                            }
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, statement, "Invalid password", 2);
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "One or more fields are empty", "Empty fields.", 2);
+                }
             }
         }
     }
 
+    @Override
+    protected boolean checkEmptyFields(){
+        return super.checkEmptyFields()||mpcview.statusField.getText().trim().equals("");
+    }
 }

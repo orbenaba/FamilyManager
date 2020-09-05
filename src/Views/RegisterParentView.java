@@ -1,14 +1,12 @@
 package Views;
 
 
-import Models.Family;
-
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
+
 
 public class RegisterParentView extends RegisterHumanView {
     public String familyUsername;
@@ -18,11 +16,9 @@ public class RegisterParentView extends RegisterHumanView {
     public JCheckBox isMarried;
     public JLabel childView;
 
-
     public RegisterParentView(String familyUsername) {
         this.familyUsername=familyUsername;
-        System.out.println("Family name= "+this.familyUsername);
-        Border frame=BorderFactory.createMatteBorder(1,1,1,1,Color.green);
+        Border frame=BorderFactory.createMatteBorder(1,1,1,1,fore);
         //Initialize
         salary=new JTextField();
         jobName=new JTextField();
@@ -30,49 +26,34 @@ public class RegisterParentView extends RegisterHumanView {
         jobNameLabel=new JLabel("Job name:");
         salaryLabel=new JLabel("Salary:");
         //set Bounds
-        salary.setBounds(570,480,200,40);
-        salaryLabel.setBounds(450,480,120,40);
-
-
-        jobName.setBounds(490,350,200,40);
-        jobNameLabel.setBounds(340,350,150,40);
-
-
+        salary.setBounds(590,700,200,40);
+        salaryLabel.setBounds(480,700,120,40);
+        jobName.setBounds(275,650,200,40);
+        jobNameLabel.setBounds(130,650,150,40);
         isMarried.setHorizontalTextPosition(SwingConstants.LEFT);
-        isMarried.setBounds(620,550,180,40);
-
-
-        //Style
-        Font f=new Font("Arial",Font.BOLD,25);
+        isMarried.setBounds(620,610,180,40);
         salaryLabel.setFont(f);
         jobNameLabel.setFont(f);
         salary.setFont(f);
         isMarried.setFont(f);
         jobName.setFont(f);
-
-        Color color=new Color(48,48,48);
-        salary.setBackground(color);
-        jobName.setBackground(color);
-        isMarried.setBackground(Color.black);
+        salary.setBackground(back);
+        jobName.setBackground(back);
+        isMarried.setBackground(back);
         //get rid of the border which is drawn by default around the checkBox
         isMarried.setFocusPainted(false);
         isMarried.setOpaque(true);
-
-        salaryLabel.setForeground(Color.green);
-        salary.setForeground(Color.green);
-        isMarried.setForeground(Color.green);
-        jobName.setForeground(Color.green);
-        jobNameLabel.setForeground(Color.green);
-
+        salaryLabel.setForeground(fore);
+        salary.setForeground(fore);
+        isMarried.setForeground(fore);
+        jobName.setForeground(fore);
+        jobNameLabel.setForeground(fore);
         salary.setBorder(frame);
         jobName.setBorder(frame);
-
         childView=new JLabel("Actually, I'm a child");
-        childView.setForeground(Color.green);
-        childView.setFont(new Font("Arial",Font.ITALIC,20));
-        childView.setBounds(50,50,180,25);
-
-
+        childView.setForeground(fore);
+        childView.setFont(f);
+        childView.setBounds(50,50,260,25);
         //add
         add(childView);
         add(salary);
@@ -80,6 +61,16 @@ public class RegisterParentView extends RegisterHumanView {
         add(isMarried);
         add(jobName);
         add(jobNameLabel);
+        add(background);
+        setVisible(true);
+    }
+
+    public void addSalary8Limit(KeyAdapter mal){
+        salary.addKeyListener(mal);
+    }
+
+    public void addJobName20Limit(KeyAdapter mal){
+        jobName.addKeyListener(mal);
     }
 
     public void addJobnameListener(MouseAdapter mal){
